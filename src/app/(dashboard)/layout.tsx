@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import {Toaster} from "sonner";
 export const metadata: Metadata = {
 	title: {
 		template: "%s | Code Four",
@@ -14,7 +15,10 @@ export default function Layout({
 }>) {
 	return (
 		<div className="bg-gradient-to-tl from-gray-800 to-gray-950 min-h-screen">
-			<div>{children}</div>
+			<div>
+				{children}
+				<Toaster richColors theme="light" />
+			</div>
 		</div>
 	);
 }

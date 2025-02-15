@@ -1,24 +1,30 @@
 "use client";
 
+import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/resizable";
+import EditorPanel from "@/features/room/editor-panel/EditorPanel";
 import HeaderRoom from "@/features/room/HeaderRoom";
+import {OutputPanel} from "@/features/room/output-panel/OutputPanel";
+import {useIsMobile} from "@/hooks/use-mobile";
+import {outputContent} from "@/types";
+import {useState} from "react";
 
-import {Monaco} from "@monaco-editor/react";
-import {useRef} from "react";
-
-export default function EditorPanel() {
-	const editorRef = useRef<{getValue: () => string} | null>(null);
-
-	const handleEditorDidMount = (editor: any, monaco: Monaco) => {
-		editorRef.current = editor;
-	};
-
-	function showValue() {
-		if (editorRef.current) alert(editorRef.current.getValue());
-	}
-
+export default function RoomPage() {
+	const [outputContent, setOutputContent] = useState<outputContent>({output: "", error: ""});
+	const isMobile = useIsMobile();
 	return (
-		<div className="h-screen max-w-screen-2xl flex flex-col items-center mx-auto p-4">
+		<div className="h-screen max-w-screen-2xl flex flex-col items-center mx-auto p-4 gap-4">
 			<HeaderRoom />
+			<ResizablePanelGroup
+				direction={!isMobile ? "horizontal" : "vertical"}
+				className="h-full max-h-[1280px] w-full bg-blacklight/90 rounded-xl border-2 border-blackBorder overflow-hidden ">
+				<ResizablePanel defaultSize={60}>
+					<EditorPanel setOutputContent={setOutputContent} />
+				</ResizablePanel>
+				<ResizableHandle className="w-0 bg-blackBorder" withHandle />
+				<ResizablePanel defaultSize={40}>
+					<OutputPanel outputContent={outputContent} />
+				</ResizablePanel>
+			</ResizablePanelGroup>
 		</div>
 	);
 }

@@ -6,10 +6,14 @@ export default {
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+		"./src/features/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
 		extend: {
 			colors: {
+				blackBorder: "#313244",
+				blacklight: "#12121a",
+				blackRed: "#f0040423",
 				blackBlue: "#00153c",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",

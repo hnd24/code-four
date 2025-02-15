@@ -1,19 +1,17 @@
 "use client";
 import {Button} from "@/components/ui/button";
-import {useIsMobile} from "@/hooks/use-mobile";
 import {SignInButton} from "@clerk/nextjs";
 import Image from "next/image";
 
 export default function Page() {
-	const isMobile = useIsMobile();
 	return (
 		<div className="max-w-screen-xl h-screen p-4 flex flex-col items-center justify-center mx-auto gap-6 ">
 			<div className="p-1 rounded-full bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-spin-slow">
 				<Image
 					src={"/favicon/welcome.svg"}
 					alt="welcome to Code Four"
-					width={isMobile ? 300 : 400}
-					height={isMobile ? 300 : 400}
+					width={300}
+					height={300}
 					className="border-white border-4 rounded-full p-4 bg-gradient-to-br from-gray-800 to-gray-950"
 				/>
 			</div>
