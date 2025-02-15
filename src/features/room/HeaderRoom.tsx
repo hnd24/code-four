@@ -1,6 +1,6 @@
 import Logo from "@/components/Logo";
-import {Button} from "@/components/ui/button";
-import {Share2} from "lucide-react";
+import ShareButton from "./ShareButton";
+import SideBar from "./SideBar";
 import ThemeSelector from "./ThemeSelector";
 
 export default function HeaderRoom() {
@@ -9,7 +9,8 @@ export default function HeaderRoom() {
 			className="flex w-full text-white justify-between bg-gradient-to-tr from-blackBlue to-blacklight
 			rounded-lg border-2 border-blackBorder">
 			<div className="flex">
-				<Logo isSlogan={false} />
+				<Logo isSlogan={false} className="hidden sm:flex" />
+				<SideBar className="flex sm:hidden" />
 				<div className="flex flex-col justify-center">
 					<div className=" flex-col justify-around 	 ">
 						<div className="text-lg leading-5 font-bold text-white max-w-24 truncate">Room1</div>
@@ -20,13 +21,8 @@ export default function HeaderRoom() {
 				</div>
 			</div>
 			<div className="flex items-center mr-3 gap-2 lg:gap-3">
-				<ThemeSelector />
-				<Button
-					className="bg-blue-600 py-2 lg:py-1 px-2 lg:px-3 leading-none h-fit text-base font-medium
-    hover:bg-blue-500 ">
-					<Share2 className="text-white flex lg:hidden" />
-					<div className="text-white hidden lg:flex">Share</div>
-				</Button>
+				<ThemeSelector className="hidden sm:flex" />
+				<ShareButton />
 			</div>
 		</div>
 	);

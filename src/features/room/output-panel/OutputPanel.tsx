@@ -21,7 +21,7 @@ export const OutputPanel = ({outputContent: data}: Props) => {
 
 	return (
 		<div
-			className="h-full p-[12px] overflow-y-hidden
+			className="h-full p-[12px] overflow-y-auto
 		flex flex-col my-auto rounded-xl ">
 			<div className="hidden lg:flex mb-3 items-center justify-between">
 				<div className="flex items-center gap-2">
@@ -33,7 +33,6 @@ export const OutputPanel = ({outputContent: data}: Props) => {
 
 				{hasContent && <CopyButton value={error || output} />}
 			</div>
-
 			<OutputArea output={output} error={error} />
 		</div>
 	);

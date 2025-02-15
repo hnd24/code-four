@@ -15,7 +15,7 @@ export const CopyButton = ({value, className}: Props) => {
 	return (
 		<Button
 			type="button"
-			size="sm"
+			size="default"
 			variant="secondary"
 			className={cn("text-xs font-normal ", className)}
 			onClick={() => copyToClipboard(value)}>

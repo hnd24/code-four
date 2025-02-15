@@ -7,6 +7,7 @@ import {outputContent} from "@/types";
 
 import {Slider} from "@/components/ui/slider";
 import {RotateCcw} from "lucide-react";
+import Image from "next/image";
 import {useEffect, useState} from "react";
 import {CodeEditor} from "./CodeEditor";
 import LanguageSelector from "./LanguageSelector";
@@ -85,13 +86,22 @@ export default function EditorPanel({setOutputContent}: Props) {
 					flex flex-col my-auto rounded-xl ">
 			<div className="mb-3 flex  items-center justify-between">
 				<div className="flex flex-col justify-center">
-					<LanguageSelector />
+					<LanguageSelector className="hidden sm:flex" />
+					<Image
+						src={`/languages/${language}.svg`}
+						className="flex sm:hidden"
+						alt={language}
+						width={24}
+						height={24}
+					/>
 				</div>
+
 				<div className="flex gap-2">
 					<div className="w-32 flex flex-col justify-center">
 						<Slider
 							onValueChange={value => setConfig({textSize: value[0]})}
 							defaultValue={[15]}
+							min={6}
 							max={40}
 							step={1}
 							className="bg-slate-200 rounded-xl"

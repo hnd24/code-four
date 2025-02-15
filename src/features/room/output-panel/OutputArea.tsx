@@ -1,5 +1,6 @@
 "use client";
 
+import {ScrollArea} from "@/components/ui/scroll-area";
 import {useRunCode} from "@/hooks/use-run-code";
 import {AlertTriangle, CheckCircle, CircleEllipsis, Clock} from "lucide-react";
 import {OutputAreaSkeleton} from "./OutputAreaSkeleton";
@@ -14,9 +15,9 @@ export const OutputArea = ({error, output}: Props) => {
 	const {isRunning} = useRunCode();
 
 	return (
-		<div className="h-full overflow-hidden rounded-xl border border-blackBorder bg-[#1e1e2e]/50 p-4 font-mono text-sm">
+		<ScrollArea className="h-full  rounded-xl border border-blackBorder bg-[#1e1e2e]/50 p-4 font-mono text-sm">
 			<OutputAreaContent isLoading={isRunning} error={error} output={output} />
-		</div>
+		</ScrollArea>
 	);
 };
 
