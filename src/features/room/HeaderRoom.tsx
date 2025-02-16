@@ -6,7 +6,7 @@ import ThemeSelector from "./ThemeSelector";
 export default function HeaderRoom() {
 	return (
 		<div
-			className="flex w-full text-white justify-between bg-gradient-to-tr from-blackBlue to-blacklight
+			className="flex w-full text-white justify-between bg-blacklight
 			rounded-lg border-2 border-blackBorder">
 			<div className="flex">
 				<Logo isSlogan={false} className="hidden sm:flex" />

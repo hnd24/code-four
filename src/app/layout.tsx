@@ -1,5 +1,6 @@
 import {ConvexClientProvider} from "@/providers/ConvexClientProvider";
 import {ClerkProvider} from "@clerk/nextjs";
+import {dark} from "@clerk/themes";
 import {Geist, Geist_Mono} from "next/font/google";
 import {NuqsAdapter} from "nuqs/adapters/next/app";
 import "./globals.css";
@@ -20,7 +21,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLIC_KEY}>
+		<ClerkProvider
+			publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLIC_KEY}
+			afterSignOutUrl="/"
+			appearance={{
+				baseTheme: dark,
+			}}>
 			<html lang="en">
 				<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 					<ConvexClientProvider>

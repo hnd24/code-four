@@ -89,10 +89,10 @@ export default function EditorPanel({setOutputContent}: Props) {
 					<LanguageSelector className="hidden sm:flex" />
 					<Image
 						src={`/languages/${language}.svg`}
-						className="flex sm:hidden"
+						className="flex rounded-sm sm:hidden ml-2"
 						alt={language}
-						width={24}
-						height={24}
+						width={28}
+						height={28}
 					/>
 				</div>
 

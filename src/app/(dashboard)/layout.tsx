@@ -14,11 +14,9 @@ export default function Layout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className="bg-gradient-to-tl from-gray-800 to-gray-950 min-h-screen">
-			<div>
-				{children}
-				<Toaster richColors theme="light" />
-			</div>
-		</div>
+		<>
+			{children}
+			<Toaster richColors theme="light" />
+		</>
 	);
 }

@@ -27,13 +27,13 @@ export default defineSchema({
 		name: v.string(),
 		block: v.optional(v.boolean()),
 		author: v.string(), // userId
-		organization: v.optional(v.string()),	// orgId
+		organization: v.optional(v.string()), // orgId
 		theme: v.optional(v.string()),
 	}).index("by_author", ["author"]),
 
 	code: defineTable({
-		code: v.string(),
-		language: v.string(),
+		code: v.optional(v.string()),
+		language: v.optional(v.string()),
 		roomId: v.id("rooms"),
 	}).index("by_roomId", ["roomId"]),
 });
