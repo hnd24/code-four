@@ -7,6 +7,9 @@ body {
 }
 
 @layer base {
+	.light-around {
+		box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
+	}
 	:root {
 		--background: 0 0% 100%;
 		--foreground: 240 10% 3.9%;

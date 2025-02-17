@@ -1,17 +1,12 @@
-"use client";
-
-import {SidebarTrigger} from "@/components/ui/sidebar";
-import {OrganizationSwitcher, SignedIn, UserButton} from "@clerk/nextjs";
-
+import Content from "@/features/home/content/content";
+import Header from "@/features/home/header/header";
 export default function page() {
 	return (
-		<div className="">
-			<SignedIn>
-				{/* <UserButton /> */}
-				<UserButton></UserButton>
-				<OrganizationSwitcher />
-			</SignedIn>
-			<SidebarTrigger className="text-white" />
+		<div className="flex flex-col h-full w-full p-2">
+			<Header />
+			<div className="h-full w-full mt-6">
+				<Content />
+			</div>
 		</div>
 	);
 }
