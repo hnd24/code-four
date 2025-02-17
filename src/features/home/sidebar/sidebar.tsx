@@ -7,10 +7,10 @@ import {
 	SidebarSeparator,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import DropdownOrgs from "./DropdownOrgs";
-import DropdownProblems from "./DropdownProblems";
-import FooterSidebar from "./FooterSidebar";
-import HeaderSidebar from "./HeaderSidebar";
+import DropdownOrgs from "./components/dropdown-orgs";
+import DropdownProblems from "./components/dropdown-problems";
+import FooterSidebar from "./components/footer-sidebar";
+import HeaderSidebar from "./components/header-sidebar";
 
 export function AppSidebar() {
 	const {open} = useSidebar();

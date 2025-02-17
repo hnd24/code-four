@@ -4,7 +4,7 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/SelectTheme";
+} from "@/components/select-theme";
 import {THEMES} from "@/constants";
 import {useEditor} from "@/hooks/use-editor";
 import {cn} from "@/lib/utils";
@@ -36,7 +36,7 @@ export default function ThemeSelector({className}: Props) {
 					}
 				/>
 			</SelectTrigger>
-			<SelectContent className="bg-blacklight border-blackBorder text-white">
+			<SelectContent className="bg-blackLight border-blackBorder text-white">
 				{THEMES.map(theme => {
 					return (
 						<SelectItem key={theme.value} value={theme.value}>

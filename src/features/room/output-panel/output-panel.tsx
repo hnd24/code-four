@@ -4,8 +4,8 @@ import {Terminal} from "lucide-react";
 
 import {useRunCode} from "@/hooks/use-run-code";
 import {outputContent} from "@/types";
-import {CopyButton} from "./CoppyButton";
-import {OutputArea} from "./OutputArea";
+import {CopyButton} from "./components/coppy-button";
+import {OutputArea} from "./components/output-area";
 
 type Props = {
 	outputContent: outputContent;

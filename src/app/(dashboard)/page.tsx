@@ -8,7 +8,7 @@ export default function Page() {
 	const {isSignedIn} = useUser();
 	return (
 		<div
-			className="w-screen h-screen p-4 bg-gradient-to-b from-[#1f1f23] to-blacklight
+			className="w-screen h-screen p-4 bg-gradient-to-b from-[#1f1f23] to-blackLight
 		flex flex-col items-center justify-center mx-auto gap-6 ">
 			<div className="p-1 rounded-full bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-spin-slow">
 				<Image

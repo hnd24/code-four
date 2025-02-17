@@ -3,7 +3,7 @@
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {useRunCode} from "@/hooks/use-run-code";
 import {AlertTriangle, CheckCircle, CircleEllipsis, Clock} from "lucide-react";
-import {OutputAreaSkeleton} from "./OutputAreaSkeleton";
+import {OutputAreaSkeleton} from "./output-area-skeleton";
 
 type Props = {
 	isLoading?: boolean;

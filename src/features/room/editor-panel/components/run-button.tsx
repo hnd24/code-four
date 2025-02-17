@@ -1,4 +1,4 @@
-import {Hint} from "@/components/Hint";
+import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
 
 import {Loader2, Play} from "lucide-react";

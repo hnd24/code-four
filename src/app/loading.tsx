@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Loading() {
 	return (
 		<div
-			className="h-screen bg-blacklight
+			className="h-screen bg-blackLight
 			w-full flex flex-col justify-center items-center">
 			<Image
 				src={`/favicon/loading1.svg`}

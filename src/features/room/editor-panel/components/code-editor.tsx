@@ -8,7 +8,7 @@ import {defineMonacoThemes, setDraftCode} from "@/lib/utils";
 
 import {useEditor} from "@/hooks/use-editor";
 import {useClerk} from "@clerk/nextjs";
-import {CodeEditorSkeleton} from "./CodeEditorSkeleton";
+import {CodeEditorSkeleton} from "./code-editor-skeleton";
 
 type Props = {
 	theme: Theme;

@@ -26,7 +26,7 @@ type Props = {
 	className?: string;
 };
 
-export default function SideBar({className}: Props) {
+export default function Navbar({className}: Props) {
 	const {
 		config: {language: CheckedLanguage, theme: CheckedTheme},
 		setConfig,
@@ -36,7 +36,7 @@ export default function SideBar({className}: Props) {
 			<SheetTrigger className={className}>
 				<Image src="/favicon/logo.ico" alt="logo" width={50} height={50} />
 			</SheetTrigger>
-			<SheetContent side="left" className="bg-blacklight text-white/90 w-fit min-w-60">
+			<SheetContent side="left" className="bg-blackLight text-white/90 w-fit min-w-60">
 				<SheetHeader>
 					<SheetTitle className="text-white/90 text-start">Code Four</SheetTitle>
 					<SheetDescription className="text-white/60 text-start">

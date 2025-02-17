@@ -8,7 +8,7 @@ export function CodeEditorSkeleton() {
 		36.70947203994367, 33.824239858932366, 51.36349179915079, 67.31670878876955,
 	];
 	return (
-		<div className="size-full overflow-hidden rounded-xl border border-white/[0.05] bg-blacklight/90 p-6 backdrop-blur">
+		<div className="size-full overflow-hidden rounded-xl border border-white/[0.05] bg-blackLight/90 p-6 backdrop-blur">
 			<div className="overflow-hidden rounded-xl ring-1 ring-white/[0.05]">
 				<div className="bg-[#1e1e2e]/50 p-4 backdrop-blur-sm">
 					{randomWidth.map((width, i) => (

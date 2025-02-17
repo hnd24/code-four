@@ -1,5 +1,5 @@
 "use client";
-import {Hint} from "@/components/Hint";
+import {Hint} from "@/components/hint";
 import {useSidebar} from "@/components/ui/sidebar";
 import {cn} from "@/lib/utils";
 import {useOrganization, useOrganizationList} from "@clerk/nextjs";

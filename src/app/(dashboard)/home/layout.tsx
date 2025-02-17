@@ -1,5 +1,6 @@
 import {SidebarProvider} from "@/components/ui/sidebar";
-import {AppSidebar} from "@/features/home/side-bar/SideBar";
+import {AppSidebar} from "@/features/home/sidebar/sidebar";
+
 import type {Metadata} from "next";
 import {cookies} from "next/headers";
 export const metadata: Metadata = {

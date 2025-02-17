@@ -14,7 +14,7 @@ export default function DashBoardLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className="h-screen w-screen bg-blacklight">
+		<div className="h-screen w-screen bg-blackLight">
 			{children}
 			<Toaster richColors theme="light" />
 		</div>

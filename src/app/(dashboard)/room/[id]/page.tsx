@@ -1,9 +1,9 @@
 "use client";
 
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/resizable";
-import EditorPanel from "@/features/room/editor-panel/EditorPanel";
-import HeaderRoom from "@/features/room/HeaderRoom";
-import {OutputPanel} from "@/features/room/output-panel/OutputPanel";
+import HeaderRoom from "@/features/room/components/header-room";
+import EditorPanel from "@/features/room/editor-panel/editor-panel";
+import {OutputPanel} from "@/features/room/output-panel/output-panel";
 import {useIsMobile} from "@/hooks/use-mobile";
 import {outputContent} from "@/types";
 import {useState} from "react";
@@ -16,7 +16,7 @@ export default function RoomPage() {
 			<HeaderRoom />
 			<ResizablePanelGroup
 				direction={!isMobile ? "horizontal" : "vertical"}
-				className="h-full max-h-[1280px] w-full bg-blacklight/90 rounded-xl border-2 border-blackBorder overflow-hidden ">
+				className="h-full max-h-[1280px] w-full bg-blackLight/90 rounded-xl border-2 border-blackBorder overflow-hidden ">
 				<ResizablePanel defaultSize={60}>
 					<EditorPanel setOutputContent={setOutputContent} />
 				</ResizablePanel>

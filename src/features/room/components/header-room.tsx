@@ -1,16 +1,17 @@
-import Logo from "@/components/Logo";
-import ShareButton from "./ShareButton";
-import SideBar from "./SideBar";
-import ThemeSelector from "./ThemeSelector";
+import Logo from "@/components/logo";
+
+import Navbar from "./navbar";
+import ThemeSelector from "./rheme-selector";
+import ShareButton from "./share-button";
 
 export default function HeaderRoom() {
 	return (
 		<div
-			className="flex w-full text-white justify-between bg-blacklight
+			className="flex w-full text-white justify-between bg-blackLight
 			rounded-lg border-2 border-blackBorder">
 			<div className="flex">
 				<Logo isSlogan={false} className="hidden sm:flex" />
-				<SideBar className="flex sm:hidden" />
+				<Navbar className="flex sm:hidden" />
 				<div className="flex flex-col justify-center">
 					<div className=" flex-col justify-around 	 ">
 						<div className="text-lg leading-5 font-bold text-white max-w-24 truncate">Room1</div>

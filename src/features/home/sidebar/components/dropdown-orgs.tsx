@@ -13,7 +13,7 @@ import {
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {useOrganizationList} from "@clerk/nextjs";
 import {ChevronDown, Loader} from "lucide-react";
-import OrgItem from "./OrgItem";
+import OrgItem from "./org-item";
 
 export default function DropdownOrgs() {
 	const {userMemberships, isLoaded} = useOrganizationList({

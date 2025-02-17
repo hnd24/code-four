@@ -9,9 +9,9 @@ import {Slider} from "@/components/ui/slider";
 import {RotateCcw} from "lucide-react";
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import {CodeEditor} from "./CodeEditor";
-import LanguageSelector from "./LanguageSelector";
-import {RunButton} from "./RunButton";
+import {CodeEditor} from "./components/code-editor";
+import LanguageSelector from "./components/language-selector";
+import {RunButton} from "./components/run-button";
 
 type Props = {
 	setOutputContent: ({output, error}: outputContent) => void;

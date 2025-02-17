@@ -32,12 +32,12 @@ export default function LanguageSelector({className}: Props) {
 			}}>
 			<SelectTrigger
 				className={cn(
-					"w-fit min-w-40 lg:min-w-44 bg-blacklight text-white/90 rounded-md border-blackBorder",
+					"w-fit min-w-40 lg:min-w-44 bg-blackLight text-white/90 rounded-md border-blackBorder",
 					className,
-					)}>
+				)}>
 				<SelectValue placeholder="Language" />
 			</SelectTrigger>
-			<SelectContent className="bg-blacklight text-white/90 border-blackBorder ">
+			<SelectContent className="bg-blackLight text-white/90 border-blackBorder ">
 				{Object.values(LANGUAGES).map(({label, value}) => (
 					<SelectItem key={value} value={value}>
 						<div className="flex items-center justify-between gap-4 ">
