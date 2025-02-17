@@ -1,7 +1,7 @@
 import {ConvexError, v} from "convex/values";
+import {internal} from "./_generated/api";
 import {MutationCtx, QueryCtx, internalMutation, query} from "./_generated/server";
 import {roles} from "./schema";
-import { internal } from "./_generated/api";
 
 export async function getUser(ctx: QueryCtx | MutationCtx, userId: string) {
 	const user = await ctx.db
@@ -65,7 +65,7 @@ export const addOrgIdToUser = internalMutation({
 		await ctx.runMutation(internal.organizations.createOrUpdateOrg, {
 			orgId: args.orgId,
 			member: args.userId,
-		})
+		});
 	},
 });
 
@@ -81,7 +81,7 @@ export const removeOrgIdFromUser = internalMutation({
 		await ctx.runMutation(internal.organizations.removeMemberOrg, {
 			orgId: args.orgId,
 			member: args.userId,
-		})
+		});
 	},
 });
 
@@ -105,9 +105,9 @@ export const updateRoleInOrgForUser = internalMutation({
 });
 
 export const getUserProfile = query({
-	args: {userId: v.id("users")}, // _id
+	args: {userId: v.string()}, // _id
 	async handler(ctx, args) {
-		const user = await ctx.db.get(args.userId);
+		const user = await getUser(ctx, args.userId);
 
 		return {
 			name: user?.name,
@@ -125,7 +125,7 @@ export const getMe = query({
 			return null;
 		}
 
-		const user = await getUser(ctx, identity.tokenIdentifier);
+		const user = await getUser(ctx, identity.subject);
 
 		if (!user) {
 			return null;

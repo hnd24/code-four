@@ -8,8 +8,8 @@ export default function Loading() {
 			<Image
 				src={`/favicon/loading1.svg`}
 				alt="Logo"
-				width={400}
-				height={400}
+				width={300}
+				height={300}
 				className="animate-pulse duration-1000"
 			/>
 		</div>
