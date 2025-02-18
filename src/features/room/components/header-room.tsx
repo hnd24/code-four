@@ -1,4 +1,4 @@
-import Logo from "@/components/logo";
+import Logo from "@/features/room/components/logo-room-page";
 
 import Navbar from "./navbar";
 import ThemeSelector from "./rheme-selector";

@@ -7,7 +7,7 @@ export default function DropdownProblems() {
 			<SidebarGroup>
 				<SidebarGroupLabel asChild>
 					<CollapsibleTrigger>
-						<div className="text-gray-100/60 text-base gap-2 flex">
+						<div className="text-gray-100/60 text-base gap-2 flex w-full truncate">
 							<span>0</span>
 							Problems
 						</div>

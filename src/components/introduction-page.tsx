@@ -1,11 +1,8 @@
-"use client";
 import {Button} from "@/components/ui/button";
-import {useUser} from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Page() {
-	const {isSignedIn} = useUser();
+export default function IntroductionPage() {
 	return (
 		<div
 			className="w-screen h-screen p-4 bg-gradient-to-b from-[#1f1f23] to-blackLight
@@ -25,12 +22,12 @@ export default function Page() {
 					Coding is easier when you have teammates!
 				</p>
 			</div>
-			<Link href={isSignedIn ? "/home" : "/sign-in"}>
+			<Link href={"/sign-in"}>
 				<Button
 					className="border-4 rounded-full text-lg py-4 px-6 
           hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r 
         hover:from-purple-400 hover:via-pink-500 hover:to-red-500 from-purple-400 via-pink-500 to-red-500">
-					{isSignedIn ? "home" : "Sign In"}
+					{"Sign In"}
 				</Button>
 			</Link>
 		</div>

@@ -22,7 +22,7 @@ export default defineSchema({
 		orgId: v.string(),
 		name: v.string(),
 		members: v.array(v.string()), // userIds
-		rooms: v.optional(v.id("rooms")), // roomIds
+		rooms: v.optional(v.optional(v.id("rooms"))), // roomIds
 	})
 		.index("by_orgId", ["orgId"])
 		.index("by_rooms", ["rooms"]),
@@ -33,8 +33,16 @@ export default defineSchema({
 		deletionCountdown: v.optional(v.number()), // in days
 		author: v.string(), // userId
 		organization: v.optional(v.string()), // orgId
-		theme: v.optional(v.string()),
 	}).index("by_author", ["author"]),
+
+	favoriteRooms: defineTable({
+		userId: v.string(),
+		OrgId: v.string(),
+		roomId: v.id("rooms"),
+	})
+		.index("by_userId", ["userId"])
+		.index("by_orgId", ["OrgId"])
+		.index("by_roomId", ["roomId"]),
 
 	code: defineTable({
 		code: v.optional(v.string()),

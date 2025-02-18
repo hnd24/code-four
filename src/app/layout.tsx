@@ -1,8 +1,10 @@
 import {ConvexClientProvider} from "@/providers/ConvexClientProvider";
 import {ClerkProvider} from "@clerk/nextjs";
 import {dark} from "@clerk/themes";
+import {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import {NuqsAdapter} from "nuqs/adapters/next/app";
+import {Toaster} from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,6 +16,14 @@ const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
 	subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+	title: {
+		template: "%s | Code Four",
+		default: "Code Four",
+	},
+	description: "website for developers, by developer",
+};
 
 export default function RootLayout({
 	children,
@@ -30,7 +40,10 @@ export default function RootLayout({
 			<html lang="en">
 				<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 					<ConvexClientProvider>
-						<NuqsAdapter>{children}</NuqsAdapter>
+						<NuqsAdapter>
+							{children}
+							<Toaster richColors theme="light" />
+						</NuqsAdapter>
 					</ConvexClientProvider>
 				</body>
 			</html>

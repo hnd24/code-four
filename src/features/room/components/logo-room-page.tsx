@@ -10,7 +10,7 @@ type Props = {
 
 export default function Logo({className, isLogo = true, isSlogan = true}: Props) {
 	return (
-		<Link href={"/home"} className={cn("flex items-center group", className)}>
+		<Link href={"/"} className={cn("flex items-center group", className)}>
 			<Image
 				src="/favicon/logo.ico"
 				alt="logo"

@@ -20,14 +20,14 @@ export default function Error() {
 					onClick={() => window.location.reload()}
 					className={cn(
 						"bg-blue-700 text-gray-100/90 rounded-xl w-32",
-						pathname !== "/home" && "rounded-r-none",
+						pathname !== "/" && "rounded-r-none",
 					)}>
 					Reset Page
 				</Button>
-				{pathname !== "/home" && (
+				{pathname !== "/" && (
 					<Button
 						className="bg-blue-700 text-gray-100/90 rounded-xl rounded-l-none w-32"
-						onClick={() => window.location.replace("/home")}>
+						onClick={() => window.location.replace("/")}>
 						Return Home
 					</Button>
 				)}

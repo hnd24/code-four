@@ -44,7 +44,9 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 					/>
 				</div>
 				<div className="w-full truncate flex items-center">{name}</div>
-				<div className={cn("ml-auto hidden items-center ", open && "flex")}>{memberCount}</div>
+				<div className={cn("ml-auto truncate hidden items-center ", open && "flex")}>
+					{memberCount}
+				</div>
 			</div>
 		</Hint>
 	);

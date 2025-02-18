@@ -46,7 +46,7 @@ export default function Navbar({className}: Props) {
 				<Accordion type="single" collapsible>
 					<AccordionItem value="item-1">
 						<AccordionTrigger isTrigger={false}>
-							<Link href={"/home"}>Return home</Link>
+							<Link href={"/"}>Return home</Link>
 						</AccordionTrigger>
 					</AccordionItem>
 					<AccordionItem value="item-2">

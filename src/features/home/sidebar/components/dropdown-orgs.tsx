@@ -8,14 +8,17 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarMenuSkeleton,
+	useSidebar,
 } from "@/components/ui/sidebar";
 
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
+import {cn} from "@/lib/utils";
 import {useOrganizationList} from "@clerk/nextjs";
 import {ChevronDown, Loader} from "lucide-react";
 import OrgItem from "./org-item";
 
 export default function DropdownOrgs() {
+	const {open} = useSidebar();
 	const {userMemberships, isLoaded} = useOrganizationList({
 		userMemberships: {
 			infinite: true,
@@ -26,7 +29,7 @@ export default function DropdownOrgs() {
 			<SidebarGroup>
 				<SidebarGroupLabel asChild>
 					<CollapsibleTrigger>
-						<div className="text-gray-100/60 text-base gap-2 flex">
+						<div className="text-gray-100/60 text-base gap-2 flex w-full truncate">
 							{isLoaded ? (
 								<span>{userMemberships.data?.length}</span>
 							) : (
@@ -54,11 +57,11 @@ export default function DropdownOrgs() {
 									</SidebarMenuItem>
 								))
 							) : (
-								<>
-									<SidebarMenuSkeleton className="ml-2 w-44" showIcon></SidebarMenuSkeleton>
-									<SidebarMenuSkeleton className="ml-2 w-52" showIcon></SidebarMenuSkeleton>
-									<SidebarMenuSkeleton className="ml-2 w-40" showIcon></SidebarMenuSkeleton>
-								</>
+								<div className={cn(!open && "hidden")}>
+									<SidebarMenuSkeleton className="w-44" showIcon></SidebarMenuSkeleton>
+									<SidebarMenuSkeleton className="w-52" showIcon></SidebarMenuSkeleton>
+									<SidebarMenuSkeleton className="w-36" showIcon></SidebarMenuSkeleton>
+								</div>
 							)}
 						</SidebarMenu>
 					</SidebarGroupContent>

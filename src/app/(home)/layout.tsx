@@ -21,7 +21,7 @@ export default async function HomeLayout({
 	return (
 		<SidebarProvider defaultOpen={defaultOpen}>
 			<AppSidebar />
-			<>{children}</>
+			<div className="w-screen h-screen bg-blackLight">{children}</div>
 		</SidebarProvider>
 	);
 }
