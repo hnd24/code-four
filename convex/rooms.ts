@@ -114,6 +114,24 @@ export const toggleFavoriteRoom = mutation({
 	},
 });
 
+export const turnOnCountUpDeleteRoom = mutation({
+	args: {roomId: v.id("rooms")},
+	async handler(ctx, args) {
+		await ctx.db.patch(args.roomId, {deletionCountup: 1});
+	},
+});
+
+export const removeRoom = mutation({
+	args: {roomId: v.id("rooms")},
+	async handler(ctx, args) {
+		const access = await hasAccessToRoom(ctx, args.roomId);
+		if (!access) {
+			throw new ConvexError("no access to file");
+		}
+		await ctx.db.delete(args.roomId);
+	},
+});
+
 export const getAllFavoriteRooms = query({
 	args: {userId: v.string()},
 	async handler(ctx, args) {

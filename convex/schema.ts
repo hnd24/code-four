@@ -19,6 +19,7 @@ export default defineSchema({
 
 	organizations: defineTable({
 		orgId: v.string(),
+		image: v.optional(v.string()),
 		name: v.string(),
 		members: v.array(v.string()), // userIds
 		rooms: v.optional(v.array(v.id("rooms"))), // roomIds

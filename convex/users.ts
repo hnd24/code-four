@@ -53,7 +53,16 @@ export const updateUser = internalMutation({
 	},
 });
 
-export const addOrgIdToUser = internalMutation({
+export const deleteUser = internalMutation({
+	args: {userId: v.string()},
+	async handler(ctx, args) {
+		const user = await getUser(ctx, args.userId);
+
+		await ctx.db.delete(user._id);
+	},
+});
+
+export const addOrgMemberShipToUser = internalMutation({
 	args: {userId: v.string(), orgId: v.string(), role: roles},
 	async handler(ctx, args) {
 		const user = await getUser(ctx, args.userId);
@@ -62,23 +71,7 @@ export const addOrgIdToUser = internalMutation({
 			orgIds: [...user.orgIds, {orgId: args.orgId, role: args.role}],
 		});
 
-		await ctx.runMutation(internal.organizations.createOrUpdateOrg, {
-			orgId: args.orgId,
-			member: args.userId,
-		});
-	},
-});
-
-export const removeOrgIdFromUser = internalMutation({
-	args: {userId: v.string(), orgId: v.string()},
-	async handler(ctx, args) {
-		const user = await getUser(ctx, args.userId);
-
-		await ctx.db.patch(user._id, {
-			orgIds: user.orgIds.filter(org => org.orgId !== args.orgId),
-		});
-
-		await ctx.runMutation(internal.organizations.removeMemberOrg, {
+		await ctx.runMutation(internal.organizations.addMemberOrg, {
 			orgId: args.orgId,
 			member: args.userId,
 		});
@@ -100,6 +93,22 @@ export const updateRoleInOrgForUser = internalMutation({
 
 		await ctx.db.patch(user._id, {
 			orgIds: user.orgIds,
+		});
+	},
+});
+
+export const removeOrgMemberShipToUser = internalMutation({
+	args: {userId: v.string(), orgId: v.string()},
+	async handler(ctx, args) {
+		const user = await getUser(ctx, args.userId);
+
+		await ctx.db.patch(user._id, {
+			orgIds: user.orgIds.filter(org => org.orgId !== args.orgId),
+		});
+
+		await ctx.runMutation(internal.organizations.removeMemberOrg, {
+			orgId: args.orgId,
+			member: args.userId,
 		});
 	},
 });

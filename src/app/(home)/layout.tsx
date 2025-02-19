@@ -2,7 +2,6 @@ import {SidebarProvider} from "@/components/ui/sidebar";
 import {AppSidebar} from "@/features/home/sidebar/sidebar";
 
 import type {Metadata} from "next";
-import {cookies} from "next/headers";
 export const metadata: Metadata = {
 	title: {
 		template: "Home",
@@ -16,10 +15,8 @@ export default async function HomeLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const cookieStore = await cookies();
-	const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 	return (
-		<SidebarProvider defaultOpen={defaultOpen}>
+		<SidebarProvider defaultOpen={false}>
 			<AppSidebar />
 			<div className="w-screen h-screen bg-blackLight">{children}</div>
 		</SidebarProvider>

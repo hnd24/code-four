@@ -1,3 +1,5 @@
+import {Id} from "../../convex/_generated/dataModel";
+
 export enum Theme {
 	Light = "light",
 	Default = "vs-dark",
@@ -24,4 +26,14 @@ export type DraftCode = {
 export type outputContent = {
 	output: string;
 	error?: string;
+};
+
+export type orgType = {
+	_id: Id<"organizations">;
+	_creationTime: number;
+	rooms?: Id<"rooms">[] | undefined;
+	image?: string | undefined;
+	name: string;
+	orgId: string;
+	members: string[];
 };

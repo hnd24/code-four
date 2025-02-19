@@ -37,8 +37,13 @@ http.route({
 						image: result.data.image_url,
 					});
 					break;
+				case "user.deleted":
+					await ctx.runMutation(internal.users.deleteUser, {
+						userId: result.data.id || "",
+					});
+					break;
 				case "organizationMembership.created":
-					await ctx.runMutation(internal.users.addOrgIdToUser, {
+					await ctx.runMutation(internal.users.addOrgMemberShipToUser, {
 						userId: result.data.public_user_data.user_id,
 						orgId: result.data.organization.id,
 						role: result.data.role === "org:admin" ? "admin" : "member",
@@ -52,12 +57,26 @@ http.route({
 					});
 					break;
 				case "organizationMembership.deleted":
-					await ctx.runMutation(internal.users.removeOrgIdFromUser, {
+					await ctx.runMutation(internal.users.removeOrgMemberShipToUser, {
 						userId: result.data.public_user_data.user_id,
 						orgId: result.data.organization.id,
 					});
 					break;
-				case "organization.deleted": 
+				case "organization.created":
+					await ctx.runMutation(internal.organizations.createOrg, {
+						orgId: result.data.id,
+						name: result.data.name,
+						image: result.data.image_url || "",
+						member: result.data.created_by || "",
+					});
+					break;
+				case "organization.updated":
+					await ctx.runMutation(internal.organizations.updateProfileOrg, {
+						orgId: result.data.id,
+						name: result.data.name,
+						image: result.data.image_url || "",
+					});
+				case "organization.deleted":
 					await ctx.runMutation(internal.organizations.removeOrg, {
 						orgId: result.data.id ?? "",
 					});

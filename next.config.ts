@@ -6,8 +6,10 @@ const nextConfig: NextConfig = {
 			{
 				protocol: "https",
 				hostname: "img.clerk.com",
-				port: "",
-				search: "",
+			},
+			{
+				protocol: "https",
+				hostname: "example.org",
 			},
 		],
 	},
