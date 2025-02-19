@@ -54,7 +54,7 @@ export const getRoomById = query({
 	async handler(ctx, args) {
 		const room = await ctx.db.get(args.roomId);
 		if (!room) {
-			throw new ConvexError("expected room to be defined");
+			return null;
 		}
 
 		return room;
@@ -177,10 +177,34 @@ export const turnOffCountUpDeleteRoom = mutation({
 	},
 });
 
+export const createRoom = mutation({
+	args: {
+		name: v.string(),
+		author: v.string(), // userId
+		orgId: v.string(), // orgId
+		block: v.optional(v.boolean()),
+		deletionCountup: v.optional(v.number()), // in days
+	},
+	async handler(ctx, args) {
+		// Chèn room vào database và lấy ID của nó
+		const roomId = await ctx.db.insert("rooms", args);
+
+		// Lấy lại thông tin room vừa tạo
+		return await ctx.db.get(roomId);
+	},
+});
+
 export const deleteRoomById = mutation({
 	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
 		await deleteRoom(ctx, args.roomId);
+	},
+});
+
+export const renameRoom = mutation({
+	args: {roomId: v.id("rooms"), name: v.string()},
+	async handler(ctx, args) {
+		await ctx.db.patch(args.roomId, {name: args.name});
 	},
 });
 

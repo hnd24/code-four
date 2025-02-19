@@ -37,3 +37,13 @@ export type orgType = {
 	orgId: string;
 	members: string[];
 };
+
+export type roomType = {
+	_id: Id<"rooms">;
+	_creationTime: number;
+	name: string;
+	author: string;
+	block?: boolean | undefined;
+	deletionCountup?: number | undefined;
+	orgId: string;
+};

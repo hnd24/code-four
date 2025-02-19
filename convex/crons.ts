@@ -9,3 +9,5 @@ crons.daily(
 	internal.rooms.plusCountUpDeleteRoom,
 );
 crons.daily("deleteOldRooms", {hourUTC: 16, minuteUTC: 0}, internal.rooms.deleteRoomsByCountUp);
+
+export default crons;
