@@ -10,9 +10,11 @@ export default function HomePage() {
 	const {organization} = useOrganization();
 	if (!isSignedIn) return <IntroductionPage />;
 	return (
-		<div className="flex flex-col h-full w-full py-1 px-2">
-			<HeaderHome />
-			<div className="h-full w-full mt-4 md:mt-6">{organization ? <Content /> : <NoOrg />}</div>
-		</div>
+		<>
+			<div className="flex flex-col h-full w-full py-1 px-2">
+				<HeaderHome />
+				<div className="h-full w-full mt-4 md:mt-6">{organization ? <Content /> : <NoOrg />}</div>
+			</div>
+		</>
 	);
 }

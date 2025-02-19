@@ -12,5 +12,5 @@ export default function RoomLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return <>{children}</>;
+	return <div className="w-screen h-screen bg-blackLight">{children}</div>;
 }

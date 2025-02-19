@@ -11,6 +11,14 @@ export type Payment = {
 	email: string;
 };
 
+export type RoomsTable = {
+	name: string;
+	author: string;
+	organization?: string;
+	createAt: Date;
+	block?: boolean;
+};
+
 export const columns: ColumnDef<Payment>[] = [
 	{
 		accessorKey: "status",

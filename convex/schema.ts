@@ -15,34 +15,31 @@ export default defineSchema({
 				role: roles,
 			}),
 		),
-		rooms: v.optional(v.array(v.id("rooms"))), // roomIds
 	}).index("by_userId", ["userId"]),
 
 	organizations: defineTable({
 		orgId: v.string(),
 		name: v.string(),
 		members: v.array(v.string()), // userIds
-		rooms: v.optional(v.optional(v.id("rooms"))), // roomIds
-	})
-		.index("by_orgId", ["orgId"])
-		.index("by_rooms", ["rooms"]),
+		rooms: v.optional(v.array(v.id("rooms"))), // roomIds
+	}).index("by_orgId", ["orgId"]),
 
 	rooms: defineTable({
 		name: v.string(),
-		block: v.optional(v.boolean()),
-		deletionCountdown: v.optional(v.number()), // in days
 		author: v.string(), // userId
-		organization: v.optional(v.string()), // orgId
-	}).index("by_author", ["author"]),
+		favorite: v.optional(v.boolean()),
+		block: v.optional(v.boolean()),
+		deletionCountup: v.optional(v.number()), // in days
+		orgId: v.string(), // orgId
+	})
+		.index("by_author", ["author"])
+		.index("by_orgId", ["orgId"]),
 
 	favoriteRooms: defineTable({
 		userId: v.string(),
-		OrgId: v.string(),
+		orgId: v.string(),
 		roomId: v.id("rooms"),
-	})
-		.index("by_userId", ["userId"])
-		.index("by_orgId", ["OrgId"])
-		.index("by_roomId", ["roomId"]),
+	}).index("by_userId_orgId_by_roomId", ["userId", "roomId", "orgId"]),
 
 	code: defineTable({
 		code: v.optional(v.string()),

@@ -62,6 +62,11 @@ export const removeOrg = internalMutation({
 				});
 			}
 		});
+		if (org.rooms) {
+			org.rooms.forEach(async roomId => {
+				await ctx.db.patch(roomId, {deletionCountup: 1});
+			});
+		}
 
 		await ctx.db.delete(org._id);
 	},

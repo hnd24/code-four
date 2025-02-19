@@ -17,6 +17,7 @@ import DropdownOrgs from "./components/dropdown-orgs";
 import DropdownProblems from "./components/dropdown-problems";
 import FooterSidebar from "./components/footer-sidebar";
 import HeaderSidebar from "./components/header-sidebar";
+import OrgProfile from "./components/org-profile";
 
 export function AppSidebar() {
 	const {open, toggleSidebar} = useSidebar();
@@ -38,6 +39,11 @@ export function AppSidebar() {
 					<SidebarGroup className="group-data-[collapsible=icon]:hidden">
 						<SidebarGroupContent>
 							<SidebarMenu>
+								<SidebarMenuItem>
+									<SidebarMenuButton asChild>
+										<OrgProfile />
+									</SidebarMenuButton>
+								</SidebarMenuItem>
 								<SidebarMenuItem>
 									<SidebarMenuButton asChild>
 										<CreateOrgButton />
