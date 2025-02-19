@@ -28,19 +28,21 @@ export default defineSchema({
 	rooms: defineTable({
 		name: v.string(),
 		author: v.string(), // userId
-		favorite: v.optional(v.boolean()),
 		block: v.optional(v.boolean()),
 		deletionCountup: v.optional(v.number()), // in days
 		orgId: v.string(), // orgId
 	})
 		.index("by_author", ["author"])
-		.index("by_orgId", ["orgId"]),
+		.index("by_orgId", ["orgId"])
+		.index("by_deletionCountup", ["deletionCountup"]),
 
 	favoriteRooms: defineTable({
 		userId: v.string(),
 		orgId: v.string(),
 		roomId: v.id("rooms"),
-	}).index("by_userId_orgId_by_roomId", ["userId", "roomId", "orgId"]),
+	})
+		.index("by_userId_orgId_by_roomId", ["userId", "roomId", "orgId"])
+		.index("by_orgId", ["orgId"]),
 
 	code: defineTable({
 		code: v.optional(v.string()),

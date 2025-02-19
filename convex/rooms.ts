@@ -1,46 +1,55 @@
 import {ConvexError, v} from "convex/values";
 import {Id} from "./_generated/dataModel";
-import {mutation, MutationCtx, query, QueryCtx} from "./_generated/server";
-export async function hasAccessToOrg(ctx: QueryCtx | MutationCtx, orgId: string) {
+import {internalMutation, mutation, MutationCtx, query, QueryCtx} from "./_generated/server";
+import {getOrg} from "./organizations";
+import {getUser} from "./users";
+
+export async function getRoom(ctx: QueryCtx | MutationCtx, roomId: Id<"rooms">) {
+	const room = await ctx.db.get(roomId);
+	if (!room) {
+		throw new ConvexError("Room not found");
+	}
+	return room;
+}
+
+export async function isAuthorOfRoom(ctx: QueryCtx | MutationCtx, roomId: Id<"rooms">) {
+	const room = await ctx.db.get(roomId);
+	if (!room) {
+		throw new ConvexError("Room not found");
+	}
 	const identity = await ctx.auth.getUserIdentity();
 	if (!identity) {
-		return null;
+		throw new ConvexError("You must be logged in");
 	}
-
-	const user = await ctx.db
-		.query("users")
-		.withIndex("by_userId", q => q.eq("userId", identity.tokenIdentifier))
-		.first();
-
-	if (!user) {
-		return null;
-	}
-
-	const hasAccess = user.orgIds.some(item => item.orgId === orgId);
-
-	if (!hasAccess) {
-		throw new ConvexError("you do not have access to this org");
-	}
-
-	return user;
+	const access = room.author === identity.tokenIdentifier;
+	if (!access) return false;
+	if (access) return room;
 }
 
-async function hasAccessToRoom(ctx: QueryCtx | MutationCtx, roomId: Id<"rooms">) {
-	const room = await ctx.db.get(roomId);
-
+export async function deleteRoom(ctx: MutationCtx, roomId: Id<"rooms">) {
+	const room = await getRoom(ctx, roomId);
 	if (!room) {
-		return null;
+		throw new ConvexError("Room not found");
 	}
-	const hasAccess = await hasAccessToOrg(ctx, room.orgId);
-
-	if (!hasAccess) {
-		return null;
-	}
-
-	return {user: hasAccess, room};
+	await ctx.db.delete(room._id);
 }
 
-export const getRoom = query({
+export async function deleteFavorite(ctx: MutationCtx, orgId: string) {
+	const favorites = await ctx.db
+		.query("favoriteRooms")
+		.withIndex("by_orgId", q => q.eq("orgId", orgId))
+		.collect();
+	if (!favorites) return;
+	Promise.all(
+		favorites.map(async favorite => {
+			const room = await ctx.db.get(favorite.roomId);
+			if (room?.author === favorite.userId) return;
+			ctx.db.delete(favorite._id);
+		}),
+	);
+}
+
+export const getRoomById = query({
 	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
 		const room = await ctx.db.get(args.roomId);
@@ -59,7 +68,6 @@ export const getRoomsOfUser = query({
 		if (!identity) {
 			throw new ConvexError("you must be logged in to view your rooms");
 		}
-
 		return await ctx.db
 			.query("rooms")
 			.withIndex("by_author", q => q.eq("author", identity.tokenIdentifier))
@@ -70,47 +78,88 @@ export const getRoomsOfUser = query({
 export const getRoomsOfOrganization = query({
 	args: {orgId: v.string()},
 	async handler(ctx, args) {
-		const hasAccess = await hasAccessToOrg(ctx, args.orgId);
-		if (!hasAccess) {
+		const org = await getOrg(ctx, args.orgId);
+		if (!org || !org.rooms || org.rooms.length === 0) {
 			return [];
 		}
-
-		const rooms = await ctx.db
-			.query("rooms")
-			.withIndex("by_orgId", q => q.eq("orgId", args.orgId))
-			.collect();
-
-		return rooms;
+		return await Promise.all(org.rooms.map(roomId => ctx.db.get(roomId)));
 	},
 });
 
 export const toggleFavoriteRoom = mutation({
 	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
-		const access = await hasAccessToRoom(ctx, args.roomId);
-		if (!access) {
-			throw new ConvexError("no access to file");
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) {
+			throw new ConvexError("you must be logged in to favorite a room");
+		}
+		const user = await getUser(ctx, identity?.subject);
+		const room = await getRoom(ctx, args.roomId);
+		if (!room || !user) {
+			throw new ConvexError("room not found");
 		}
 		const favorite = await ctx.db
 			.query("favoriteRooms")
 			.withIndex("by_userId_orgId_by_roomId", q =>
-				q
-					.eq("userId", access.user.userId)
-					.eq("roomId", access.room._id)
-					.eq("orgId", access.room.orgId),
+				q.eq("userId", user.userId).eq("roomId", room._id).eq("orgId", room.orgId),
 			)
 			.first();
 		if (!favorite) {
 			await ctx.db.insert("favoriteRooms", {
-				userId: access.user.userId,
-				roomId: access.room._id,
-				orgId: access.room.orgId,
+				userId: user.userId,
+				roomId: room._id,
+				orgId: room.orgId,
 			});
-			await ctx.db.patch(access.room._id, {favorite: true});
 		} else {
 			await ctx.db.delete(favorite._id);
-			await ctx.db.patch(access.room._id, {favorite: false});
 		}
+	},
+});
+
+export const toggleBlockRoom = mutation({
+	args: {roomId: v.id("rooms")},
+	async handler(ctx, args) {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) {
+			throw new ConvexError("you must be logged in to favorite a room");
+		}
+		const user = await getUser(ctx, identity?.subject);
+		const room = await getRoom(ctx, args.roomId);
+
+		if (!room) {
+			throw new ConvexError("room not found");
+		}
+		if (room.author !== user.userId) {
+			throw new ConvexError("you are not the author of this room");
+		}
+		if (room.block) {
+			await ctx.db.patch(room._id, {block: false});
+		} else {
+			await ctx.db.patch(room._id, {block: true});
+		}
+	},
+});
+
+export const getAllFavoriteRooms = query({
+	args: {},
+	async handler(ctx, args) {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) {
+			throw new ConvexError("you must be logged in to view your favorite rooms");
+		}
+		const user = await getUser(ctx, identity?.subject);
+		if (!identity) {
+			throw new ConvexError("you must be logged in to view your favorite rooms");
+		}
+		const favorites = await ctx.db
+			.query("favoriteRooms")
+			.withIndex("by_userId_orgId_by_roomId", q => q.eq("userId", identity.subject))
+			.collect();
+		let rooms = Promise.all(
+			favorites.map(async favorite => {
+				return await ctx.db.get(favorite.roomId);
+			}),
+		);
 	},
 });
 
@@ -121,27 +170,47 @@ export const turnOnCountUpDeleteRoom = mutation({
 	},
 });
 
-export const removeRoom = mutation({
+export const turnOffCountUpDeleteRoom = mutation({
 	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
-		const access = await hasAccessToRoom(ctx, args.roomId);
-		if (!access) {
-			throw new ConvexError("no access to file");
-		}
-		await ctx.db.delete(args.roomId);
+		await ctx.db.patch(args.roomId, {deletionCountup: 0});
 	},
 });
 
-export const getAllFavoriteRooms = query({
-	args: {userId: v.string()},
+export const deleteRoomById = mutation({
+	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
-		const identity = await ctx.auth.getUserIdentity();
-		if (!identity) {
-			throw new ConvexError("you must be logged in to view your favorite rooms");
-		}
-		return await ctx.db
-			.query("favoriteRooms")
-			.withIndex("by_userId_orgId_by_roomId", q => q.eq("userId", identity.tokenIdentifier))
+		await deleteRoom(ctx, args.roomId);
+	},
+});
+
+export const plusCountUpDeleteRoom = internalMutation({
+	args: {},
+	async handler(ctx, args) {
+		const rooms = await ctx.db
+			.query("rooms")
+			.withIndex("by_deletionCountup", q => q.gt("deletionCountup", 0))
 			.collect();
+		Promise.all(
+			rooms.map(async room => {
+				if (room.deletionCountup)
+					await ctx.db.patch(room._id, {deletionCountup: room.deletionCountup + 1});
+			}),
+		);
+	},
+});
+
+export const deleteRoomsByCountUp = internalMutation({
+	args: {},
+	async handler(ctx, args) {
+		const rooms = await ctx.db
+			.query("rooms")
+			.withIndex("by_deletionCountup", q => q.eq("deletionCountup", 7))
+			.collect();
+		Promise.all(
+			rooms.map(async room => {
+				if (room.deletionCountup && room.deletionCountup === 7) await ctx.db.delete(room._id);
+			}),
+		);
 	},
 });
