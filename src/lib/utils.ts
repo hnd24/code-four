@@ -3,8 +3,8 @@ import {MONACO_THEMES} from "@/themes";
 import {DraftCode} from "@/types";
 import {Monaco} from "@monaco-editor/react";
 import {clsx, type ClassValue} from "clsx";
+import {format} from "date-fns";
 import {twMerge} from "tailwind-merge";
-
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
@@ -28,4 +28,9 @@ export const setDraftCode = (draft: DraftCode) => {
 export const getDraftCode = () => {
 	const draft = localStorage.getItem(DRAFT_CODE_KEY);
 	return draft ? (JSON.parse(draft) as DraftCode) : null;
+};
+
+export const formatTime = (time: number) => {
+	const formattedDate = format(new Date(time), "M/dd/yyyy, hh:mm:ss a");
+	return formattedDate;
 };

@@ -23,7 +23,7 @@ export const RunButton = ({disabled, onClick}: Props) => {
 		// <Hint label={isAuthenticated ? "Run this code" : "You need to Login/Sing up to Run"}>
 		/* <Button disabled={disabled || !isAuthenticated} onClick={onExecute}> */
 		<Hint label={true ? "Run this code" : "You need to Login/Sing up to Run"}>
-			<Button disabled={disabled} onClick={onExecute} className="bg-blue-600 hover:bg-blue-500">
+			<Button disabled={disabled} onClick={onExecute} className="bg-blue-700 hover:bg-blue-800">
 				{disabled ? (
 					<>
 						<Loader2 className="animate-spin text-white/60" />

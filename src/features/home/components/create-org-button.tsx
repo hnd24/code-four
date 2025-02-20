@@ -14,7 +14,7 @@ export default function CreateOrgButton({className}: Props) {
 			<DialogTrigger asChild>
 				<Button
 					className={cn(
-						"w-full truncate bg-blue-600 hover:bg-blue-700 hover:text-white text-gray-100/90",
+						"w-full truncate bg-blue-700 hover:!bg-blue-800 hover:!text-white text-gray-100/90",
 						className,
 					)}>
 					Create Organization

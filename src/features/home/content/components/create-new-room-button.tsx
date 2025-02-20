@@ -15,6 +15,7 @@ import {roomType} from "@/types";
 import {useConvexMutation} from "@convex-dev/react-query";
 import {useMutation} from "@tanstack/react-query";
 import {Plus} from "lucide-react";
+import Image from "next/image";
 import {useState} from "react";
 import {api} from "../../../../../convex/_generated/api";
 type Props = {
@@ -25,6 +26,7 @@ type Props = {
 	org: {
 		id: string;
 		name: string;
+		image: string;
 	};
 	disabled?: boolean;
 };
@@ -36,7 +38,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 		onSuccess: room => {
 			setNameRoom("");
 			const room1 = room as roomType;
-			window.location.replace(`/room/${room1?._id || ""}`);
+			window.location.replace(`/room/${room1?._id}`);
 		},
 	});
 
@@ -77,7 +79,16 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 					</div>
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">Org</Label>
-						<Input className="col-span-4" value={org.name} disabled />
+						<div className="col-span-4 flex gap-2">
+							<Input className="w-full" value={org.name} disabled />
+							<Image
+								src={org.image}
+								alt="logo Org"
+								width={36}
+								height={36}
+								className=" rounded-lg border border-gray-400	"
+							/>
+						</div>
 					</div>
 					<Button
 						disabled={isPending}

@@ -13,7 +13,7 @@ export default function ApertureButton({open, toggleSidebar, isMobile}: Props) {
 			onClick={toggleSidebar}
 			className={cn(
 				" flex text-2xl p-2 cursor-pointer w-fit justify-center gap-2 rounded-xl",
-				!isMobile && open ? "bg-blue-600" : "bg-indigo-600",
+				!isMobile && open ? "bg-blue-700" : "bg-indigo-700",
 			)}>
 			<div className="flex gap-1 transition-transform duration-1000">
 				<Aperture size={32} className={cn(!isMobile && open && "animate-spin")} />

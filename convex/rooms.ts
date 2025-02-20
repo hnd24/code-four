@@ -53,11 +53,38 @@ export const getRoomById = query({
 	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
 		const room = await ctx.db.get(args.roomId);
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) {
+			throw new ConvexError("You must be logged in");
+		}
+		const user = await getUser(ctx, identity.subject);
 		if (!room) {
 			return null;
 		}
 
 		return room;
+	},
+});
+
+export const confirmJoinRoom = query({
+	args: {roomId: v.id("rooms")},
+	async handler(ctx, args) {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) {
+			throw new ConvexError("You must be logged in");
+		}
+		const user = await getUser(ctx, identity.subject);
+		const room = await getRoom(ctx, args.roomId);
+		if (!!!room) {
+			return null;
+		}
+		if (user.orgIds.some(org => org.orgId === room.orgId)) return room;
+
+		if (room.author === user.userId) {
+			return room;
+		}
+		// error 5 : user cant not access
+		return 5;
 	},
 });
 
@@ -188,9 +215,9 @@ export const createRoom = mutation({
 	async handler(ctx, args) {
 		// Chèn room vào database và lấy ID của nó
 		const roomId = await ctx.db.insert("rooms", args);
-
-		// Lấy lại thông tin room vừa tạo
-		return await ctx.db.get(roomId);
+		const org = await getOrg(ctx, args.orgId);
+		await ctx.db.patch(org._id, {rooms: [...(org.rooms || []), roomId]});
+		return await getRoom(ctx, roomId);
 	},
 });
 
