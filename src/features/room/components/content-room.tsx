@@ -17,7 +17,7 @@ export default function ContentRoom() {
 			<ResizablePanel defaultSize={60}>
 				<EditorPanel setOutputContent={setOutputContent} />
 			</ResizablePanel>
-			<ResizableHandle className="w-0 bg-blackBorder" withHandle />
+			<ResizableHandle className="w-0 bg-blackBorder " withHandle />
 			<ResizablePanel defaultSize={40}>
 				<OutputPanel outputContent={outputContent} />
 			</ResizablePanel>

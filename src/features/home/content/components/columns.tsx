@@ -1,5 +1,5 @@
 "use client";
-import {ArrowUpDown} from "lucide-react";
+import {ArrowUpDown, ShieldBan} from "lucide-react";
 
 import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
@@ -14,32 +14,51 @@ import DropdownMenuTable from "./dropdown-menu-table";
 export const columns: ColumnDef<roomType>[] = [
 	{
 		id: "joinRoom",
+
 		cell: ({row}) => {
 			const room = row.original;
-
-			return (
-				<div className="w-full flex  justify-center">
-					<Hint label="click to move room" key={row.id}>
-						<Button
-							className=" bg-blue-700 hover:bg-blue-800 "
-							onClick={() => {
-								window.location.href = `/room/${room._id}`;
-							}}>
-							Join Room
-						</Button>
-					</Hint>
-				</div>
-			);
+			if (room?._id)
+				return (
+					<div className="w-full flex justify-center">
+						<Hint label="click to move room" key={row.id}>
+							<Button
+								className=" bg-blue-700 hover:bg-blue-800 "
+								onClick={() => {
+									window.location.href = `/room/${room?._id}`;
+								}}>
+								Join Room
+							</Button>
+						</Hint>
+					</div>
+				);
 		},
 	},
 	{
-		accessorKey: "name",
+		id: "block",
+		header: "Block",
+		cell: ({row}) => {
+			const room = row.original;
+			if (room?.block)
+				return (
+					<div className="w-full flex ">
+						<ShieldBan className="h-4 w-4 text-yellow-700" />
+					</div>
+				);
+		},
+	},
+
+	{
+		id: "name",
 		header: "Name",
+		cell: ({row}) => {
+			const room = row.original;
+			return <div className="w-full flex items-center justify-start">{room?.name}</div>;
+		},
 	},
 	{
 		accessorKey: "_creationTime",
 		header: ({column}) => (
-			<div className="w-full flex gap-4">
+			<div className="w-full flex justify-between ">
 				<span className="flex items-center">Create at</span>
 				<Button
 					variant="ghost"
@@ -49,7 +68,10 @@ export const columns: ColumnDef<roomType>[] = [
 				</Button>
 			</div>
 		),
-		cell: ({row}) => formatTime(row.getValue("_creationTime")),
+		cell: ({row}) => {
+			const room = row.original;
+			if (room?._creationTime) return <div>{formatTime(room?._creationTime || 0)}</div>;
+		},
 		sortingFn: "datetime",
 	},
 
@@ -57,8 +79,12 @@ export const columns: ColumnDef<roomType>[] = [
 		id: "actions",
 		cell: ({row}) => {
 			const room = row.original;
-
-			return <DropdownMenuTable room={room} />;
+			if (room)
+				return (
+					<div className="w-full flex items-center justify-center">
+						<DropdownMenuTable room={room} />
+					</div>
+				);
 		},
 	},
 ];

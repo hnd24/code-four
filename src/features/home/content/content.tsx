@@ -31,7 +31,7 @@ export default function Content({user, org}: Props) {
 				<div className="flex flex-col">
 					<span className="text-xl font-bold md:flex hidden">List rooms :</span>
 					<Search className="flex md:hidden" />
-					<ServerTable orgId={org?.id} />
+					<ServerTable orgId={org?.id} userId={user?.id} />
 				</div>
 			</div>
 		</div>

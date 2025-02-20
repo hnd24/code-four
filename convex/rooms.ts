@@ -32,9 +32,28 @@ export async function deleteRoom(ctx: MutationCtx, roomId: Id<"rooms">) {
 		throw new ConvexError("Room not found");
 	}
 	await ctx.db.delete(room._id);
+	await deleteFavoriteByOrg(ctx, room.orgId);
+	await deleteRoomFromOrg(ctx, room.orgId, room._id);
 }
 
-export async function deleteFavorite(ctx: MutationCtx, orgId: string) {
+export async function deleteRoomByUser(ctx: MutationCtx, userId: string) {
+	const rooms = await ctx.db
+		.query("rooms")
+		.withIndex("by_author", q => q.eq("author", userId))
+		.collect();
+	if (!rooms) return;
+	Promise.all(rooms.map(async room => deleteRoom(ctx, room._id)));
+}
+
+export async function deleteRoomFromOrg(ctx: MutationCtx, orgId: string, roomId: string) {
+	const org = await getOrg(ctx, orgId);
+	if (!org) {
+		throw new ConvexError("Organization not found");
+	}
+	await ctx.db.patch(org._id, {rooms: (org.rooms || []).filter(id => id !== roomId)});
+}
+
+export async function deleteFavoriteByOrg(ctx: MutationCtx, orgId: string) {
 	const favorites = await ctx.db
 		.query("favoriteRooms")
 		.withIndex("by_orgId", q => q.eq("orgId", orgId))
@@ -44,6 +63,19 @@ export async function deleteFavorite(ctx: MutationCtx, orgId: string) {
 		favorites.map(async favorite => {
 			const room = await ctx.db.get(favorite.roomId);
 			if (room?.author === favorite.userId) return;
+			ctx.db.delete(favorite._id);
+		}),
+	);
+}
+
+export async function deleteFavoriteByUser(ctx: MutationCtx, userId: string) {
+	const favorites = await ctx.db
+		.query("favoriteRooms")
+		.withIndex("by_userId_orgId_by_roomId", q => q.eq("userId", userId))
+		.collect();
+	if (!favorites) return;
+	Promise.all(
+		favorites.map(async favorite => {
 			ctx.db.delete(favorite._id);
 		}),
 	);
@@ -102,7 +134,31 @@ export const getRoomsOfUser = query({
 	},
 });
 
-export const getRoomsOfOrganization = query({
+export const getRoomsOfOrgByUser = query({
+	args: {orgId: v.string(), userId: v.string()},
+
+	async handler(ctx, args) {
+		const org = await getOrg(ctx, args.orgId);
+		console.log("🚀 ~ handler ~ org:", org);
+		console.log("🚀 ~ orgId:", args.orgId);
+		console.log("🚀 ~ userId:", args.userId);
+		if (!org || !org.rooms || org.rooms.length === 0) {
+			return [];
+		}
+		return await Promise.all(
+			org.rooms.map(async roomId => {
+				const room = await ctx.db.get(roomId);
+				if (room?.block) {
+					if (room?.author === args.userId) return room;
+					return;
+				}
+				return room;
+			}),
+		);
+	},
+});
+
+export const getRoomsOfOrg = query({
 	args: {orgId: v.string()},
 	async handler(ctx, args) {
 		const org = await getOrg(ctx, args.orgId);
@@ -143,21 +199,29 @@ export const toggleFavoriteRoom = mutation({
 	},
 });
 
+export const confirmFavoriteRoom = query({
+	args: {roomId: v.id("rooms"), userId: v.string()},
+	async handler(ctx, args) {
+		const favorite = await ctx.db
+			.query("favoriteRooms")
+			.withIndex("by_userId_orgId_by_roomId", q =>
+				q.eq("userId", args.userId).eq("roomId", args.roomId),
+			)
+			.first();
+		if (!favorite) {
+			return false;
+		}
+		return true;
+	},
+});
 export const toggleBlockRoom = mutation({
 	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
-		const identity = await ctx.auth.getUserIdentity();
-		if (!identity) {
-			throw new ConvexError("you must be logged in to favorite a room");
-		}
-		const user = await getUser(ctx, identity?.subject);
 		const room = await getRoom(ctx, args.roomId);
+		console.log("🚀 ~ handler ~ room:", room);
 
 		if (!room) {
 			throw new ConvexError("room not found");
-		}
-		if (room.author !== user.userId) {
-			throw new ConvexError("you are not the author of this room");
 		}
 		if (room.block) {
 			await ctx.db.patch(room._id, {block: false});
@@ -213,7 +277,6 @@ export const createRoom = mutation({
 		deletionCountup: v.optional(v.number()), // in days
 	},
 	async handler(ctx, args) {
-		// Chèn room vào database và lấy ID của nó
 		const roomId = await ctx.db.insert("rooms", args);
 		const org = await getOrg(ctx, args.orgId);
 		await ctx.db.patch(org._id, {rooms: [...(org.rooms || []), roomId]});

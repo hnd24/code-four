@@ -1,8 +1,9 @@
 import {ConvexError, v} from "convex/values";
 import {internal} from "./_generated/api";
 import {MutationCtx, QueryCtx, internalMutation, query} from "./_generated/server";
+
+import {deleteFavoriteByOrg, deleteFavoriteByUser, deleteRoomByUser} from "./rooms";
 import {roles} from "./schema";
-import {deleteFavorite} from "./rooms";
 
 export async function getUser(ctx: QueryCtx | MutationCtx, userId: string) {
 	const user = await ctx.db
@@ -60,6 +61,16 @@ export const deleteUser = internalMutation({
 		const user = await getUser(ctx, args.userId);
 
 		await ctx.db.delete(user._id);
+		await Promise.all(
+			user.orgIds.map(org =>
+				ctx.runMutation(internal.organizations.removeMemberOrg, {
+					orgId: org.orgId,
+					member: args.userId,
+				}),
+			),
+		);
+		await deleteRoomByUser(ctx, args.userId);
+		await deleteFavoriteByUser(ctx, args.userId);
 	},
 });
 
@@ -112,7 +123,7 @@ export const removeOrgMemberShipToUser = internalMutation({
 			member: args.userId,
 		});
 
-		await deleteFavorite(ctx, args.orgId);
+		await deleteFavoriteByOrg(ctx, args.orgId);
 	},
 });
 

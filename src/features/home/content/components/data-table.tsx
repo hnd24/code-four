@@ -63,6 +63,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 			columnVisibility,
 		},
 	});
+
 	return (
 		<div className="gap-4 ">
 			<div className="flex items-center py-4">
@@ -108,7 +109,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 					))}
 				</TableHeader>
 				<TableBody>
-					{table.getRowModel()?.rows?.length && table.getRowModel()?.rows?.length ? (
+					{table.getRowModel()?.rows?.length ? (
 						table.getRowModel()?.rows.map((row, index) => (
 							<TableRow
 								key={row.id}
@@ -118,7 +119,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 								)}>
 								{row.getVisibleCells().map(cell => (
 									<TableCell key={cell.id}>
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+										{flexRender(cell.column.columnDef.cell, cell?.getContext())}
 									</TableCell>
 								))}
 							</TableRow>

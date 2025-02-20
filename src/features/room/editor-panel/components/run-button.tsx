@@ -11,27 +11,21 @@ type Props = {
 };
 
 export const RunButton = ({disabled, onClick}: Props) => {
-	// const {isAuthenticated} = useCurrentUser();
-
 	const onExecute = () => {
-		// if (!isAuthenticated || disabled) return;
-
 		onClick();
 	};
 
 	return (
-		// <Hint label={isAuthenticated ? "Run this code" : "You need to Login/Sing up to Run"}>
-		/* <Button disabled={disabled || !isAuthenticated} onClick={onExecute}> */
-		<Hint label={true ? "Run this code" : "You need to Login/Sing up to Run"}>
+		<Hint label={"Run this code"}>
 			<Button disabled={disabled} onClick={onExecute} className="bg-blue-700 hover:bg-blue-800">
 				{disabled ? (
 					<>
-						<Loader2 className="animate-spin text-white/60" />
+						<Loader2 size={16} className="text-white" />
 						<div className="hidden lg:flex">Executing</div>
 					</>
 				) : (
 					<>
-						<Play className="text-white/90 transition-transform group-hover:scale-110 group-hover:text-white" />
+						<Play size={16} className="text-white" />
 						<div className="hidden lg:flex">Run Code</div>
 					</>
 				)}

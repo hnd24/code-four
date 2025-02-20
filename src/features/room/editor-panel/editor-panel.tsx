@@ -110,9 +110,9 @@ export default function EditorPanel({setOutputContent}: Props) {
 					<Button
 						variant="outline"
 						size="icon"
-						className="border-none text-gray-900 hover:bg-[#2a2a3a]"
+						className="border-none text-gray-900 hover:bg-gray-200/80"
 						onClick={onReset}>
-						<RotateCcw />
+						<RotateCcw size={16} />
 					</Button>
 					<RunButton disabled={isPending} onClick={onExecute} />
 				</div>
