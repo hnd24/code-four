@@ -13,7 +13,6 @@ import {
 	VisibilityState,
 } from "@tanstack/react-table";
 
-import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -38,7 +37,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [globalFilter, setGlobalFilter] = useQueryState("search");
 	const table = useReactTable({
-		data,
+		data: data ?? [],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
@@ -51,7 +50,11 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 		getSortedRowModel: getSortedRowModel(),
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
-		onGlobalFilterChange: setGlobalFilter,
+		onGlobalFilterChange: value => {
+			if (globalFilter !== value) {
+				setGlobalFilter(value);
+			}
+		},
 		onColumnVisibilityChange: setColumnVisibility,
 		state: {
 			sorting,
@@ -88,7 +91,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 			</div>
 			<Table className="border-blackBorder">
 				<TableHeader className="border-b border-gray-600">
-					{table.getHeaderGroups().map(headerGroup => (
+					{table?.getHeaderGroups()?.map(headerGroup => (
 						<TableRow key={headerGroup.id} className="hover:bg-blackLight">
 							{headerGroup.headers.map(header => {
 								return (
@@ -105,7 +108,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 					))}
 				</TableHeader>
 				<TableBody>
-					{table.getRowModel()?.rows?.length ? (
+					{table.getRowModel()?.rows?.length && table.getRowModel()?.rows?.length ? (
 						table.getRowModel()?.rows.map((row, index) => (
 							<TableRow
 								key={row.id}
@@ -121,10 +124,8 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 							</TableRow>
 						))
 					) : (
-						<TableRow>
-							<TableCell colSpan={columns.length} className="h-24 text-center text-white">
-								No results.
-							</TableCell>
+						<TableRow className="h-24 text-center hover:!bg-blackLight text-white">
+							<TableCell colSpan={columns.length}>No rooms.</TableCell>
 						</TableRow>
 					)}
 				</TableBody>

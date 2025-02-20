@@ -38,13 +38,13 @@ export async function getOrg(ctx: QueryCtx | MutationCtx, orgId: string) {
 }
 
 export const createOrg = internalMutation({
-	args: {orgId: v.string(), member: v.string(), image: v.string(), name: v.string()},
+	args: {orgId: v.string(), image: v.string(), name: v.string()},
 	async handler(ctx, args) {
 		await ctx.db.insert("organizations", {
 			orgId: args.orgId,
 			name: args.name,
 			image: args.image,
-			members: [args.member],
+			members: [],
 		});
 	},
 });

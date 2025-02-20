@@ -13,6 +13,26 @@ import DropdownMenuTable from "./dropdown-menu-table";
 
 export const columns: ColumnDef<roomType>[] = [
 	{
+		id: "joinRoom",
+		cell: ({row}) => {
+			const room = row.original;
+
+			return (
+				<div className="w-full flex  justify-center">
+					<Hint label="click to move room" key={row.id}>
+						<Button
+							className=" bg-blue-700 hover:bg-blue-800 "
+							onClick={() => {
+								window.location.href = `/room/${room._id}`;
+							}}>
+							Join Room
+						</Button>
+					</Hint>
+				</div>
+			);
+		},
+	},
+	{
 		accessorKey: "name",
 		header: "Name",
 	},
@@ -33,26 +53,6 @@ export const columns: ColumnDef<roomType>[] = [
 		sortingFn: "datetime",
 	},
 
-	{
-		id: "joinRoom",
-		cell: ({row}) => {
-			const room = row.original;
-
-			return (
-				<div className="w-full flex  justify-center">
-					<Hint label="click to move room" key={row.id}>
-						<Button
-							className=" bg-blue-700 hover:bg-blue-800 "
-							onClick={() => {
-								window.location.href = `/room/${room._id}`;
-							}}>
-							Join Room
-						</Button>
-					</Hint>
-				</div>
-			);
-		},
-	},
 	{
 		id: "actions",
 		cell: ({row}) => {

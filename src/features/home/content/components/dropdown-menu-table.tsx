@@ -1,6 +1,7 @@
 "use client";
 import {Heart, MoreHorizontal, ScanLine, ShieldBan, Trash2} from "lucide-react";
 
+import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -26,22 +27,28 @@ export default function DropdownMenuTable({room}: Props) {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" side="right">
 				<DropdownMenuItem>
-					<div className="w-full flex ">
-						<span>Delete</span>
-						<Trash2 className="h-4 w-4 text-amber-700 ml-auto" />
-					</div>
+					<Hint label="feature coming soon">
+						<div className="w-full flex ">
+							<span>Delete</span>
+							<Trash2 className="h-4 w-4 text-amber-700 ml-auto" />
+						</div>
+					</Hint>
 				</DropdownMenuItem>
 				<DropdownMenuItem>
-					<div className="w-full flex ">
-						<span>Favorite</span>
-						<Heart className="h-4 w-4 text-red-700 ml-auto" />
-					</div>
+					<Hint label="feature coming soon">
+						<div className="w-full flex ">
+							<span>Favorite</span>
+							<Heart className="h-4 w-4 text-red-700 ml-auto" />
+						</div>
+					</Hint>
 				</DropdownMenuItem>
 				<DropdownMenuItem>
-					<div className="w-full flex ">
-						<span>Block</span>
-						<ShieldBan className="h-4 w-4 text-yellow-700 ml-auto" />
-					</div>
+					<Hint label="feature coming soon">
+						<div className="w-full flex ">
+							<span>Block</span>
+							<ShieldBan className="h-4 w-4 text-yellow-700 ml-auto" />
+						</div>
+					</Hint>
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className="hover:!border-none !outline-none hover:bg-gray-300/60"

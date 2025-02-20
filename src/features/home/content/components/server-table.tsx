@@ -18,5 +18,13 @@ export default function ServerTable({orgId}: Props) {
 		error,
 	} = useQuery(convexQuery(api.rooms.getRoomsOfOrganization, {orgId}));
 
-	return <>{roomData && <DataTable columns={columns} data={roomData as roomType[]} />}</>;
+	return (
+		<>
+			{isPending ? (
+				<div className="">Loading...</div>
+			) : (
+				<DataTable columns={columns} data={roomData as roomType[]} />
+			)}
+		</>
+	);
 }

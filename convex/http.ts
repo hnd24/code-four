@@ -67,7 +67,6 @@ http.route({
 						orgId: result.data.id,
 						name: result.data.name,
 						image: result.data.image_url || "",
-						member: result.data.created_by || "",
 					});
 					break;
 				case "organization.updated":
