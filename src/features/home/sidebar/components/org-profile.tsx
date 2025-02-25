@@ -7,13 +7,15 @@ import {VisuallyHidden} from "@radix-ui/react-visually-hidden";
 
 type Props = {
 	className?: string;
+	disabled?: boolean;
 };
 
-export default function OrgProfile({className}: Props) {
+export default function OrgProfile({className, disabled = false}: Props) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
+					disabled={disabled}
 					className={cn(
 						"w-full truncate bg-green-700 hover:!bg-green-800 text-gray-100/90 hover:!text-white ",
 						className,

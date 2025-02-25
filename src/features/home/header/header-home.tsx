@@ -4,7 +4,6 @@ import {useSidebar} from "@/components/ui/sidebar";
 import {cn} from "@/lib/utils";
 import {OrganizationSwitcher, UserButton} from "@clerk/nextjs";
 import LogoToggleSidebar from "../components/logo-toggle-sidebar";
-import Search from "../components/search";
 
 export default function header() {
 	const {isMobile, toggleSidebar} = useSidebar();
@@ -14,7 +13,8 @@ export default function header() {
 				<div className={cn("hidden gap-2 items-center", isMobile && "flex")}>
 					<LogoToggleSidebar toggleSidebar={toggleSidebar} />
 				</div>
-				<Search className="md:flex hidden" />
+				{/* <Search className="md:flex hidden" /> */}
+				<div></div>
 				<div className="flex items-center gap-2 ">
 					<UserButton />
 					<Hint label="manage your organizations">

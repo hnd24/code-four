@@ -89,7 +89,6 @@ export const getRoomById = query({
 		if (!identity) {
 			throw new ConvexError("You must be logged in");
 		}
-		const user = await getUser(ctx, identity.subject);
 		if (!room) {
 			return null;
 		}
@@ -109,10 +108,12 @@ export const confirmJoinRoom = query({
 		const room = await getRoom(ctx, args.roomId);
 		if (!!!room) {
 			return null;
-		}
-		if (user.orgIds.some(org => org.orgId === room.orgId)) return room;
-
-		if (room.author === user.userId) {
+		} else if (room.author === user.userId) {
+			console.log("🚀 ~ handler ~ userId:", user.userId);
+			console.log("🚀 ~ handler ~ author:", room.author);
+			console.log("room is author");
+			return room;
+		} else if (user.orgIds.some(org => org.orgId === room.orgId)) {
 			return room;
 		}
 		// error 5 : user cant not access
@@ -139,9 +140,6 @@ export const getRoomsOfOrgByUser = query({
 
 	async handler(ctx, args) {
 		const org = await getOrg(ctx, args.orgId);
-		console.log("🚀 ~ handler ~ org:", org);
-		console.log("🚀 ~ orgId:", args.orgId);
-		console.log("🚀 ~ userId:", args.userId);
 		if (!org || !org.rooms || org.rooms.length === 0) {
 			return [];
 		}

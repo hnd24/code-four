@@ -20,11 +20,12 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {Input} from "@/components/ui/input";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+
 import {cn} from "@/lib/utils";
-import {useQueryState} from "nuqs";
+import {Columns} from "lucide-react";
 import {useState} from "react";
-import ListRooms from "./list-rooms";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -35,7 +36,6 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-	const [globalFilter, setGlobalFilter] = useQueryState("search");
 	const table = useReactTable({
 		data: data ?? [],
 		columns,
@@ -50,16 +50,10 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 		getSortedRowModel: getSortedRowModel(),
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
-		onGlobalFilterChange: value => {
-			if (globalFilter !== value) {
-				setGlobalFilter(value);
-			}
-		},
 		onColumnVisibilityChange: setColumnVisibility,
 		state: {
 			sorting,
 			columnFilters,
-			globalFilter,
 			columnVisibility,
 		},
 	});
@@ -67,10 +61,19 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 	return (
 		<div className="gap-4 ">
 			<div className="flex items-center py-4">
-				<ListRooms />
+				{/* <ListRooms /> */}
+				<Input
+					placeholder="Search Name..."
+					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+					onChange={event => table.getColumn("name")?.setFilterValue(event.target.value)}
+					className={cn("border-2 border-blackBorder w-64 lg:w-80 focus:border-gray-600")}
+				/>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button className="ml-auto bg-blue-700 hover:bg-blue-800  outline-none">Columns</Button>
+						<Button className="ml-auto bg-blue-700 hover:bg-blue-800  outline-none px-2 py-1">
+							<span className="lg:flex hidden">Columns</span>
+							<Columns className="flex lg:hidden " size={18} />
+						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="start" side="left">
 						{table

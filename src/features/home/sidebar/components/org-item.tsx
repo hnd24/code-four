@@ -45,7 +45,7 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 				</div>
 				<div className={cn("w-full hidden justify-between", open && "flex")}>
 					<div className="w-full truncate flex items-center">{name}</div>
-					<div className={"truncate  items-center w-fit"}>{memberCount}</div>
+					<div className={"truncate flex items-center w-fit"}>{memberCount}</div>
 				</div>
 			</div>
 		</Hint>

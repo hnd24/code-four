@@ -129,8 +129,6 @@ export const getOrgsOfUser = query({
 
 		const orgIds = user.orgIds.map(org => org.orgId);
 
-		const orgs = await Promise.all(orgIds.map(orgId => getOrg(ctx, orgId)));
-
-		return orgs;
+		return await Promise.all(orgIds.map(orgId => getOrg(ctx, orgId)));
 	},
 });

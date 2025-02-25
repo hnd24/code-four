@@ -5,6 +5,7 @@ import NotFound from "@/app/not-found";
 import NoAccessPage from "@/app/pages/no-access-page";
 import ContentRoom from "@/features/room/components/content-room";
 import HeaderRoom from "@/features/room/components/header-room";
+import {useUser} from "@clerk/nextjs";
 import {convexQuery} from "@convex-dev/react-query";
 import {useQuery} from "@tanstack/react-query";
 import {usePathname} from "next/navigation";
@@ -15,7 +16,8 @@ export default function RoomPage() {
 	const pathname = usePathname();
 
 	const roomId = pathname.split("/").pop();
-
+	const {user} = useUser();
+	console.log("🚀 ~ RoomPage ~ user:", user);
 	const {data, isPending, error} = useQuery(
 		convexQuery(api.rooms.confirmJoinRoom, {roomId: roomId as Id<"rooms">}),
 	);

@@ -7,8 +7,6 @@ import {usePathname} from "next/navigation";
 
 export default function Error() {
 	const pathname = usePathname();
-	console.log("🚀 ~ Error ~ pathname:", pathname);
-
 	return (
 		<div
 			className="h-screen bg-blackLight

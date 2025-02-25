@@ -1,5 +1,5 @@
 "use client";
-import {ArrowUpDown, ShieldBan} from "lucide-react";
+import {ArrowRightFromLine, ArrowUpDown, ShieldBan} from "lucide-react";
 
 import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
@@ -26,7 +26,8 @@ export const columns: ColumnDef<roomType>[] = [
 								onClick={() => {
 									window.location.href = `/room/${room?._id}`;
 								}}>
-								Join Room
+								<span className="hidden lg:flex">Join Room</span>
+								<ArrowRightFromLine className="flex lg:hidden" size={14} />
 							</Button>
 						</Hint>
 					</div>
@@ -48,7 +49,7 @@ export const columns: ColumnDef<roomType>[] = [
 	},
 
 	{
-		id: "name",
+		accessorKey: "name",
 		header: "Name",
 		cell: ({row}) => {
 			const room = row.original;
@@ -70,7 +71,8 @@ export const columns: ColumnDef<roomType>[] = [
 		),
 		cell: ({row}) => {
 			const room = row.original;
-			if (room?._creationTime) return <div>{formatTime(room?._creationTime || 0)}</div>;
+			if (room?._creationTime)
+				return <div className="w-full truncate">{formatTime(room?._creationTime || 0)}</div>;
 		},
 		sortingFn: "datetime",
 	},

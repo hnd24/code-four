@@ -13,7 +13,6 @@ import {
 
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {cn} from "@/lib/utils";
-import {orgType} from "@/types";
 import {useUser} from "@clerk/nextjs";
 import {convexQuery} from "@convex-dev/react-query";
 import {useQuery} from "@tanstack/react-query";
@@ -25,8 +24,14 @@ export default function DropdownOrgs() {
 	const {open} = useSidebar();
 	const {user} = useUser();
 	const userId = user?.id || "";
-	const {data, isPending, error} = useQuery(convexQuery(api.organizations.getOrgsOfUser, {userId}));
-	const orgData: orgType[] = data || [];
+	const {
+		data: orgData,
+		isPending,
+		error,
+	} = useQuery(convexQuery(api.organizations.getOrgsOfUser, {userId}));
+	console.log("🚀 ~ DropdownOrgs ~ isPending:", isPending);
+	console.log("🚀 ~ DropdownOrgs ~ orgData:", orgData);
+
 	return (
 		<Collapsible defaultOpen className="group/collapsible">
 			<SidebarGroup>
@@ -53,6 +58,7 @@ export default function DropdownOrgs() {
 									<SidebarMenuSkeleton className="w-36" showIcon></SidebarMenuSkeleton>
 								</div>
 							) : (
+								orgData &&
 								orgData?.map((mem, index) => (
 									<SidebarMenuItem key={index}>
 										<SidebarMenuButton asChild>
