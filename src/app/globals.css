@@ -91,9 +91,6 @@ body {
 	}
 	.yRemoteSelection {
 		@apply opacity-50;
-		& ~ .yRemoteSelectionHead::after {
-			@apply opacity-50;
-		}
 	}
 
 	.yRemoteSelectionHead {

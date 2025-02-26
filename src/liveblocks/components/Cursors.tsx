@@ -4,6 +4,7 @@ import {AwarenessList, UserAwareness} from "@/liveblocks.config";
 import {useSelf} from "@liveblocks/react/suspense";
 import {LiveblocksYjsProvider} from "@liveblocks/yjs";
 import {useEffect, useState} from "react";
+import "../../app/globals.css";
 
 type Props = {
 	yProvider: LiveblocksYjsProvider;

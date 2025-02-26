@@ -41,6 +41,7 @@
 		"convex": "^1.19.1",
 		"date-fns": "^4.1.0",
 		"lucide-react": "^0.475.0",
+		"monaco-editor": "^0.52.2",
 		"next": "15.1.7",
 		"nuqs": "^2.3.2",
 		"react": "^19.0.0",
