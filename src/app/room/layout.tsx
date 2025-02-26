@@ -1,6 +1,6 @@
 import type {Metadata} from "next";
+import {Providers} from "../../liveblocks/Provider";
 import "../globals.css";
-import {Providers} from "../liveblocks/Provider";
 export const metadata: Metadata = {
 	title: "Room",
 	description: "website for developers, by developer",

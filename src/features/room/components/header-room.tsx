@@ -1,6 +1,6 @@
 import Logo from "@/features/room/components/logo-room-page";
 
-import {Avatars} from "@/app/liveblocks/components/Avatars";
+import {Avatars} from "@/liveblocks/components/Avatars";
 import Navbar from "./navbar";
 import ThemeSelector from "./theme-selector";
 
