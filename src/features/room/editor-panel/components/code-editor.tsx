@@ -1,125 +1,114 @@
-import {Button} from "@/components/ui/button";
-import {CODE_EXAMPLES} from "@/constants/code-example";
-import {useEditor} from "@/hooks/use-editor";
-import {useExecuteCode} from "@/hooks/use-execute-code";
-import {getDraftCode} from "@/lib/utils";
-import {outputContent} from "@/types";
+"use client";
 
-import {Hint} from "@/components/hint";
-import {Atom} from "lucide-react";
-import Image from "next/image";
-import {useEffect, useState} from "react";
-import SelectSizeFont from "../components/select-size-font";
-import {CodeEditor} from "./components/code-editor";
-import LanguageSelector from "./components/language-selector";
-import {RunButton} from "./components/run-button";
+import {Language, Theme} from "@/types";
+
+import {Editor} from "@monaco-editor/react";
+
+import {useEditor} from "@/hooks/use-editor";
+import {defineMonacoThemes, setDraftCode} from "@/lib/utils";
+import {Cursors} from "@/liveblocks/components/Cursors";
+import {useClerk} from "@clerk/nextjs";
+import {useRoom} from "@liveblocks/react";
+import {getYjsProviderForRoom} from "@liveblocks/yjs";
+import {editor} from "monaco-editor";
+import {useCallback, useEffect, useState} from "react";
+import {MonacoBinding} from "y-monaco";
+import {Awareness} from "y-protocols/awareness.js";
+import {CodeEditorSkeleton} from "./code-editor-skeleton";
 
 type Props = {
-	setOutputContent: ({output, error}: outputContent) => void;
+	theme: Theme;
+	language: Language;
+	textSize?: number;
+	value?: string;
+	onChange?: (value?: string) => void;
+	readonly?: boolean;
 };
+type OpaqueRoom = any;
+export const CodeEditor = ({
+	theme,
+	readonly = false,
+	language,
+	value,
+	textSize,
+	onChange,
+}: Props) => {
+	// Monaco Editor causes ClerkJS to fail loading
+	// https://github.com/clerk/javascript/issues/1643
 
-export default function EditorPanel({setOutputContent}: Props) {
-	const {
-		config: {theme, language, textSize},
-		setConfig,
-	} = useEditor();
+	const {} = useEditor();
+	const clerk = useClerk();
 
-	const [value, setValue] = useState<string | undefined>("");
-	const {executeCode, isPending: isExecuting} = useExecuteCode();
-	// chưa hoàn thiện cơ sở dữ liệu
-	// const save = useSaveExecution();
+	if (!clerk.loaded) {
+		return null;
+	}
 
-	// const {data, isPending: isLoading} = useGetLastExecution();
+	const room = useRoom();
+	const provider = getYjsProviderForRoom(room as unknown as OpaqueRoom);
+	const [editorRef, setEditorRef] = useState<editor.IStandaloneCodeEditor>();
 
-	const defaultCode = CODE_EXAMPLES[language];
-
-	// useEffect(() => {
-	// 	if (isLoading) return;
-
-	// 	const draftCode = getDraftCode();
-
-	// 	if (draftCode?.language === language) {
-	// 		setValue(draftCode.code);
-	// 	} else if (data?.language === language) {
-	// 		setValue(data.code);
-	// 	} else {
-	// 		setValue(CODE_EXAMPLES[language]);
-	// 	}
-	// }, [data, isLoading, language]);
-
-	// được thiết kế để dùng tạm
-	//******************************* */
+	// Set up Liveblocks Yjs provider and attach Monaco editor
 	useEffect(() => {
-		const draftCode = getDraftCode();
-		if (draftCode?.language === language) {
-			setValue(draftCode.code);
-		} else {
-			setValue(CODE_EXAMPLES[language]);
+		let binding: MonacoBinding;
+
+		if (editorRef) {
+			const yDoc = provider.getYDoc();
+			const yText = yDoc.getText("monaco");
+
+			// Attach Yjs to Monaco
+			binding = new MonacoBinding(
+				yText,
+				editorRef.getModel() as editor.ITextModel,
+				new Set([editorRef]),
+				provider.awareness as unknown as Awareness,
+			);
 		}
-	}, [language]);
-	//******************************* */
 
-	const onReset = () => {
-		setValue(defaultCode);
+		return () => {
+			binding?.destroy();
+		};
+	}, [editorRef, room]);
+
+	const handleOnMount = useCallback((e: editor.IStandaloneCodeEditor) => {
+		setEditorRef(e);
+	}, []);
+
+	const handleChange = (value?: string) => {
+		if (!onChange) return;
+
+		onChange(value);
+		setDraftCode({language, code: value});
 	};
-
-	const onExecute = async () => {
-		if (!value) return;
-
-		const data = await executeCode({language, code: value});
-
-		setOutputContent({output: data.stdout, error: data.stderr});
-		// chưa hoàn thiện cơ sở dư liệu
-		// save.mutate({
-		// 	code: value,
-		// 	language,
-		// 	error: data.stderr,
-		// 	output: data.stdout,
-		// });
-	};
-
-	// const isPending = isExecuting || save.isPending;
-	const isPending = isExecuting;
-
 	return (
-		<div
-			className="h-full p-[12px] overflow-y-hidden
-					flex flex-col my-auto rounded-xl ">
-			<div className="mb-3 flex  items-center justify-between overflow-hidden">
-				<div className="flex flex-col justify-center">
-					<LanguageSelector className="hidden sm:flex" />
-					<Image
-						src={`/languages/${language}.svg`}
-						className="flex rounded-sm sm:hidden ml-2"
-						alt={language}
-						width={28}
-						height={28}
-					/>
-				</div>
-
-				<div className="flex gap-2">
-					<SelectSizeFont />
-					<Hint label="Example">
-						<Button
-							variant="outline"
-							size="icon"
-							className="bg-gray-200 border-none text-gray-900 hover:bg-gray-200/80"
-							onClick={onReset}>
-							<Atom size={20} />
-						</Button>
-					</Hint>
-					<RunButton disabled={isPending} onClick={onExecute} />
-				</div>
-			</div>
-			<div className="h-full border border-blackBorder rounded-lg overflow-hidden">
-				<CodeEditor
-					value={value}
-					onChange={setValue}
-					theme={theme}
-					textSize={textSize}
-					language={language}
-				/>
-			</div>
-		</div>
+		<>
+			{provider ? <Cursors yProvider={provider} /> : null}
+			<Editor
+				onMount={handleOnMount}
+				language={language}
+				theme={theme}
+				value={value}
+				onChange={handleChange}
+				beforeMount={defineMonacoThemes}
+				options={{
+					readOnly: readonly,
+					fontSize: textSize,
+					automaticLayout: true,
+					scrollBeyondLastLine: false,
+					padding: {top: 16, bottom: 16},
+					fontFamily: '"Fira Code", "Cascadia Code", Consolas, monospace',
+					fontLigatures: true,
+					cursorBlinking: "smooth",
+					smoothScrolling: true,
+					renderLineHighlight: "none",
+					lineHeight: 1.6,
+					letterSpacing: 0.5,
+					scrollbar: {
+						verticalScrollbarSize: 8,
+						horizontalScrollbarSize: 8,
+					},
+				}}
+				loading={<CodeEditorSkeleton />}
+			/>
+		</>
 	);
-}
+};
