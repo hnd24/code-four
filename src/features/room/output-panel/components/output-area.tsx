@@ -39,7 +39,7 @@ function OutputAreaContent({isLoading, error, output}: Props) {
 			<div className="flex items-start gap-3 text-red-400">
 				<AlertTriangle className="mt-1 size-5 flex-shrink-0" />
 				<div className="space-y-1">
-					<div className="font-medium">Execution Error</div>
+					<div className="font-medium truncate">Execution Error</div>
 					<pre className="whitespace-pre-wrap text-red-400/80">{error}</pre>
 				</div>
 			</div>
@@ -51,7 +51,7 @@ function OutputAreaContent({isLoading, error, output}: Props) {
 			<div className="space-y-2">
 				<div className="mb-3 flex items-center gap-2 text-emerald-400">
 					<CheckCircle className="size-5" />
-					<span className="font-medium">Execution Successful</span>
+					<span className="font-medium truncate">Execution Successful</span>
 				</div>
 				<pre className="whitespace-pre-wrap text-gray-300">{output}</pre>
 			</div>
@@ -63,7 +63,7 @@ function OutputAreaContent({isLoading, error, output}: Props) {
 			<div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-gray-800/50 ring-1 ring-gray-700/50">
 				<Clock className="size-6" />
 			</div>
-			<p className="text-center">Run your code to see the output here...</p>
+			<p className="text-center truncate">Run your code to see the output here...</p>
 		</div>
 	);
 }

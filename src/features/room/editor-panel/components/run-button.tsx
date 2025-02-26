@@ -26,7 +26,7 @@ export const RunButton = ({disabled, onClick}: Props) => {
 				) : (
 					<>
 						<Play size={16} className="text-white" />
-						<div className="hidden lg:flex">Run Code</div>
+						<div className="hidden lg:flex ">Run Code</div>
 					</>
 				)}
 			</Button>

@@ -1,8 +1,8 @@
 import Logo from "@/features/room/components/logo-room-page";
 
+import {Avatars} from "@/app/liveblocks/components/Avatars";
 import Navbar from "./navbar";
-import ThemeSelector from "./rheme-selector";
-import ShareButton from "./share-button";
+import ThemeSelector from "./theme-selector";
 
 export default function HeaderRoom() {
 	return (
@@ -21,9 +21,9 @@ export default function HeaderRoom() {
 					</div>
 				</div>
 			</div>
-			<div className="flex items-center mr-3 gap-2 lg:gap-3">
+			<div className="flex items-center mr-3 gap-2 lg:gap-5">
 				<ThemeSelector className="hidden sm:flex" />
-				<ShareButton />
+				<Avatars />
 			</div>
 		</div>
 	);

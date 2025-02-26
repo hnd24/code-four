@@ -5,10 +5,11 @@ import {useExecuteCode} from "@/hooks/use-execute-code";
 import {getDraftCode} from "@/lib/utils";
 import {outputContent} from "@/types";
 
-import {Slider} from "@/components/ui/slider";
-import {RotateCcw} from "lucide-react";
+import {Hint} from "@/components/hint";
+import {Atom} from "lucide-react";
 import Image from "next/image";
 import {useEffect, useState} from "react";
+import SelectSizeFont from "../components/select-size-font";
 import {CodeEditor} from "./components/code-editor";
 import LanguageSelector from "./components/language-selector";
 import {RunButton} from "./components/run-button";
@@ -84,7 +85,7 @@ export default function EditorPanel({setOutputContent}: Props) {
 		<div
 			className="h-full p-[12px] overflow-y-hidden
 					flex flex-col my-auto rounded-xl ">
-			<div className="mb-3 flex  items-center justify-between">
+			<div className="mb-3 flex  items-center justify-between overflow-hidden">
 				<div className="flex flex-col justify-center">
 					<LanguageSelector className="hidden sm:flex" />
 					<Image
@@ -97,23 +98,16 @@ export default function EditorPanel({setOutputContent}: Props) {
 				</div>
 
 				<div className="flex gap-2">
-					<div className="w-32 flex flex-col justify-center">
-						<Slider
-							onValueChange={value => setConfig({textSize: value[0]})}
-							defaultValue={[15]}
-							min={6}
-							max={40}
-							step={1}
-							className="bg-slate-200 rounded-xl"
-						/>
-					</div>
-					<Button
-						variant="outline"
-						size="icon"
-						className="border-none text-gray-900 hover:bg-gray-200/80"
-						onClick={onReset}>
-						<RotateCcw size={16} />
-					</Button>
+					<SelectSizeFont />
+					<Hint label="Example">
+						<Button
+							variant="outline"
+							size="icon"
+							className="bg-gray-200 border-none text-gray-900 hover:bg-gray-200/80"
+							onClick={onReset}>
+							<Atom size={20} />
+						</Button>
+					</Hint>
 					<RunButton disabled={isPending} onClick={onExecute} />
 				</div>
 			</div>

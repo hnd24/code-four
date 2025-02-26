@@ -23,7 +23,7 @@ export const OutputPanel = ({outputContent: data}: Props) => {
 		<div
 			className="h-full p-[12px] overflow-y-auto
 		flex flex-col my-auto rounded-xl ">
-			<div className="hidden lg:flex mb-3 items-center justify-between">
+			<div className="hidden lg:flex mb-3 items-center justify-between overflow-hidden">
 				<div className="flex items-center gap-2">
 					<div className="flex size-9 items-center justify-center rounded-lg bg-[#1e1e2e] ring-1 ring-gray-800/50">
 						<Terminal className=" text-blue-400 size-4" />

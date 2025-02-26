@@ -1,11 +1,12 @@
-import ServerTable from "@/features/home/content/components/server-table";
+import {CollaborativeEditor} from "./components/CollaborativeEditor";
+import {Room} from "./Room";
 
-export default function page() {
+export default function Home() {
 	return (
-		<div className="w-screen h-screen bg-blackLight flex items-center justify-center">
-			<div className="w-full">
-				<ServerTable />
-			</div>
-		</div>
+		<main>
+			<Room>
+				<CollaborativeEditor />
+			</Room>
+		</main>
 	);
 }

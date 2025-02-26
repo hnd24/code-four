@@ -11,6 +11,7 @@ body {
 		box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
 	}
 	:root {
+		--user-color: #000000;
 		--background: 0 0% 100%;
 		--foreground: 240 10% 3.9%;
 		--card: 0 0% 100%;
@@ -87,5 +88,19 @@ body {
 	}
 	body {
 		@apply bg-background text-foreground;
+	}
+	.yRemoteSelection {
+		@apply opacity-50;
+		& ~ .yRemoteSelectionHead::after {
+			@apply opacity-50;
+		}
+	}
+
+	.yRemoteSelectionHead {
+		@apply absolute box-border h-full border-l-2 border-[var(--user-color)];
+	}
+
+	.yRemoteSelectionHead::after {
+		@apply absolute top-[-1.4em] left-[-2px] px-2 py-1 bg-[var(--user-color)] text-white rounded-lg rounded-bl-none text-sm font-semibold transition-all duration-150 hover:opacity-0;
 	}
 }

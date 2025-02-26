@@ -1,5 +1,6 @@
 "use client";
 
+import {Room} from "@/app/liveblocks/Room";
 import Loading from "@/app/loading";
 import NotFound from "@/app/not-found";
 import NoAccessPage from "@/app/pages/no-access-page";
@@ -17,7 +18,6 @@ export default function RoomPage() {
 
 	const roomId = pathname.split("/").pop();
 	const {user} = useUser();
-	console.log("🚀 ~ RoomPage ~ user:", user);
 	const {data, isPending, error} = useQuery(
 		convexQuery(api.rooms.confirmJoinRoom, {roomId: roomId as Id<"rooms">}),
 	);
@@ -31,10 +31,12 @@ export default function RoomPage() {
 			) : data === 5 ? (
 				<NoAccessPage />
 			) : (
-				<div className="h-screen max-w-screen-2xl flex flex-col items-center mx-auto p-4 gap-4">
-					<HeaderRoom />
-					<ContentRoom />
-				</div>
+				<Room>
+					<div className="h-screen max-w-screen-2xl flex flex-col items-center mx-auto p-4 gap-4">
+						<HeaderRoom />
+						<ContentRoom />
+					</div>
+				</Room>
 			)}
 		</>
 	);

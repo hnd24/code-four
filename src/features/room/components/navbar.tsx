@@ -6,6 +6,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import {Button} from "@/components/ui/button";
 import {
 	Sheet,
 	SheetContent,
@@ -45,11 +46,6 @@ export default function Navbar({className}: Props) {
 				</SheetHeader>
 				<Accordion type="single" collapsible>
 					<AccordionItem value="item-1">
-						<AccordionTrigger isTrigger={false}>
-							<Link href={"/"}>Return home</Link>
-						</AccordionTrigger>
-					</AccordionItem>
-					<AccordionItem value="item-2">
 						<AccordionTrigger>Select Language</AccordionTrigger>
 						{Object.values(LANGUAGES).map(({label, value}) => (
 							<AccordionContent
@@ -68,7 +64,7 @@ export default function Navbar({className}: Props) {
 							</AccordionContent>
 						))}
 					</AccordionItem>
-					<AccordionItem value="item-3">
+					<AccordionItem value="item-2">
 						<AccordionTrigger>Select theme</AccordionTrigger>
 						{THEMES.map(theme => {
 							return (
@@ -87,6 +83,11 @@ export default function Navbar({className}: Props) {
 								</AccordionContent>
 							);
 						})}
+					</AccordionItem>
+					<AccordionItem value="item-3" className=" py-2 border-none">
+						<Link href={"/"} className="w-full">
+							<Button className="w-full bg-blue-800">Return home</Button>
+						</Link>
 					</AccordionItem>
 				</Accordion>
 			</SheetContent>

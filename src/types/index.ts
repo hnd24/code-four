@@ -21,6 +21,7 @@ export enum Language {
 export type DraftCode = {
 	language: Language;
 	code?: string;
+	idRoom?: string;
 };
 
 export type outputContent = {
