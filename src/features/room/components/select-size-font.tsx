@@ -1,6 +1,5 @@
 "use client";
 import {Hint} from "@/components/hint";
-import {Button} from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -21,12 +20,9 @@ export default function SelectSizeFont() {
 		<DropdownMenu>
 			<DropdownMenuTrigger>
 				<Hint label="Font size">
-					<Button
-						variant="outline"
-						size="icon"
-						className="bg-gray-200 border-none text-gray-900 hover:bg-gray-200/80 !outline-none">
+					<div className="w-9 h-9 flex items-center justify-center bg-gray-200  rounded-lg border-none text-gray-900 hover:bg-gray-200/80 !outline-none">
 						<Type size={16} />
-					</Button>
+					</div>
 				</Hint>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-fit border-2 border-blackBorder bg-gray-200">
