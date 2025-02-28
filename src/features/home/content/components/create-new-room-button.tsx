@@ -14,7 +14,7 @@ import {Label} from "@/components/ui/label";
 import {roomType} from "@/types";
 import {useConvexMutation} from "@convex-dev/react-query";
 import {useMutation} from "@tanstack/react-query";
-import {Plus} from "lucide-react";
+import {CopyPlus, Plus} from "lucide-react";
 import Image from "next/image";
 import {useState} from "react";
 import {api} from "../../../../../convex/_generated/api";
@@ -45,7 +45,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 	return (
 		<Dialog>
 			<DialogTrigger>
-				<>
+				<div>
 					<Hint label={"Create new room"} side="top">
 						<Button
 							asChild
@@ -59,10 +59,10 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 							</div>
 						</Button>
 					</Hint>
-					<Button asChild className="text-gray-100/90 bg-indigo-600 flex md:hidden">
-						Create new room
+					<Button className=" text-gray-100/90 bg-indigo-600 flex md:hidden py-6 rounded-full">
+						<CopyPlus size={18} />
 					</Button>
-				</>
+				</div>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
