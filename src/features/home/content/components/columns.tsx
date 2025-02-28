@@ -1,5 +1,5 @@
 "use client";
-import {ArrowRightFromLine, ArrowUpDown, ShieldBan} from "lucide-react";
+import {ArrowRightFromLine, ArrowUpDown} from "lucide-react";
 
 import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
@@ -30,19 +30,6 @@ export const columns: ColumnDef<roomType>[] = [
 								<ArrowRightFromLine className="flex lg:hidden" size={14} />
 							</Button>
 						</Hint>
-					</div>
-				);
-		},
-	},
-	{
-		id: "block",
-		header: "Block",
-		cell: ({row}) => {
-			const room = row.original;
-			if (room?.block)
-				return (
-					<div className="w-full flex ">
-						<ShieldBan className="h-4 w-4 text-yellow-700" />
 					</div>
 				);
 		},

@@ -28,7 +28,6 @@ export default defineSchema({
 	rooms: defineTable({
 		name: v.string(),
 		author: v.string(), // userId
-		block: v.optional(v.boolean()),
 		deletionCountup: v.optional(v.number()), // in days
 		orgId: v.string(), // orgId
 	})

@@ -1,9 +1,9 @@
 "use client";
 
-import IntroductionPage from "@/app/pages/introduction-page";
 import NoOrg from "@/components/no-org";
 import Content from "@/features/home/content/content";
 import HeaderHome from "@/features/home/header/header-home";
+import IntroductionPage from "@/pages/introduction-page";
 import {useOrganization, useUser} from "@clerk/nextjs";
 export default function HomePage() {
 	const {isSignedIn, user} = useUser();

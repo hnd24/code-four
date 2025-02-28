@@ -2,10 +2,10 @@
 
 import Loading from "@/app/loading";
 import NotFound from "@/app/not-found";
-import NoAccessPage from "@/app/pages/no-access-page";
 import ContentRoom from "@/features/room/components/content-room";
 import HeaderRoom from "@/features/room/components/header-room";
 import {Room} from "@/liveblocks/Room";
+import NoAccessPage from "@/pages/no-access-page";
 import {convexQuery} from "@convex-dev/react-query";
 import {useQuery} from "@tanstack/react-query";
 import {usePathname} from "next/navigation";
@@ -16,7 +16,7 @@ export default function RoomPage() {
 	const pathname = usePathname();
 
 	const roomId = pathname.split("/").pop();
-	const {data, isPending, error} = useQuery(
+	const {data, isPending} = useQuery(
 		convexQuery(api.rooms.confirmJoinRoom, {roomId: roomId as Id<"rooms">}),
 	);
 

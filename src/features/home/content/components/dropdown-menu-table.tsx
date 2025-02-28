@@ -1,14 +1,5 @@
 "use client";
-import {
-	Heart,
-	HeartCrack,
-	Loader,
-	MoreHorizontal,
-	ScanLine,
-	Shield,
-	ShieldBan,
-	Trash2,
-} from "lucide-react";
+import {Heart, HeartCrack, Loader, MoreHorizontal, ScanLine, Trash2} from "lucide-react";
 
 import {Button} from "@/components/ui/button";
 import {
@@ -30,20 +21,16 @@ type Props = {
 
 export default function DropdownMenuTable({room}: Props) {
 	const {user} = useUser();
-	const {mutate: toggleBlockRoom, isPending: isPendingToggleBlockRoom} = useMutation({
-		mutationFn: useConvexMutation(api.rooms.toggleBlockRoom),
-	});
+	// const {mutate: toggleBlockRoom, isPending: isPendingToggleBlockRoom} = useMutation({
+	// 	mutationFn: useConvexMutation(api.rooms.toggleBlockRoom),
+	// });
 	const {mutate: deleteRoomById, isPending: isPendingDeleteRoom} = useMutation({
 		mutationFn: useConvexMutation(api.rooms.deleteRoomById),
 	});
 	const {mutate: toggleFavoriteRoom, isPending: isPendingToggleFavoriteRoom} = useMutation({
 		mutationFn: useConvexMutation(api.rooms.toggleFavoriteRoom),
 	});
-	const {
-		data: isFavoriteRoom,
-		isPending: isPendingFavoriteRoom,
-		error,
-	} = useQuery(
+	const {data: isFavoriteRoom, isPending: isPendingFavoriteRoom} = useQuery(
 		convexQuery(api.rooms.confirmFavoriteRoom, {roomId: room._id, userId: user?.id || ""}),
 	);
 	return (
@@ -70,19 +57,13 @@ export default function DropdownMenuTable({room}: Props) {
 							</div>
 						</DropdownMenuItem>
 						{/* block opt */}
-						<DropdownMenuItem>
+						{/* <DropdownMenuItem>
 							<div
 								className="w-full flex "
 								onClick={() => {
-									console.log("🚀 ~ handler ~ room:", room._id);
 									toggleBlockRoom({roomId: room._id});
 								}}>
-								{isPendingToggleBlockRoom ? (
-									<div className="w-full flex">
-										<span>Loading</span>
-										<Loader className="h-4 w-4 ml-auto text-yellow-700" />
-									</div>
-								) : room?.block ? (
+								{room?.block ? (
 									<div className="w-full flex">
 										<span>Un Block</span>
 										<Shield className="h-4 w-4 text-yellow-700 ml-auto" />
@@ -94,7 +75,7 @@ export default function DropdownMenuTable({room}: Props) {
 									</div>
 								)}
 							</div>
-						</DropdownMenuItem>
+						</DropdownMenuItem> */}
 					</>
 				)}
 				{/* favorite opt */}
@@ -104,12 +85,7 @@ export default function DropdownMenuTable({room}: Props) {
 						onClick={() => {
 							toggleFavoriteRoom({roomId: room._id});
 						}}>
-						{isPendingToggleFavoriteRoom || isPendingDeleteRoom ? (
-							<>
-								<span>Loading</span>
-								<Loader className="h-4 w-4 ml-auto text-pink-700" />
-							</>
-						) : isFavoriteRoom ? (
+						{isFavoriteRoom ? (
 							<>
 								<span>Un favorite</span>
 								<HeartCrack className="h-4 w-4 text-pink-700 ml-auto" />

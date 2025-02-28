@@ -44,7 +44,6 @@ export type roomType = {
 	_creationTime: number;
 	name: string;
 	author: string;
-	block?: boolean | undefined;
 	deletionCountup?: number | undefined;
 	orgId: string;
 };
@@ -54,7 +53,6 @@ export type roomTableType = {
 	_creationTime: string;
 	name: string;
 	author: string;
-	block?: boolean | undefined;
 	deletionCountup?: number | undefined;
 	orgId: string;
 };
