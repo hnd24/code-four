@@ -224,10 +224,11 @@ export const confirmFavoriteRoom = query({
 export const getAllFavoriteRoomsByUser = query({
 	args: {userId: v.string()},
 	async handler(ctx, args) {
-		return await ctx.db
+		const favorites = await ctx.db
 			.query("favoriteRooms")
 			.withIndex("by_userId_orgId_by_roomId", q => q.eq("userId", args.userId))
 			.collect();
+		return await Promise.all(favorites.map(async favorite => ctx.db.get(favorite.roomId)));
 	},
 });
 

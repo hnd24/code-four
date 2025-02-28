@@ -86,3 +86,5 @@ export const THEMES: ThemeItem[] = [
 		color: "#002240",
 	},
 ];
+
+export const listTypeRoom = ["Organization", "Favorites", "User", "Trash"];

@@ -21,7 +21,16 @@ import {roomType} from "@/types";
 import {useUser} from "@clerk/nextjs";
 import {convexQuery, useConvexMutation} from "@convex-dev/react-query";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {BookUser, Heart, HeartCrack, Loader2, MoreHorizontal, ScanLine, Trash2} from "lucide-react";
+import {
+	BookUser,
+	Heart,
+	HeartCrack,
+	Loader2,
+	MoreHorizontal,
+	ScanLine,
+	ShieldCheck,
+	Trash2,
+} from "lucide-react";
 import Image from "next/image";
 import {api} from "../../../../../convex/_generated/api";
 
@@ -37,6 +46,9 @@ export default function DropdownMenuTable({room}: Props) {
 	});
 	const {mutate: toggleFavoriteRoom} = useMutation({
 		mutationFn: useConvexMutation(api.rooms.toggleFavoriteRoom),
+	});
+	const {mutate: UncountdownDelete} = useMutation({
+		mutationFn: useConvexMutation(api.rooms.turnOffCountUpDeleteRoom),
 	});
 	const {data: isFavoriteRoom} = useQuery(
 		convexQuery(api.rooms.confirmFavoriteRoom, {roomId: room._id, userId: user?.id || ""}),
@@ -66,6 +78,15 @@ export default function DropdownMenuTable({room}: Props) {
 								<Trash2 className="h-4 w-4 text-red-700 ml-auto" />
 							</div>
 						</DropdownMenuItem>
+						{/* Un countdown delete file */}
+						{room?.deletionCountup && room?.deletionCountup > 0 && (
+							<DropdownMenuItem onClick={() => UncountdownDelete({roomId: room._id})}>
+								<div className="w-full flex ">
+									<span className="text-red-700">UnCountdown </span>
+									<ShieldCheck className="h-4 w-4 text-green-700 ml-auto" />
+								</div>
+							</DropdownMenuItem>
+						)}
 					</>
 				)}
 				{/* favorite opt */}

@@ -6,12 +6,12 @@ import {Button} from "@/components/ui/button";
 import {formatTime} from "@/lib/utils";
 import {roomType} from "@/types";
 import {ColumnDef} from "@tanstack/react-table";
-import DropdownMenuTable from "./dropdown-menu-table";
+import DropdownMenuTable from "../components/dropdown-menu-table";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const columns: ColumnDef<roomType>[] = [
+export const columnsOrgFav: ColumnDef<roomType>[] = [
 	{
 		id: "joinRoom",
 

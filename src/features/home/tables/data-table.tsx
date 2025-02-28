@@ -26,6 +26,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/c
 import {cn} from "@/lib/utils";
 import {Columns} from "lucide-react";
 import {useState} from "react";
+import SelectTypeRoom from "./select-type-room";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -60,7 +61,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 
 	return (
 		<div className="gap-4 ">
-			<div className="flex items-center py-4">
+			<div className="flex items-center justify-between py-4">
 				{/* <ListRooms /> */}
 				<Input
 					placeholder="Search Name..."
@@ -68,30 +69,33 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 					onChange={event => table.getColumn("name")?.setFilterValue(event.target.value)}
 					className={cn("border-2 border-blackBorder w-64 lg:w-80 focus:border-gray-600")}
 				/>
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button className="ml-auto bg-blue-700 hover:bg-blue-800  outline-none px-2 py-1">
-							<span className="lg:flex hidden">Columns</span>
-							<Columns className="flex lg:hidden " size={18} />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="start" side="left">
-						{table
-							.getAllColumns()
-							.filter(column => column.getCanHide())
-							.map(column => {
-								return (
-									<DropdownMenuCheckboxItem
-										key={column.id}
-										className="capitalize cursor-pointer"
-										checked={column.getIsVisible()}
-										onCheckedChange={value => column.toggleVisibility(!!value)}>
-										{column.id}
-									</DropdownMenuCheckboxItem>
-								);
-							})}
-					</DropdownMenuContent>
-				</DropdownMenu>
+				<div className="flex gap-2 ">
+					<SelectTypeRoom />
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button className="ml-auto bg-blue-700 hover:bg-blue-800  outline-none px-2 py-1">
+								<span className="lg:flex hidden">Columns</span>
+								<Columns className="flex lg:hidden " size={18} />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="start" side="left">
+							{table
+								.getAllColumns()
+								.filter(column => column.getCanHide())
+								.map(column => {
+									return (
+										<DropdownMenuCheckboxItem
+											key={column.id}
+											className="capitalize cursor-pointer"
+											checked={column.getIsVisible()}
+											onCheckedChange={value => column.toggleVisibility(!!value)}>
+											{column.id}
+										</DropdownMenuCheckboxItem>
+									);
+								})}
+						</DropdownMenuContent>
+					</DropdownMenu>
+				</div>
 			</div>
 			<Table className="border-blackBorder">
 				<TableHeader className="border-b border-gray-600">

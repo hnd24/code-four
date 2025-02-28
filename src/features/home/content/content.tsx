@@ -1,9 +1,8 @@
 "use client";
 
-import Search from "../components/search";
+import Table from "../tables/table";
 import CreateNewRoomButton from "./components/create-new-room-button";
 import SeparatorCustom from "./components/separator-custom";
-import ServerTable from "./components/server-table";
 
 type Props = {
 	user: {
@@ -30,8 +29,7 @@ export default function Content({user, org}: Props) {
 			<div className="w-full mx-auto text-white flex flex-col gap-4">
 				<div className="flex flex-col">
 					<span className="text-xl font-bold md:flex hidden">List rooms :</span>
-					{/* <Search className="flex md:hidden" /> */}
-					<ServerTable orgId={org?.id} userId={user?.id} />
+					<Table orgId={org?.id} userId={user?.id} />
 				</div>
 			</div>
 		</div>
