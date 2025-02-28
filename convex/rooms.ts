@@ -220,21 +220,6 @@ export const confirmFavoriteRoom = query({
 		return true;
 	},
 });
-// export const toggleBlockRoom = mutation({
-// 	args: {roomId: v.id("rooms")},
-// 	async handler(ctx, args) {
-// 		const room = await getRoom(ctx, args.roomId);
-// 		console.log("🚀 ~ handler ~ room:", room);
-// 		if (!room) {
-// 			throw new ConvexError("room not found");
-// 		}
-// 		if (room.block) {
-// 			await ctx.db.patch(room._id, {block: false});
-// 		} else {
-// 			await ctx.db.patch(room._id, {block: true});
-// 		}
-// 	},
-// });
 
 export const getAllFavoriteRoomsByUser = query({
 	args: {userId: v.string()},
