@@ -79,6 +79,7 @@ export const CodeEditor = ({
 		onChange(value);
 		setDraftCode({language, code: value});
 	};
+
 	return (
 		<>
 			{provider ? <Cursors yProvider={provider} /> : null}

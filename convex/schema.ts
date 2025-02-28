@@ -42,6 +42,7 @@ export default defineSchema({
 		roomId: v.id("rooms"),
 	})
 		.index("by_userId_orgId_by_roomId", ["userId", "roomId", "orgId"])
+		.index("by_roomId", ["roomId"])
 		.index("by_orgId", ["orgId"]),
 
 	code: defineTable({

@@ -29,8 +29,6 @@ export default function DropdownOrgs() {
 		isPending,
 		error,
 	} = useQuery(convexQuery(api.organizations.getOrgsOfUser, {userId}));
-	console.log("🚀 ~ DropdownOrgs ~ isPending:", isPending);
-	console.log("🚀 ~ DropdownOrgs ~ orgData:", orgData);
 
 	return (
 		<Collapsible defaultOpen className="group/collapsible">

@@ -19,6 +19,7 @@ export default function ThemeSelector({className}: Props) {
 		config: {theme: value},
 		setConfig,
 	} = useEditor();
+
 	return (
 		<Select
 			defaultValue={value}
@@ -27,26 +28,24 @@ export default function ThemeSelector({className}: Props) {
 			}}>
 			<SelectTrigger
 				value={value}
-				className={cn("w-fit px-2  sm:min-w-36 border-blackBorder ", className)}>
+				className={cn("w-fit px-2 sm:min-w-36 border-blackBorder", className)}>
 				<SelectValue
 					placeholder={
-						<div className="flex ">
+						<div className="flex">
 							<div className="ml-2 flex flex-col justify-center">Theme</div>
 						</div>
 					}
 				/>
 			</SelectTrigger>
 			<SelectContent className="bg-blackLight border-blackBorder text-white">
-				{THEMES.map(theme => {
-					return (
-						<SelectItem key={theme.value} value={theme.value}>
-							<div className="flex items-center gap-4">
-								<theme.icon size={16} />
-								{theme.label}
-							</div>
-						</SelectItem>
-					);
-				})}
+				{THEMES.map(theme => (
+					<SelectItem key={theme.value} value={theme.value}>
+						<div className="flex items-center gap-4">
+							<theme.icon size={16} />
+							{theme.label}
+						</div>
+					</SelectItem>
+				))}
 			</SelectContent>
 		</Select>
 	);

@@ -18,6 +18,7 @@ import {
 import {LANGUAGES, THEMES} from "@/constants";
 import {useEditor} from "@/hooks/use-editor";
 import {cn} from "@/lib/utils";
+
 import {Check} from "lucide-react";
 
 import Image from "next/image";
@@ -29,9 +30,10 @@ type Props = {
 
 export default function Navbar({className}: Props) {
 	const {
-		config: {language: CheckedLanguage, theme: CheckedTheme},
+		config: {language: CheckedLanguage, theme: CheckedTheme, hiddenRemoteSelection},
 		setConfig,
 	} = useEditor();
+
 	return (
 		<Sheet>
 			<SheetTrigger className={className}>
@@ -84,7 +86,14 @@ export default function Navbar({className}: Props) {
 							);
 						})}
 					</AccordionItem>
-					<AccordionItem value="item-3" className=" py-2 border-none">
+					<AccordionItem value="item-3" className=" pt-2 border-none ">
+						<Button
+							onClick={() => setConfig({hiddenRemoteSelection: !hiddenRemoteSelection})}
+							className={cn("w-full ", hiddenRemoteSelection ? "bg-sky-800" : "bg-sky-800/60")}>
+							Teammate's cursor
+						</Button>
+					</AccordionItem>
+					<AccordionItem value="item-4" className=" py-2 border-none">
 						<Link href={"/"} className="w-full">
 							<Button className="w-full bg-blue-800">Return home</Button>
 						</Link>

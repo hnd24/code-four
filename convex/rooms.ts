@@ -32,7 +32,7 @@ export async function deleteRoom(ctx: MutationCtx, roomId: Id<"rooms">) {
 		throw new ConvexError("Room not found");
 	}
 	await ctx.db.delete(room._id);
-	await deleteFavoriteByOrg(ctx, room.orgId);
+	await deleteFavoritesByRoomId(ctx, room._id);
 	await deleteRoomFromOrg(ctx, room.orgId, room._id);
 }
 
@@ -51,6 +51,19 @@ export async function deleteRoomFromOrg(ctx: MutationCtx, orgId: string, roomId:
 		throw new ConvexError("Organization not found");
 	}
 	await ctx.db.patch(org._id, {rooms: (org.rooms || []).filter(id => id !== roomId)});
+}
+
+export async function deleteFavoritesByRoomId(ctx: MutationCtx, roomId: Id<"rooms">) {
+	const favorites = await ctx.db
+		.query("favoriteRooms")
+		.withIndex("by_roomId", q => q.eq("roomId", roomId))
+		.collect();
+	if (!favorites) return;
+	Promise.all(
+		favorites.map(async favorite => {
+			ctx.db.delete(favorite._id);
+		}),
+	);
 }
 
 export async function deleteFavoriteByOrg(ctx: MutationCtx, orgId: string) {

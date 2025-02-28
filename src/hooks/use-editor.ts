@@ -3,7 +3,7 @@ import {parseAsBoolean, parseAsInteger, parseAsStringEnum, useQueryStates} from 
 
 export const useEditor = () => {
 	const [config, setConfig] = useQueryStates({
-		hiddenRemoteSelecton: parseAsBoolean.withDefault(false),
+		hiddenRemoteSelection: parseAsBoolean.withDefault(false),
 		theme: parseAsStringEnum<Theme>(Object.values(Theme)).withDefault(Theme.Default),
 		language: parseAsStringEnum<Language>(Object.values(Language)).withDefault(Language.JavaScript),
 		textSize: parseAsInteger.withDefault(15),

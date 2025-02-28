@@ -2,13 +2,13 @@ import {Button} from "@/components/ui/button";
 import {CODE_EXAMPLES} from "@/constants/code-example";
 import {useEditor} from "@/hooks/use-editor";
 import {useExecuteCode} from "@/hooks/use-execute-code";
-import {getDraftCode} from "@/lib/utils";
+import {cn} from "@/lib/utils";
 import {outputContent} from "@/types";
 
 import {Hint} from "@/components/hint";
-import {Atom} from "lucide-react";
+import {Atom, Contact} from "lucide-react";
 import Image from "next/image";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import SelectSizeFont from "../components/select-size-font";
 
 import {CodeEditor} from "./components/code-editor";
@@ -21,7 +21,7 @@ type Props = {
 
 export default function EditorPanel({setOutputContent}: Props) {
 	const {
-		config: {theme, language, textSize},
+		config: {theme, language, textSize, hiddenRemoteSelection},
 		setConfig,
 	} = useEditor();
 
@@ -50,17 +50,17 @@ export default function EditorPanel({setOutputContent}: Props) {
 
 	// được thiết kế để dùng tạm
 	//******************************* */
-	useEffect(() => {
-		const draftCode = getDraftCode();
-		if (draftCode?.language === language) {
-			setValue(draftCode.code);
-		} else {
-			setValue(CODE_EXAMPLES[language]);
-		}
-	}, [language]);
+	// useEffect(() => {
+	// 	const draftCode = getDraftCode();
+	// 	if (draftCode?.language === language) {
+	// 		setValue(draftCode.code);
+	// 	} else {
+	// 		setValue(CODE_EXAMPLES[language]);
+	// 	}
+	// }, [language]);
 	//******************************* */
 
-	const onReset = () => {
+	const writeExampleCode = () => {
 		setValue(defaultCode);
 	};
 
@@ -99,13 +99,25 @@ export default function EditorPanel({setOutputContent}: Props) {
 				</div>
 
 				<div className="flex gap-2">
+					<Hint label="display teammate's cursor">
+						<Button
+							variant="outline"
+							size="icon"
+							className={cn(
+								" border-none text-gray-900 hover:bg-gray-200/80 hidden md:flex",
+								hiddenRemoteSelection ? "bg-gray-200" : "bg-gray-200/60",
+							)}
+							onClick={() => setConfig({hiddenRemoteSelection: !hiddenRemoteSelection})}>
+							<Contact size={20} />
+						</Button>
+					</Hint>
 					<SelectSizeFont />
 					<Hint label="Example">
 						<Button
 							variant="outline"
 							size="icon"
 							className="bg-gray-200 border-none text-gray-900 hover:bg-gray-200/80"
-							onClick={onReset}>
+							onClick={writeExampleCode}>
 							<Atom size={20} />
 						</Button>
 					</Hint>

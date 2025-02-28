@@ -3,10 +3,7 @@ import {AppSidebar} from "@/features/home/sidebar/sidebar";
 
 import type {Metadata} from "next";
 export const metadata: Metadata = {
-	title: {
-		template: "Home",
-		default: "Code Four",
-	},
+	title: "Home",
 	description: "website for developers, by developer",
 };
 

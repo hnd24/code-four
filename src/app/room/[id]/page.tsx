@@ -31,7 +31,7 @@ export default function RoomPage() {
 			) : (
 				<Room>
 					<div className="h-screen max-w-screen-2xl flex flex-col items-center mx-auto p-4 gap-4">
-						<HeaderRoom />
+						<HeaderRoom roomName={data.name} />
 						<ContentRoom />
 					</div>
 				</Room>

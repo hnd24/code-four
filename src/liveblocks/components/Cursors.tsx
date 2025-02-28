@@ -12,7 +12,7 @@ type Props = {
 
 export function Cursors({yProvider}: Props) {
 	const {
-		config: {hiddenRemoteSelecton},
+		config: {hiddenRemoteSelection},
 	} = useEditor();
 	const userInfo = useSelf(me => me.info);
 	const [awarenessUsers, setAwarenessUsers] = useState<AwarenessList>([]);
@@ -48,7 +48,7 @@ export function Cursors({yProvider}: Props) {
                   --user-color: ${client.user.color || "orangered"};
                 }
               ${
-								!hiddenRemoteSelecton
+								!hiddenRemoteSelection
 									? `.yRemoteSelectionHead::after {
                   content: "${client.user.name}";
                 }`

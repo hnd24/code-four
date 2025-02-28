@@ -30,6 +30,13 @@ export const getDraftCode = () => {
 	return draft ? (JSON.parse(draft) as DraftCode) : null;
 };
 
+export const setTheme = (theme: string) => {
+	localStorage.setItem("theme", theme);
+};
+export const getTheme = () => {
+	return localStorage.getItem("theme");
+};
+
 export const formatTime = (time: number) => {
 	const formattedDate = format(new Date(time), "M/dd/yyyy, hh:mm:ss a");
 	return formattedDate;
