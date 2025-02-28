@@ -44,7 +44,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 
 	return (
 		<Dialog>
-			<DialogTrigger>
+			<DialogTrigger asChild>
 				<div>
 					<Hint label={"Create new room"} side="top">
 						<Button

@@ -2,7 +2,6 @@
 
 import IntroductionPage from "@/app/pages/introduction-page";
 import NoOrg from "@/components/no-org";
-import CreateNewRoomButton from "@/features/home/content/components/create-new-room-button";
 import Content from "@/features/home/content/content";
 import HeaderHome from "@/features/home/header/header-home";
 import {useOrganization, useUser} from "@clerk/nextjs";
@@ -23,12 +22,6 @@ export default function HomePage() {
 					) : (
 						<NoOrg />
 					)}
-				</div>
-				<div className="absolute bottom-5 left-5 cursor-move" draggable>
-					<CreateNewRoomButton
-						user={{id: user.id, name: user.fullName!}}
-						org={{id: organization?.id!, name: organization?.name!, image: organization?.imageUrl!}}
-					/>
 				</div>
 			</div>
 		</>
