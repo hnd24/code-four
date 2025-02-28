@@ -64,7 +64,7 @@ export default function DropdownMenuTable({room}: Props) {
 			<DropdownMenuTrigger asChild>
 				<Button
 					variant="ghost"
-					className="h-5 w-5 rounded-full p-0 hover:!bg-gray-300/60 !outline-none">
+					className="h-5 w-5 rounded-full p-0 hover:!bfg-gray-300/60 !outline-none">
 					<MoreHorizontal className="h-4 w-4" />
 				</Button>
 			</DropdownMenuTrigger>
@@ -79,13 +79,15 @@ export default function DropdownMenuTable({room}: Props) {
 							</div>
 						</DropdownMenuItem>
 						{/* Un countdown delete file */}
-						{room?.deletionCountup && room?.deletionCountup > 0 && (
+						{room?.deletionCountup && room?.deletionCountup > 0 ? (
 							<DropdownMenuItem onClick={() => UncountdownDelete({roomId: room._id})}>
 								<div className="w-full flex text-green-700">
 									<span className="">UnCountdown </span>
 									<ShieldCheck className="h-4 w-4  ml-auto" />
 								</div>
 							</DropdownMenuItem>
+						) : (
+							<> </>
 						)}
 					</>
 				)}

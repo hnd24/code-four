@@ -80,7 +80,7 @@ export const columnsUserTrash: ColumnDef<roomType>[] = [
 			const room = row.original;
 			if (room.deletionCountup && room.deletionCountup > 0)
 				return (
-					<div className="w-full flex items-center justify-center">
+					<div className="w-full">
 						<span>{7 - room.deletionCountup}</span>
 					</div>
 				);
