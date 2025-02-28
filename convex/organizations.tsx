@@ -126,7 +126,6 @@ export const getOrgsOfUser = query({
 		if (!user) {
 			throw new ConvexError("expected user to be defined");
 		}
-
 		const orgIds = user.orgIds.map(org => org.orgId);
 
 		return await Promise.all(orgIds.map(orgId => getOrg(ctx, orgId)));

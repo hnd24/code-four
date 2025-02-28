@@ -43,7 +43,7 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 						className=" rounded-lg border-2 border-blackBorder transition"
 					/>
 				</div>
-				<div className={cn("w-full hidden justify-between", open && "flex")}>
+				<div className={cn("w-full hidden justify-between text-white", open && "flex")}>
 					<div className="w-full truncate flex items-center">{name}</div>
 					<div className={"truncate flex items-center w-fit"}>{memberCount}</div>
 				</div>

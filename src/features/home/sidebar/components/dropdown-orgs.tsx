@@ -24,12 +24,9 @@ export default function DropdownOrgs() {
 	const {open} = useSidebar();
 	const {user} = useUser();
 	const userId = user?.id || "";
-	const {
-		data: orgData,
-		isPending,
-		error,
-	} = useQuery(convexQuery(api.organizations.getOrgsOfUser, {userId}));
-
+	const {data: orgData, isPending} = useQuery(
+		convexQuery(api.organizations.getOrgsOfUser, {userId}),
+	);
 	return (
 		<Collapsible defaultOpen className="group/collapsible">
 			<SidebarGroup>
