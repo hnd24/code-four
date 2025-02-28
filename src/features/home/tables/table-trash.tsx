@@ -11,9 +11,11 @@ import {DataTable} from "./data-table";
 
 export default function TableTrash() {
 	const {data, isPending} = useQuery(convexQuery(api.rooms.getRoomsOfUser, {}));
+
 	const roomData = useMemo(() => {
-		return data?.filter(room => room?.deletionCountup && room.deletionCountup > 0) ?? [];
+		return data?.filter(room => room?.deletionCountup && room.deletionCountup > 0);
 	}, [data]);
+
 	return (
 		<>
 			{isPending ? (

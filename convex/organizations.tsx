@@ -10,7 +10,7 @@ export async function hasAccessToOrg(ctx: QueryCtx | MutationCtx, orgId: string)
 
 	const user = await ctx.db
 		.query("users")
-		.withIndex("by_userId", q => q.eq("userId", identity.tokenIdentifier))
+		.withIndex("by_userId", q => q.eq("userId", identity.subject))
 		.first();
 
 	if (!user) {

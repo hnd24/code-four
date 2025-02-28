@@ -3,6 +3,7 @@
 import {useTable} from "@/hooks/use-table";
 import TableFav from "./table-fav";
 import TableOrg from "./table-org";
+import TableTrash from "./table-trash";
 import TableUser from "./table-user";
 
 type Props = {
@@ -20,6 +21,6 @@ export default function Table({userId, orgId}: Props) {
 	} else if (typeRooms === "User") {
 		return <TableUser />;
 	} else if (typeRooms === "Trash") {
-		return <TableUser />;
+		return <TableTrash />;
 	}
 }

@@ -73,17 +73,17 @@ export default function DropdownMenuTable({room}: Props) {
 					<>
 						{/* delete opt */}
 						<DropdownMenuItem onClick={() => deleteRoomById({roomId: room._id})}>
-							<div className="w-full flex ">
-								<span className="text-red-700">Delete</span>
-								<Trash2 className="h-4 w-4 text-red-700 ml-auto" />
+							<div className="w-full flex text-red-700">
+								<span className="">Delete</span>
+								<Trash2 className="h-4 w-4  ml-auto" />
 							</div>
 						</DropdownMenuItem>
 						{/* Un countdown delete file */}
 						{room?.deletionCountup && room?.deletionCountup > 0 && (
 							<DropdownMenuItem onClick={() => UncountdownDelete({roomId: room._id})}>
-								<div className="w-full flex ">
-									<span className="text-red-700">UnCountdown </span>
-									<ShieldCheck className="h-4 w-4 text-green-700 ml-auto" />
+								<div className="w-full flex text-green-700">
+									<span className="">UnCountdown </span>
+									<ShieldCheck className="h-4 w-4  ml-auto" />
 								</div>
 							</DropdownMenuItem>
 						)}

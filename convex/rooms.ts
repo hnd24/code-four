@@ -22,7 +22,7 @@ export async function isAuthorOfRoom(ctx: QueryCtx | MutationCtx, roomId: Id<"ro
 	if (!identity) {
 		throw new ConvexError("You must be logged in");
 	}
-	const access = room.author === identity.tokenIdentifier;
+	const access = room.author === identity.subject;
 	if (!access) return false;
 	if (access) return room;
 }
@@ -142,7 +142,7 @@ export const getRoomsOfUser = query({
 		}
 		return await ctx.db
 			.query("rooms")
-			.withIndex("by_author", q => q.eq("author", identity.tokenIdentifier))
+			.withIndex("by_author", q => q.eq("author", identity.subject))
 			.collect();
 	},
 });
