@@ -109,9 +109,6 @@ export const confirmJoinRoom = query({
 		if (!!!room) {
 			return null;
 		} else if (room.author === user.userId) {
-			console.log("🚀 ~ handler ~ userId:", user.userId);
-			console.log("🚀 ~ handler ~ author:", room.author);
-			console.log("room is author");
 			return room;
 		} else if (user.orgIds.some(org => org.orgId === room.orgId)) {
 			return room;

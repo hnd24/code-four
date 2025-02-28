@@ -59,7 +59,6 @@ export const deleteUser = internalMutation({
 	args: {userId: v.string()},
 	async handler(ctx, args) {
 		const user = await getUser(ctx, args.userId);
-
 		await ctx.db.delete(user._id);
 		await Promise.all(
 			user.orgIds.map(org =>

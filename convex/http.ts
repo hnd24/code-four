@@ -75,6 +75,7 @@ http.route({
 						name: result.data.name,
 						image: result.data.image_url || "",
 					});
+					break;
 				case "organization.deleted":
 					await ctx.runMutation(internal.organizations.removeOrg, {
 						orgId: result.data.id ?? "",
