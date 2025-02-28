@@ -1,6 +1,7 @@
 import {ConvexError, v} from "convex/values";
 import {Id} from "./_generated/dataModel";
 import {internalMutation, mutation, MutationCtx, query, QueryCtx} from "./_generated/server";
+import {createCode, deleteCodeByRoomId} from "./code";
 import {getOrg} from "./organizations";
 import {getUser} from "./users";
 
@@ -34,6 +35,7 @@ export async function deleteRoom(ctx: MutationCtx, roomId: Id<"rooms">) {
 	await ctx.db.delete(room._id);
 	await deleteFavoritesByRoomId(ctx, room._id);
 	await deleteRoomFromOrg(ctx, room.orgId, room._id);
+	await deleteCodeByRoomId(ctx, room._id);
 }
 
 export async function deleteRoomByUser(ctx: MutationCtx, userId: string) {
@@ -226,7 +228,6 @@ export const toggleBlockRoom = mutation({
 	args: {roomId: v.id("rooms")},
 	async handler(ctx, args) {
 		const room = await getRoom(ctx, args.roomId);
-		console.log("🚀 ~ handler ~ room:", room);
 
 		if (!room) {
 			throw new ConvexError("room not found");
@@ -239,26 +240,13 @@ export const toggleBlockRoom = mutation({
 	},
 });
 
-export const getAllFavoriteRooms = query({
-	args: {},
+export const getAllFavoriteRoomsByUser = query({
+	args: {userId: v.string()},
 	async handler(ctx, args) {
-		const identity = await ctx.auth.getUserIdentity();
-		if (!identity) {
-			throw new ConvexError("you must be logged in to view your favorite rooms");
-		}
-		const user = await getUser(ctx, identity?.subject);
-		if (!identity) {
-			throw new ConvexError("you must be logged in to view your favorite rooms");
-		}
-		const favorites = await ctx.db
+		return await ctx.db
 			.query("favoriteRooms")
-			.withIndex("by_userId_orgId_by_roomId", q => q.eq("userId", identity.subject))
+			.withIndex("by_userId_orgId_by_roomId", q => q.eq("userId", args.userId))
 			.collect();
-		let rooms = Promise.all(
-			favorites.map(async favorite => {
-				return await ctx.db.get(favorite.roomId);
-			}),
-		);
 	},
 });
 
@@ -288,6 +276,7 @@ export const createRoom = mutation({
 		const roomId = await ctx.db.insert("rooms", args);
 		const org = await getOrg(ctx, args.orgId);
 		await ctx.db.patch(org._id, {rooms: [...(org.rooms || []), roomId]});
+		await createCode(ctx, roomId, "", "javascript");
 		return await getRoom(ctx, roomId);
 	},
 });
@@ -331,7 +320,7 @@ export const deleteRoomsByCountUp = internalMutation({
 			.collect();
 		Promise.all(
 			rooms.map(async room => {
-				if (room.deletionCountup && room.deletionCountup === 7) await ctx.db.delete(room._id);
+				if (room.deletionCountup && room.deletionCountup === 7) await deleteRoom(ctx, room._id);
 			}),
 		);
 	},

@@ -46,8 +46,8 @@ export default defineSchema({
 		.index("by_orgId", ["orgId"]),
 
 	code: defineTable({
-		code: v.optional(v.string()),
-		language: v.optional(v.string()),
+		code: v.string(),
+		language: v.string(),
 		roomId: v.id("rooms"),
 	}).index("by_roomId", ["roomId"]),
 });

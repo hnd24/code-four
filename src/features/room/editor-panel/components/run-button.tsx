@@ -16,7 +16,7 @@ export const RunButton = ({disabled, onClick}: Props) => {
 	};
 
 	return (
-		<Hint label={"Run this code"}>
+		<Hint label={disabled ? "Please wait" : "Run code"}>
 			<Button disabled={disabled} onClick={onExecute} className="bg-blue-700 hover:bg-blue-800">
 				{disabled ? (
 					<>
