@@ -1,16 +1,9 @@
 export default function Page() {
 	return (
-		<div className="flex justify-center items-center h-screen">
-			<div className="relative w-24 h-24">
-				<div className="absolute inset-0 flex justify-center items-center">
-					<div className="w-20 h-20 rounded-full border-4 border-blue-500"></div>
-				</div>
-				<div className="absolute inset-0 flex justify-center items-center">
-					<div className="w-24 h-24 rounded-full border-4 border-gray-500"></div>
-				</div>
-				<div className="absolute inset-0 flex justify-center items-center">
-					<div className="text-5xl font-bold">C</div>
-				</div>
+		<div className="flex items-center justify-center min-h-screen bg-gray-100">
+			<div className="relative h-48 w-48">
+				<div className="absolute inset-0 rounded-full border-8 border-blue-500"></div>
+				<div className="absolute inset-0 h-3/4 w-3/4 bg-gray-100 rounded-full border-8 border-gray-100"></div>
 			</div>
 		</div>
 	);

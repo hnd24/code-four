@@ -4,6 +4,7 @@ import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components
 import EditorPanel from "@/features/room/editor-panel/editor-panel";
 import {OutputPanel} from "@/features/room/output-panel/output-panel";
 import {useIsMobile} from "@/hooks/use-mobile";
+
 import {outputContent} from "@/types";
 import {useState} from "react";
 
