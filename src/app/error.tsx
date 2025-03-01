@@ -6,7 +6,7 @@ import Image from "next/image";
 import {usePathname} from "next/navigation";
 
 export default function Error() {
-	const pathname = usePathname();
+	const pathname = usePathname() || "";
 	return (
 		<div
 			className="h-screen bg-blackLight

@@ -9,7 +9,7 @@ import {ReactNode, useMemo} from "react";
 export function Room({children}: {children: ReactNode}) {
 	const pathname = usePathname();
 
-	const roomId = pathname.split("/").pop();
+	const roomId = pathname?.split("/").pop() || "example-room";
 
 	return (
 		<RoomProvider
