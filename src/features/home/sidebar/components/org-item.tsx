@@ -14,11 +14,11 @@ type ItemProps = {
 
 export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 	const {organization} = useOrganization();
-	const {open} = useSidebar();
+	const {open, openMobile} = useSidebar();
 	const {setActive} = useOrganizationList();
 
 	const isActive = organization?.id === id;
-
+	const isOpen = open || openMobile;
 	const onClick = () => {
 		if (!setActive) return;
 
@@ -29,9 +29,9 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 		<Hint label={name} side="right">
 			<div
 				className={cn(
-					"flex gap-2  cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-600/60 rounded-lg",
+					"flex gap-2  cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-600/60 rounded-lg text-white",
 					isActive && " opacity-100 bg-gray-600/60",
-					open && "px-2 py-1",
+					isOpen && "px-2 py-1",
 				)}
 				onClick={onClick}>
 				<div className={cn("aspect-square w-8 h-8 ")}>
@@ -43,7 +43,7 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 						className=" rounded-lg border-2 border-blackBorder transition"
 					/>
 				</div>
-				<div className={cn("w-full hidden justify-between text-white", open && "flex")}>
+				<div className={cn("w-full hidden justify-between", isOpen && "flex")}>
 					<div className="w-full truncate flex items-center">{name}</div>
 					<div className={"truncate flex items-center w-fit"}>{memberCount}</div>
 				</div>
