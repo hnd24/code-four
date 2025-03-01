@@ -15,7 +15,7 @@ import {Id} from "../../../../convex/_generated/dataModel";
 export default function RoomPage() {
 	const pathname = usePathname();
 
-	const roomId = pathname?.split("/").pop();
+	const roomId = pathname?.split("/").pop() || "";
 	const {data, isPending} = useQuery(
 		convexQuery(api.rooms.confirmJoinRoom, {roomId: roomId as Id<"rooms">}),
 	);

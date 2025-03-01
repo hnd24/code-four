@@ -35,7 +35,7 @@ export default function EditorPanel({setOutputContent}: Props) {
 	const {executeCode, isPending: isExecuting} = useExecuteCode();
 
 	const pathname = usePathname();
-	const roomId = pathname.split("/").pop();
+	const roomId = pathname?.split("/").pop() || "";
 	const {data: code, isPending} = useQuery(
 		convexQuery(api.code.getCodeByRoomId, {roomId: roomId as Id<"rooms">}),
 	);
