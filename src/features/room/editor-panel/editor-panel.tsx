@@ -1,44 +1,45 @@
 "use client";
+import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
 import {CODE_EXAMPLES} from "@/constants/code-example";
 import {useEditor} from "@/hooks/use-editor";
 import {useExecuteCode} from "@/hooks/use-execute-code";
 import {cn} from "@/lib/utils";
-import {Language, outputContent} from "@/types";
-
-import {Hint} from "@/components/hint";
-import {Atom, Contact, Loader2} from "lucide-react";
+import {CodeType, FileInputType, Language, outputContent} from "@/types";
+import {Atom, Contact, FileInput, Loader2} from "lucide-react";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import SelectSizeFont from "../components/select-size-font";
 
-import {convexQuery, useConvexMutation} from "@convex-dev/react-query";
-import {useMutation, useQuery} from "@tanstack/react-query";
-import {usePathname} from "next/navigation";
+import {useConvexMutation} from "@convex-dev/react-query";
+import {useMutation} from "@tanstack/react-query";
 import {api} from "../../../../convex/_generated/api";
-import {Id} from "../../../../convex/_generated/dataModel";
+
+import {useClerk} from "@clerk/nextjs";
 import {CodeEditor} from "./components/code-editor";
 import LanguageSelector from "./components/language-selector";
 import {RunButton} from "./components/run-button";
 
 type Props = {
 	setOutputContent: ({output, error}: outputContent) => void;
+	code: CodeType;
+	isPending: boolean;
+	input?: FileInputType[];
 };
 
-export default function EditorPanel({setOutputContent}: Props) {
+export default function EditorPanel({setOutputContent, code, isPending, input}: Props) {
+	const clerk = useClerk();
+
+	if (!clerk.loaded) {
+		return null;
+	}
 	const {
-		config: {theme, language, textSize, hiddenRemoteSelection},
+		config: {theme, language, textSize, hiddenRemoteSelection, input: inputConfig},
 		setConfig,
 	} = useEditor();
 
 	const [value, setValue] = useState<string | undefined>("");
 	const {executeCode, isPending: isExecuting} = useExecuteCode();
-
-	const pathname = usePathname();
-	const roomId = pathname?.split("/").pop() || "";
-	const {data: code, isPending} = useQuery(
-		convexQuery(api.code.getCodeByRoomId, {roomId: roomId as Id<"rooms">}),
-	);
 
 	const {mutate: updateCode} = useMutation({
 		mutationFn: useConvexMutation(api.code.updateCode),
@@ -64,7 +65,7 @@ export default function EditorPanel({setOutputContent}: Props) {
 	const onExecute = async () => {
 		if (!value) return;
 
-		const data = await executeCode({language, code: value});
+		const data = await executeCode({language, code: value, input});
 		setOutputContent({output: data.stdout, error: data.stderr});
 	};
 
@@ -107,7 +108,19 @@ export default function EditorPanel({setOutputContent}: Props) {
 							<Contact size={20} />
 						</Button>
 					</Hint>
-					<SelectSizeFont />
+					<Hint label="file inputConfig">
+						<Button
+							variant="outline"
+							size="icon"
+							className={cn(
+								" border-none text-gray-900 hover:bg-gray-200/80 hidden md:flex",
+								inputConfig ? "bg-gray-200" : "bg-gray-200/60",
+							)}
+							onClick={() => setConfig({input: !inputConfig})}>
+							<FileInput size={20} />
+						</Button>
+					</Hint>
+
 					<Hint label="Example">
 						<Button
 							variant="outline"
@@ -117,6 +130,7 @@ export default function EditorPanel({setOutputContent}: Props) {
 							<Atom size={20} />
 						</Button>
 					</Hint>
+					<SelectSizeFont />
 					<RunButton disabled={isLoading} onClick={onExecute} />
 				</div>
 			</div>

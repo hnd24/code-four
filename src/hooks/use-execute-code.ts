@@ -1,4 +1,4 @@
-import {Language} from "@/types";
+import {FileInputType, Language} from "@/types";
 import {VERSIONS} from "../constants/runtime";
 
 import {axiosClient} from "@/lib/axios";
@@ -23,22 +23,23 @@ type Response = {
 type Code = {
 	language: Language;
 	code: string;
+	input?: FileInputType[];
 };
 
 export const useExecuteCode = () => {
 	const {setIsRunning} = useRunCode();
 
-	const executeCodeRequest = async ({language, code}: Code) => {
+	const executeCodeRequest = async ({language, code, input = []}: Code) => {
 		setIsRunning(true);
 		const response = await axiosClient.post<Response>("/execute", {
 			language,
 			version: VERSIONS[language],
-			files: [{content: code}],
+			files: [{content: code}, ...input],
 		});
 
 		return response.data.run;
 	};
-	
+
 	const {mutateAsync: executeCode, isPending} = useMutation({
 		mutationFn: executeCodeRequest,
 

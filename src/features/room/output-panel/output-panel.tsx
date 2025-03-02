@@ -12,8 +12,6 @@ type Props = {
 };
 
 export const OutputPanel = ({outputContent: data}: Props) => {
-	// const {isPending, data} = useGetLastExecution();
-	const {} = useRunCode();
 	const output = data?.output;
 	const error = data?.error;
 

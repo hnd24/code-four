@@ -60,3 +60,18 @@ export const getCodeByRoomId = query({
 		return code;
 	},
 });
+
+export const updateInputInCodeRoom = mutation({
+	args: {
+		codeId: v.id("code"),
+		input: v.array(
+			v.object({
+				name: v.string(),
+				content: v.string(),
+			}),
+		),
+	},
+	async handler(ctx, args) {
+		await ctx.db.patch(args.codeId, {input: args.input});
+	},
+});

@@ -4,7 +4,6 @@ import {Language, Theme} from "@/types";
 
 import {Editor} from "@monaco-editor/react";
 
-import {useEditor} from "@/hooks/use-editor";
 import {defineMonacoThemes, setDraftCode} from "@/lib/utils";
 import {Cursors} from "@/liveblocks/components/Cursors";
 import {useClerk} from "@clerk/nextjs";
@@ -36,7 +35,6 @@ export const CodeEditor = ({
 	// Monaco Editor causes ClerkJS to fail loading
 	// https://github.com/clerk/javascript/issues/1643
 
-	const {} = useEditor();
 	const clerk = useClerk();
 
 	if (!clerk.loaded) {

@@ -56,3 +56,25 @@ export type roomTableType = {
 	deletionCountup?: number | undefined;
 	orgId: string;
 };
+
+export type FileInputType = {
+	name: string;
+	content: string;
+};
+
+export type CodeType =
+	| {
+			_id: Id<"code">;
+			_creationTime: number;
+			input?:
+				| {
+						name: string;
+						content: string;
+				  }[]
+				| undefined;
+			code: string;
+			roomId: Id<"rooms">;
+			language: string;
+	  }
+	| null
+	| undefined;

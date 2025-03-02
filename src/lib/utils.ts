@@ -1,6 +1,6 @@
 import {DRAFT_CODE_KEY} from "@/constants";
 import {MONACO_THEMES} from "@/themes";
-import {DraftCode} from "@/types";
+import {DraftCode, FileInputType} from "@/types";
 import {Monaco} from "@monaco-editor/react";
 import {clsx, type ClassValue} from "clsx";
 import {format} from "date-fns";
@@ -35,6 +35,15 @@ export const setTheme = (theme: string) => {
 };
 export const getTheme = () => {
 	return localStorage.getItem("theme");
+};
+
+export const setInputTemLocalStorage = (inputTem: FileInputType[], codeId: string) => {
+	localStorage.setItem(`inputTem_${codeId}`, JSON.stringify(inputTem));
+};
+
+export const getInputTemLocalStorage = (codeId: string) => {
+	const inputTem = localStorage.getItem(`inputTem_${codeId}`);
+	return inputTem ? (JSON.parse(inputTem) as FileInputType[]) : [];
 };
 
 export const formatTime = (time: number) => {

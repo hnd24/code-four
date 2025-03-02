@@ -18,7 +18,7 @@ export default function Logo({className, isLogo = true, isSlogan = true}: Props)
 					alt="logo"
 					width={50}
 					height={50}
-					className={cn("opacity-60 group-hover:opacity-100", isLogo ? "flex" : "hidden")}
+					className={cn("opacity-100 group-hover:opacity-80", isLogo ? "flex" : "hidden")}
 				/>
 				<div className={isSlogan ? "flex" : "hidden"}>
 					<div className="hidden md:flex flex-col justify-around group-hover:ring-white/20 transition-all text-white/60 group-hover:text-white">

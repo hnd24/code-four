@@ -48,5 +48,6 @@ export default defineSchema({
 		code: v.string(),
 		language: v.string(),
 		roomId: v.id("rooms"),
+		input: v.optional(v.array(v.object({name: v.string(), content: v.string()}))),
 	}).index("by_roomId", ["roomId"]),
 });

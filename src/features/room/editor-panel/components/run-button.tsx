@@ -20,7 +20,7 @@ export const RunButton = ({disabled, onClick}: Props) => {
 			<Button disabled={disabled} onClick={onExecute} className="bg-blue-700 hover:bg-blue-800">
 				{disabled ? (
 					<>
-						<Loader2 size={16} className="text-white" />
+						<Loader2 size={16} className="text-white animate-spin" />
 						<div className="hidden lg:flex">Executing</div>
 					</>
 				) : (

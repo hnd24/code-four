@@ -7,6 +7,7 @@ export const useEditor = () => {
 		theme: parseAsStringEnum<Theme>(Object.values(Theme)).withDefault(Theme.Default),
 		language: parseAsStringEnum<Language>(Object.values(Language)).withDefault(Language.JavaScript),
 		textSize: parseAsInteger.withDefault(15),
+		input: parseAsBoolean.withDefault(false),
 	});
 
 	return {
