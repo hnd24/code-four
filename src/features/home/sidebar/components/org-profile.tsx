@@ -17,7 +17,7 @@ export default function OrgProfile({className, disabled = false}: Props) {
 				<Button
 					disabled={disabled}
 					className={cn(
-						"w-full truncate bg-green-700 hover:!bg-green-800 text-gray-100/90 hover:!text-white ",
+						"w-full truncate hover:!bg-black/80 !text-white dark:bg-green-700 dark:hover:!bg-green-800 dark:text-white/90 dark:hover:!text-white ",
 						className,
 					)}>
 					Manage Organization

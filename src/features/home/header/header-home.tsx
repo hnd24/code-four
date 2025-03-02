@@ -1,21 +1,21 @@
 "use client";
 import {Hint} from "@/components/hint";
 import {useSidebar} from "@/components/ui/sidebar";
+
 import {cn} from "@/lib/utils";
 import {OrganizationSwitcher, UserButton} from "@clerk/nextjs";
 import LogoToggleSidebar from "../components/logo-toggle-sidebar";
-
 export default function header() {
 	const {isMobile, toggleSidebar} = useSidebar();
 	return (
-		<div className="text-gray-100 border-b border-b-blackBorder">
-			<div className="w-full justify-between h-[58px] flex items-center">
+		<div className=" rounded-bl-xl dark:rounded-none dark:px-0 pb-[1px] border-b-2  border-blackBorder ">
+			<div className="w-full justify-between h-[58px] flex items-center pl-2">
 				<div className={cn("hidden gap-2 items-center", isMobile && "flex")}>
-					<LogoToggleSidebar toggleSidebar={toggleSidebar} />
+					<LogoToggleSidebar toggleSidebar={toggleSidebar} open={false} />
 				</div>
 				{/* <Search className="md:flex hidden" /> */}
 				<div></div>
-				<div className="flex items-center gap-2 ">
+				<div className="flex items-center gap-2 bg-blackLight h-full px-4 rounded-t-xl rounded-bl-xl shadow">
 					<UserButton />
 					<Hint label="manage your organizations">
 						<div>
@@ -36,6 +36,10 @@ export default function header() {
 											border: "2px solid #313244",
 											justifyContent: "space-between",
 											backgroundColor: "#12121a",
+											// backgroundColor: "--sidebar-background",
+											// "&:hover": {
+											// 	backgroundColor: "--sidebar-background",
+											// },
 										},
 									},
 								}}

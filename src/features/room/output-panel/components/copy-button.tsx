@@ -16,20 +16,10 @@ export const CopyButton = ({value, className}: Props) => {
 	return (
 		<Hint label="Copy to clipboard" side="left">
 			<Button
-				type="button"
 				size="default"
-				variant="secondary"
-				className={cn("text-xs font-normal px-2", className)}
+				className={cn("text-xs font-normal px-2 dark:text-black/90", className)}
 				onClick={() => copyToClipboard(value)}>
-				{isCopied ? (
-					<div className="flex items-center gap-1">
-						<CheckCircle className="!size-3.5" />
-					</div>
-				) : (
-					<div className="flex items-center gap-1">
-						<Copy className="!size-3.5" />
-					</div>
-				)}
+				{isCopied ? <CheckCircle size={16} /> : <Copy size={16} />}
 			</Button>
 		</Hint>
 	);

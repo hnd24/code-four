@@ -62,7 +62,7 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 				"h-full p-[12px] w-full overflow-y-auto flex flex-col my-auto rounded-xl overflow-hidden",
 				className,
 			)}>
-			<div className="w-full flex mb-3 items-center ">
+			<div className="w-full flex mb-2 items-center ">
 				<ScrollArea
 					className="w-full overflow-auto"
 					onWheel={e => {
@@ -78,10 +78,12 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 							data.map((item, index) => (
 								<div
 									key={index}
-									onClick={() => !isPending && setCheckedFileInput(item)}
+									onClick={() => setCheckedFileInput(item)}
 									className={cn(
-										"flex items-center gap-4 border-r-2 border-blackBorder text-white px-2 py-1 rounded-md hover:bg-gray-200/10 cursor-pointer",
-										item?.name === checkedFileInput?.name && "bg-gray-200/20",
+										"flex items-center gap-4  border-blackBorder px-2 py-1 rounded-md cursor-pointer  ",
+										"border-l-2 border-t-2 bg-gray-300/60 hover:bg-gray-400",
+										"dark:border-r-2 dark:bg-gray-200/20 dark:text-white dark:hover:bg-gray-200/60",
+										item?.name === checkedFileInput?.name && "bg-gray-400/60 dark:bg-gray-200/60",
 									)}>
 									<span>{item?.name}</span>
 									<div
@@ -90,7 +92,10 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 											setCheckedFileInput({name: "", content: ""});
 											e.stopPropagation();
 										}}>
-										<X size={16} className="hover:bg-white/80 rounded-full hover:text-blue-700" />
+										<X
+											size={16}
+											className="rounded-full hover:bg-gray-500 dark:hover:bg-white/80  dark:hover:text-blue-700"
+										/>
 									</div>
 								</div>
 							))}
@@ -103,7 +108,7 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 							<DialogTrigger asChild>
 								<Button
 									disabled={isPending}
-									className="h-8 w-8 bg-green-700 hover:bg-green-800 text-white rounded-lg !px-0 !py-0 ">
+									className="h-8 w-8 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-lg !px-0 !py-0 ">
 									<Plus size={14} />
 								</Button>
 							</DialogTrigger>
@@ -114,12 +119,20 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 									<div className="w-full flex flex-col gap-4">
 										<Label>File Name</Label>
 										<Input
+											onKeyDown={e => {
+												if (e.key === "Enter" && newFile.name !== "") {
+													setInputTem([...data, newFile]);
+													setCheckedFileInput(newFile);
+													setOpenCreateFileDialog(false);
+												}
+											}}
 											onChange={e => {
 												setNewFile({name: e.target.value, content: ""});
 											}}
 											placeholder="input.txt"
 										/>
 										<Button
+											className="dark:text-black"
 											disabled={newFile.name === ""}
 											onClick={() => {
 												setInputTem([...data, newFile]);
@@ -145,17 +158,17 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 					</Hint>
 				</div>
 			</div>
-			<span className="text-white w-full text-center uppercase truncate mb-2">
+			<span className=" dark:text-white/60 h-9 mb-2 w-full text-center uppercase truncate ">
 				Remember to save your changes
 			</span>
 			<Textarea
 				value={checkedFileInput?.content || ""}
 				disabled={!checkedFileInput?.name}
-				placeholder="chosen file input..."
+				placeholder={!checkedFileInput?.name ? "chosen file input..." : ""}
 				onChange={e =>
 					setCheckedFileInput({name: checkedFileInput?.name || "", content: e.target.value})
 				}
-				className="w-full h-full text-white bg-[#1e1e2e]/50 border-blackBorder overflow-y-hidden p-4"
+				className="w-full h-full dark:text-white dark:bg-[#1e1e2e]/50 border-blackBorder overflow-y-hidden p-4"
 			/>
 		</div>
 	);

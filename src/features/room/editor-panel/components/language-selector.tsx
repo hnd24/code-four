@@ -1,12 +1,7 @@
 "use client";
 
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
+import {SelectValue} from "@/components/select-theme";
+import {Select, SelectContent, SelectItem, SelectTrigger} from "@/components/ui/select";
 import {LANGUAGES} from "@/constants";
 import {useEditor} from "@/hooks/use-editor";
 import {cn} from "@/lib/utils";
@@ -45,15 +40,20 @@ export default function LanguageSelector({className, codeId, language}: Props) {
 				}}>
 				<SelectTrigger
 					className={cn(
-						"w-fit min-w-40 lg:min-w-44 bg-blackLight text-white/90 rounded-md border-blackBorder",
+						"w-fit min-w-40 lg:min-w-44 rounded-md border-2 ",
+						"border-black dark:border-blackBorder",
+						"dark:text-white/90  dark:border-blackBorder",
 						className,
 					)}>
 					<SelectValue placeholder="Language" />
 				</SelectTrigger>
-				<SelectContent className="bg-blackLight text-white/90 border-blackBorder ">
+				<SelectContent className=" dark:text-white/90 dark:border-blackBorder ">
 					{Object.values(LANGUAGES).map(({label, value}) => (
-						<SelectItem key={value} value={value}>
-							<div className="flex items-center justify-between gap-4 ">
+						<SelectItem
+							key={value}
+							value={value}
+							className="hover:bg-gray-300 dark:hover:bg-gray-600 ">
+							<div className="flex items-center justify-between gap-4 text-black dark:!text-white/60">
 								<Image src={`/languages/${value}.svg`} alt={label} width={20} height={20} />
 								<div>{label}</div>
 							</div>

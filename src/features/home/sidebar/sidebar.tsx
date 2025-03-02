@@ -1,8 +1,10 @@
 "use client";
 
+import SwitchMode from "@/components/switch-mode";
 import {
 	Sidebar,
 	SidebarContent,
+	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarMenu,
@@ -15,8 +17,6 @@ import {cn} from "@/lib/utils";
 import {useOrganization, useUser} from "@clerk/nextjs";
 import CreateOrgButton from "../components/create-org-button";
 import DropdownOrgs from "./components/dropdown-orgs";
-import DropdownProblems from "./components/dropdown-problems";
-import FooterSidebar from "./components/footer-sidebar";
 import HeaderSidebar from "./components/header-sidebar";
 import OrgProfile from "./components/org-profile";
 
@@ -29,16 +29,17 @@ export function AppSidebar() {
 		<div className={cn(!!user ? "flex" : "hidden")}>
 			<Sidebar
 				collapsible={isSignedIn ? "icon" : "offcanvas"}
-				className="text-gray-100/90 border-blackBorder ">
+				className="!border-r-2 border-blackBorder ">
 				{/* header */}
 				<HeaderSidebar open={open} toggleSidebar={toggleSidebar} />
-				<SidebarSeparator className="bg-blackBorder" />
+				<SidebarSeparator className="bg-blackBorder hidden dark:flex" />
 				{/* content */}
 				<SidebarContent>
 					<SidebarGroup>
 						<DropdownOrgs />
 						<SidebarSeparator className="bg-blackBorder" />
-						<DropdownProblems />
+						{/* feature is coming soon */}
+						{/* <DropdownProblems /> */}
 						<SidebarGroup className="group-data-[collapsible=icon]:hidden">
 							<SidebarGroupContent>
 								<SidebarMenu>
@@ -59,7 +60,13 @@ export function AppSidebar() {
 				</SidebarContent>
 				<SidebarSeparator className="bg-blackBorder" />
 				{/* footer */}
-				<FooterSidebar open={open} />
+				<SidebarFooter>
+					<SidebarMenu>
+						<SidebarMenuItem>
+							<SwitchMode open={open} />
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarFooter>
 			</Sidebar>
 		</div>
 	);

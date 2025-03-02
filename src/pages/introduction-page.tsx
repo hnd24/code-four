@@ -24,7 +24,8 @@ export default function IntroductionPage() {
 			</div>
 			<Link href={"/sign-in"}>
 				<Button
-					className="border-4 rounded-full text-lg py-4 px-6 
+					className="border-4 rounded-full text-lg py-4 px-6
+					bg-black
           hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r 
         hover:from-purple-400 hover:via-pink-500 hover:to-red-500 from-purple-400 via-pink-500 to-red-500">
 					{"Sign In"}

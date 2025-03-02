@@ -14,7 +14,7 @@ export const OutputAreaSkeleton = () => {
 					{randomWidth.map((width, i) => (
 						<div key={i} className="mb-3 flex items-center gap-4 ">
 							<Skeleton
-								className="h-4 bg-white/20"
+								className="h-4 bg-gray-400 dark:bg-white/20"
 								style={{
 									width: `${width}%`,
 								}}

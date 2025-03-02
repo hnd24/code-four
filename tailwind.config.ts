@@ -17,6 +17,7 @@ export default {
 				blackLight: "#12121a",
 				blackRed: "#f0040423",
 				blackBlue: "#00153c",
+				whiteLight: "#E8E8E8",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
 				card: {

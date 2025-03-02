@@ -307,3 +307,10 @@ export const deleteRoomsByCountUp = internalMutation({
 		);
 	},
 });
+
+export const updateNameRoom = mutation({
+	args: {roomId: v.id("rooms"), name: v.string()},
+	async handler(ctx, args) {
+		await ctx.db.patch(args.roomId, {name: args.name});
+	},
+});

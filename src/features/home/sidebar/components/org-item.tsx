@@ -29,8 +29,8 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 		<Hint label={name} side="right">
 			<div
 				className={cn(
-					"flex gap-2  cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-600/60 rounded-lg text-white",
-					isActive && " opacity-100 bg-gray-600/60",
+					"flex gap-2  cursor-pointer rounded-lg text-white hover:bg-gray-400 opacity-60 dark:hover:opacity-100 dark:hover:bg-gray-600/60 ",
+					isActive && "bg-gray-300 opacity-100 dark:bg-gray-600/60",
 					isOpen && "px-2 py-1",
 				)}
 				onClick={onClick}>
@@ -40,10 +40,14 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 						alt={name}
 						width={32}
 						height={32}
-						className=" rounded-lg border-2 border-blackBorder transition"
+						className=" rounded-lg border-2 border-white dark:border-blackBorder transition"
 					/>
 				</div>
-				<div className={cn("w-full hidden justify-between", isOpen && "flex")}>
+				<div
+					className={cn(
+						"w-full hidden justify-between font-medium text-black dark:text-white ",
+						isOpen && "flex",
+					)}>
 					<div className="w-full truncate flex items-center">{name}</div>
 					<div className={"truncate flex items-center w-fit"}>{memberCount}</div>
 				</div>

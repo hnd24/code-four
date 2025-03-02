@@ -15,7 +15,7 @@ export const OutputArea = ({error, output}: Props) => {
 	const {isRunning} = useRunCode();
 
 	return (
-		<ScrollArea className="h-full  rounded-xl border border-blackBorder bg-[#1e1e2e]/50 p-4 font-mono text-sm">
+		<ScrollArea className="h-full  rounded-xl border border-blackBorder bg-gray-200 dark:bg-[#1e1e2e]/50 p-4 font-mono text-sm">
 			<OutputAreaContent isLoading={isRunning} error={error} output={output} />
 		</ScrollArea>
 	);
@@ -40,20 +40,20 @@ function OutputAreaContent({isLoading, error, output}: Props) {
 				<AlertTriangle className="mt-1 size-5 flex-shrink-0" />
 				<div className="space-y-1">
 					<div className="font-medium truncate">Execution Error</div>
-					<pre className="whitespace-pre-wrap text-red-400/80">{error}</pre>
+					<pre className="whitespace-pre-wrap text-red-400">{error}</pre>
 				</div>
 			</div>
 		);
 	}
 
-	if (output) {
+	if (!error) {
 		return (
 			<div className="space-y-2">
 				<div className="mb-3 flex items-center gap-2 text-emerald-400">
 					<CheckCircle className="size-5" />
 					<span className="font-medium truncate">Execution Successful</span>
 				</div>
-				<pre className="whitespace-pre-wrap text-gray-300">{output}</pre>
+				<pre className="whitespace-pre-wrap text-black/90 dark:text-gray-300">{output}</pre>
 			</div>
 		);
 	}

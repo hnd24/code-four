@@ -32,7 +32,9 @@ export default function DropdownOrgs() {
 			<SidebarGroup>
 				<SidebarGroupLabel asChild>
 					<CollapsibleTrigger>
-						<div className="text-gray-100/60 text-base gap-2 flex w-full truncate">
+						<div
+							className="text-base gap-2 flex w-full truncate text-black font-bold 
+							dark:text-white/60 dark:font-normal">
 							{isPending ? (
 								<Loader size={18} className=" relative top-0.5" />
 							) : (
@@ -40,7 +42,7 @@ export default function DropdownOrgs() {
 							)}
 							Organizations
 						</div>
-						<ChevronDown className="ml-auto text-gray-100/60 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+						<ChevronDown className="ml-auto text-black dark:text-white/60 transition-transform group-data-[state=open]/collapsible:rotate-180" />
 					</CollapsibleTrigger>
 				</SidebarGroupLabel>
 				<CollapsibleContent>

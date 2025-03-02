@@ -19,7 +19,7 @@ export default function SelectTypeRoom() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button className="ml-auto bg-green-700 hover:bg-green-800  outline-none px-2 py-1">
+				<Button className="ml-auto dark:bg-green-700 dark:hover:bg-green-800  outline-none px-2 py-1">
 					<span className="lg:flex hidden">Type</span>
 					<ListCollapse className="flex lg:hidden " size={18} />
 				</Button>

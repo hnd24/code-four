@@ -42,7 +42,9 @@ export default function ContentRoom({roomId}: Props) {
 	return (
 		<ResizablePanelGroup
 			direction={!isMobile ? "horizontal" : "vertical"}
-			className="h-full max-h-[1280px] w-full bg-blackLight/90 rounded-xl border-2 border-blackBorder overflow-hidden ">
+			className="h-full max-h-[1280px] w-full overflow-hidden rounded-xl border-2 shadow-2xl
+			bg-whiteLight border-black
+			dark:bg-blackLight/90 dark:border-blackBorder  ">
 			<ResizablePanel defaultSize={60}>
 				<EditorPanel
 					setOutputContent={setOutputContent}
@@ -56,13 +58,11 @@ export default function ContentRoom({roomId}: Props) {
 				{!inputConfig ? (
 					<OutputPanel outputContent={outputContent} />
 				) : (
-					<ResizablePanelGroup
-						direction="vertical"
-						className="w-full bg-blackLight/90 overflow-hidden">
+					<ResizablePanelGroup direction="vertical" className="w-full  overflow-hidden">
 						<ResizablePanel defaultSize={40}>
 							<OutputPanel outputContent={outputContent} />
 						</ResizablePanel>
-						<ResizableHandle className="h-0 bg-blackBlue " withHandle />
+						<ResizableHandle className="h-0  " withHandle />
 						<ResizablePanel defaultSize={60}>
 							<InputPanel setInputTem={setInputTem} codeId={code?._id} inputTem={inputTem} />
 						</ResizablePanel>

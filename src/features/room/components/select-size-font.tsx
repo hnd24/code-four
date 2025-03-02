@@ -21,8 +21,9 @@ export default function SelectSizeFont() {
 			<DropdownMenuTrigger>
 				<Hint label="Font size">
 					<div
-						className="w-9 h-9 flex items-center justify-center 
-					bg-gray-200  rounded-lg border-none text-gray-900 hover:bg-gray-200/80 !outline-none">
+						className="w-9 h-9 flex items-center justify-center rounded-lg !outline-none
+						bg-black text-white hover:bg-black/80
+					dark:bg-gray-200  dark:rounded-lg dark:border-none dark:text-black dark:hover:bg-gray-200/80 ">
 						<Type size={16} />
 					</div>
 				</Hint>

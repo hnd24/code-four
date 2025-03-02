@@ -28,7 +28,9 @@ export default function Content({user, org}: Props) {
 			<SeparatorCustom className="flex md:hidden" />
 			<div className="w-full mx-auto text-white flex flex-col gap-4">
 				<div className="flex flex-col">
-					<span className="text-xl font-bold md:flex hidden">List rooms :</span>
+					<span className="text-xl font-bold md:flex hidden text-black dark:text-white/60">
+						List rooms :
+					</span>
 					<Table orgId={org?.id} userId={user?.id} />
 				</div>
 			</div>

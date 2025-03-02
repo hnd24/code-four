@@ -45,13 +45,14 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<div>
+				<div className="px-2">
 					<Hint label={"Create new room"} side="top">
 						<Button
 							asChild
 							disabled={isPending || disabled}
-							className="!w-64 !h-40 bg-blackLight justify-center items-center rounded-xl border-2 border-blackBorder 
-  hover:bg-gray-900 hover:border-gray-600 hidden md:flex">
+							className="hidden md:flex !w-64 !h-40 justify-center items-center rounded-xl border-2 
+							bg-gray-300 hover:bg-gray-400 hover:border-black/60
+							dark:bg-blackLight  dark:hover:bg-gray-900 dark:border-blackBorder dark:hover:border-gray-600">
 							<div className="h-full w-full flex flex-col justify-center items-center">
 								<span className="text-4xl">
 									<Plus className="w-20 h-20 text-blackBorder hover:text-gray-600" />
@@ -59,7 +60,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 							</div>
 						</Button>
 					</Hint>
-					<Button className=" text-gray-100/90 bg-indigo-600 flex md:hidden py-6 rounded-full">
+					<Button className=" text-white/90 dark:bg-indigo-600 flex md:hidden py-6 rounded-full">
 						<CopyPlus size={18} />
 					</Button>
 				</div>
@@ -91,6 +92,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 						</div>
 					</div>
 					<Button
+						className="dark:text-black"
 						disabled={isPending}
 						onClick={async () => {
 							await createRoom({name: nameRoom, author: user.id, orgId: org.id});

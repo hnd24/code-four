@@ -1,5 +1,6 @@
 "use client";
 
+import SwitchMode from "@/components/switch-mode";
 import {
 	Accordion,
 	AccordionContent,
@@ -39,22 +40,29 @@ export default function Navbar({className}: Props) {
 			<SheetTrigger className={className}>
 				<Image src="/favicon/logo.ico" alt="logo" width={50} height={50} />
 			</SheetTrigger>
-			<SheetContent side="left" className="bg-blackLight text-white/90 w-fit min-w-60">
+			<SheetContent
+				side="left"
+				className=" w-fit min-w-60 
+				bg-whiteLight/90
+			dark:bg-blackLight dark:text-white/90">
 				<SheetHeader>
-					<SheetTitle className="text-white/90 text-start">Code Four</SheetTitle>
-					<SheetDescription className="text-white/60 text-start">
+					<SheetTitle className="dark:text-white/90 text-start">Code Four</SheetTitle>
+					<SheetDescription className="dark:text-white/60 text-start">
 						Code together, fun together
 					</SheetDescription>
 				</SheetHeader>
+				<div className="w-full h-[1px] my-4 bg-black dark:bg-blackBorder "></div>
 				<Accordion type="single" collapsible>
 					<AccordionItem value="item-1">
-						<AccordionTrigger>Select Language</AccordionTrigger>
+						<AccordionTrigger className="font-bold text-black/80 dark:text-white/60">
+							Select Language
+						</AccordionTrigger>
 						{Object.values(LANGUAGES).map(({label, value}) => (
 							<AccordionContent
 								key={value}
 								className={cn(
-									"flex justify-between hover:cursor-pointer text-gray-500",
-									CheckedLanguage === value && "text-gray-100",
+									"flex items-center justify-between hover:cursor-pointer text-black/50 dark:text-white/30 py-2 px-2 rounded-lg",
+									CheckedLanguage === value && "text-black/80 dark:text-white/80 bg-gray-400",
 								)}
 								onClick={() => setConfig({language: value})}>
 								<div className="flex items-center gap-4 ">
@@ -67,15 +75,17 @@ export default function Navbar({className}: Props) {
 						))}
 					</AccordionItem>
 					<AccordionItem value="item-2">
-						<AccordionTrigger>Select theme</AccordionTrigger>
+						<AccordionTrigger className="font-bold text-black/80 dark:text-white/60">
+							Select theme
+						</AccordionTrigger>
 						{THEMES.map(theme => {
 							return (
 								<AccordionContent
 									key={theme.value}
 									onClick={() => setConfig({theme: theme.value})}
 									className={cn(
-										"flex items-center justify-between hover:cursor-pointer text-gray-500",
-										CheckedTheme === theme.value && "text-gray-100",
+										"flex items-center justify-between hover:cursor-pointer text-black/50 dark:text-white/30 py-2 px-2 rounded-lg",
+										CheckedTheme === theme.value && "text-black/80 dark:text-white/80 bg-gray-400",
 									)}>
 									<div className={"flex gap-4"}>
 										<theme.icon size={16} />
@@ -86,18 +96,24 @@ export default function Navbar({className}: Props) {
 							);
 						})}
 					</AccordionItem>
-					<AccordionItem value="item-3" className=" pt-2 border-none ">
+					<div className="pt-4 pb-2 border-none ">
 						<Button
 							onClick={() => setConfig({hiddenRemoteSelection: !hiddenRemoteSelection})}
-							className={cn("w-full ", hiddenRemoteSelection ? "bg-sky-800" : "bg-sky-800/60")}>
+							className={cn(
+								"w-full ",
+								hiddenRemoteSelection ? "dark:bg-sky-800" : "bg-black/60 dark:bg-sky-800/60",
+							)}>
 							Teammate's cursor
 						</Button>
-					</AccordionItem>
-					<AccordionItem value="item-4" className=" py-2 border-none">
+					</div>
+					<div className=" py-2 border-none">
+						<SwitchMode open />
+					</div>
+					<div className=" py-2 border-none">
 						<Link href={"/"} className="w-full">
-							<Button className="w-full bg-blue-800">Return home</Button>
+							<Button className="w-full dark:bg-blue-800">Return home</Button>
 						</Link>
-					</AccordionItem>
+					</div>
 				</Accordion>
 			</SheetContent>
 		</Sheet>

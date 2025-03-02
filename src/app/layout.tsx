@@ -2,11 +2,11 @@ import {ConvexClientProvider} from "@/providers/ConvexClientProvider";
 import {ClerkProvider} from "@clerk/nextjs";
 import {dark} from "@clerk/themes";
 import {Metadata} from "next";
+import {ThemeProvider} from "next-themes";
 import {Geist, Geist_Mono} from "next/font/google";
 import {NuqsAdapter} from "nuqs/adapters/next/app";
 import {Toaster} from "sonner";
 import "./globals.css";
-
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -37,11 +37,11 @@ export default function RootLayout({
 			appearance={{
 				baseTheme: dark,
 			}}>
-			<html lang="en">
+			<html lang="en" suppressHydrationWarning>
 				<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 					<ConvexClientProvider>
 						<NuqsAdapter>
-							{children}
+							<ThemeProvider attribute="class">{children}</ThemeProvider>
 							<Toaster richColors theme="light" />
 						</NuqsAdapter>
 					</ConvexClientProvider>

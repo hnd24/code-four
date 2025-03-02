@@ -23,7 +23,9 @@ export function Avatars() {
 
 export function Avatar({picture, name}: {picture: string; name: string}) {
 	return (
-		<div className={"flex border-2 rounded-full w-7 h-7 -ml-2"} data-tooltip={name}>
+		<div
+			className={"flex border-2 border-blackBorder rounded-full w-7 h-7 -ml-2"}
+			data-tooltip={name}>
 			<Hint label={name} side="bottom">
 				<Image src={picture} width={28} height={28} alt="avt" className="rounded-full" />
 			</Hint>

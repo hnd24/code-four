@@ -11,7 +11,7 @@ body {
 		box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
 	}
 	:root {
-		--user-color: #000000;
+		--user-color: 0, 0%, 0%;
 		--background: 0 0% 100%;
 		--foreground: 240 10% 3.9%;
 		--card: 0 0% 100%;
@@ -37,7 +37,8 @@ body {
 		--chart-4: 43 74% 66%;
 		--chart-5: 27 87% 67%;
 		--radius: 0.5rem;
-		--sidebar-background: 240, 18%, 9%;
+		--sidebar-background: 0, 0%, 91%;
+		/* --sidebar-background: 60, 100%, 100%; */
 		--sidebar-foreground: 240 5.3% 26.1%;
 		--sidebar-primary: 240 5.9% 10%;
 		--sidebar-primary-foreground: 0 0% 98%;
@@ -45,13 +46,17 @@ body {
 		--sidebar-accent-foreground: 240 5.9% 10%;
 		--sidebar-border: 220 13% 91%;
 		--sidebar-ring: 217.2 91.2% 59.8%;
+		--text-custom: 0, 0%, 0%;
+		--border-custom: 0, 0%, 0%;
 	}
 	.dark {
+		--text-custom: 0, 0%, 100%;
+		--border-custom: 237, 16%, 23%;
 		--background: 240 10% 3.9%;
 		--foreground: 0 0% 98%;
 		--card: 240 10% 3.9%;
 		--card-foreground: 0 0% 98%;
-		--popover: 240 10% 3.9%;
+		--popover: 240, 18%, 9%;
 		--popover-foreground: 0 0% 98%;
 		--primary: 0 0% 98%;
 		--primary-foreground: 240 5.9% 10%;
@@ -71,7 +76,7 @@ body {
 		--chart-3: 30 80% 55%;
 		--chart-4: 280 65% 60%;
 		--chart-5: 340 75% 55%;
-		--sidebar-background: 240 5.9% 10%;
+		--sidebar-background: 240, 18%, 9%;
 		--sidebar-foreground: 240 4.8% 95.9%;
 		--sidebar-primary: 224.3 76.3% 48%;
 		--sidebar-primary-foreground: 0 0% 100%;

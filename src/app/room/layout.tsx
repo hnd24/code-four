@@ -12,7 +12,7 @@ export default function RoomLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className="w-screen h-screen bg-blackLight">
+		<div className="w-screen h-screen bg-whiteLight dark:bg-blackLight">
 			<Providers>{children}</Providers>
 		</div>
 	);

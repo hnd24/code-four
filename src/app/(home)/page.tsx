@@ -9,6 +9,7 @@ export default function HomePage() {
 	const {isSignedIn, user} = useUser();
 	const {organization} = useOrganization();
 	if (!isSignedIn) return <IntroductionPage />;
+
 	return (
 		<>
 			<div className="flex flex-col h-full w-full py-1 px-2 relative">

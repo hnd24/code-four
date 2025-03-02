@@ -22,7 +22,7 @@ export const columnsOrgFav: ColumnDef<roomType>[] = [
 					<div className="w-full flex justify-center">
 						<Hint label="click to move room" key={row.id}>
 							<Button
-								className=" bg-blue-700 hover:bg-blue-800 "
+								className=" dark:bg-blue-700 dark:hover:bg-blue-800 "
 								onClick={() => {
 									window.location.href = `/room/${room?._id}`;
 								}}>
@@ -50,7 +50,7 @@ export const columnsOrgFav: ColumnDef<roomType>[] = [
 				<span className="flex items-center">Create at</span>
 				<Button
 					variant="ghost"
-					className="rounded-full hover:!bg-gray-300/60 !outline-none"
+					className="rounded-full text-black bg-whiteLight hover:bg-gray-400 dark:bg-blackLight dark:hover:bg-gray-300/60 outline-none"
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					<ArrowUpDown className=" h-4 w-4" />
 				</Button>

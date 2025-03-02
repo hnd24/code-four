@@ -50,7 +50,7 @@ export const columnsUserTrash: ColumnDef<roomType>[] = [
 				<span className="flex items-center">Create at</span>
 				<Button
 					variant="ghost"
-					className="rounded-full hover:!bg-gray-300/60 !outline-none"
+					className="rounded-full bg-blackLight hover:bg-gray-300/60 !outline-none"
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					<ArrowUpDown className=" h-4 w-4" />
 				</Button>

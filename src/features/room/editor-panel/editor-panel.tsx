@@ -38,6 +38,7 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 		setConfig,
 	} = useEditor();
 
+	console.log("🚀 ~ Edi	torPanel ~ language:", language === "cpp");
 	const [value, setValue] = useState<string | undefined>("");
 	const {executeCode, isPending: isExecuting} = useExecuteCode();
 
@@ -95,37 +96,37 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 					/>
 				</div>
 
-				<div className="flex gap-2">
+				<div className="flex items-center gap-2 h-10">
 					<Hint label="display teammate's cursor">
 						<Button
-							variant="outline"
 							size="icon"
 							className={cn(
-								" border-none text-gray-900 hover:bg-gray-200/80 hidden md:flex",
-								hiddenRemoteSelection ? "bg-gray-200" : "bg-gray-200/60",
+								"hidden md:flex",
+								"dark:bg-gray-200 dark:border-none dark:text-black dark:hover:bg-gray-200/80 ",
+								hiddenRemoteSelection ? "dark:bg-gray-200" : "bg-black/50 dark:bg-gray-200/60",
 							)}
 							onClick={() => setConfig({hiddenRemoteSelection: !hiddenRemoteSelection})}>
 							<Contact size={20} />
 						</Button>
 					</Hint>
-					<Hint label="file inputConfig">
+					{/* ********************** */}
+					<Hint label="file input">
 						<Button
-							variant="outline"
 							size="icon"
 							className={cn(
-								" border-none text-gray-900 hover:bg-gray-200/80 hidden md:flex",
-								inputConfig ? "bg-gray-200" : "bg-gray-200/60",
+								" dark:bg-gray-200 dark:border-none dark:text-black dark:hover:bg-gray-200/80",
+								inputConfig ? "dark:bg-gray-200" : "bg-black/50 dark:bg-gray-200/60",
+								(language === "cpp" || language === "csharp") && "hidden",
 							)}
 							onClick={() => setConfig({input: !inputConfig})}>
 							<FileInput size={20} />
 						</Button>
 					</Hint>
-
+					{/* ********************** */}
 					<Hint label="Example">
 						<Button
-							variant="outline"
 							size="icon"
-							className="bg-gray-200 border-none text-gray-900 hover:bg-gray-200/80"
+							className="dark:bg-gray-200 dark:border-none dark:text-black dark:hover:bg-gray-200/80"
 							onClick={onReset}>
 							<Atom size={20} />
 						</Button>
