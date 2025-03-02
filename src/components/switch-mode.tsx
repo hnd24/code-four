@@ -1,9 +1,9 @@
 "use client";
+import {Hint} from "@/components/hint";
+import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
 import {Moon, Sun} from "lucide-react";
 import {useTheme} from "next-themes";
-import {Hint} from "./hint";
-import {Button} from "./ui/button";
 
 type Props = {
 	open?: boolean;
@@ -13,29 +13,19 @@ type Props = {
 export default function SwitchMode({open = false, className}: Props) {
 	const {theme, setTheme} = useTheme();
 	return (
-		<>
-			<Hint label="switch mode">
-				<div className={cn("flex w-full justify-center items-center", className)}>
-					<Button
-						className={cn(
-							"hidden w-full truncate bg-indigo-900 hover:bg-indigo-950 text-black dark:text-white",
-							theme === "dark" && "flex",
-							className,
-						)}
-						onClick={() => setTheme("light")}>
-						{open ? "Dark theme" : <Moon />}
-					</Button>
-					<Button
-						className={cn(
-							"hidden w-full truncate bg-black hover:bg-black/80",
-							theme === "light" && "flex",
-							className,
-						)}
-						onClick={() => setTheme("dark")}>
-						{open ? "Light theme" : <Sun />}
-					</Button>
-				</div>
-			</Hint>
-		</>
+		<Hint label="switch mode">
+			<div className={cn("flex w-full  justify-center items-center", className)}>
+				<Button
+					className={cn(
+						"h-9 w-full !text-white ",
+						"dark:bg-indigo-900 dark:hover:bg-indigo-950",
+						"bg-black hover:bg-black/80 ",
+						className,
+					)}
+					onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+					{theme === "dark" ? open ? "Dark mode" : <Moon /> : open ? "Light mode" : <Sun />}
+				</Button>
+			</div>
+		</Hint>
 	);
 }

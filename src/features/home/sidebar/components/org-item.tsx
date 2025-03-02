@@ -29,7 +29,9 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 		<Hint label={name} side="right">
 			<div
 				className={cn(
-					"flex gap-2  cursor-pointer rounded-lg text-white hover:bg-gray-400 opacity-60 dark:hover:opacity-100 dark:hover:bg-gray-600/60 ",
+					"flex gap-2 overflow-hidden cursor-pointer rounded-lg  opacity-60 ",
+					"text-white hover:bg-gray-400",
+					" dark:hover:opacity-100 dark:hover:bg-gray-600/60",
 					isActive && "bg-gray-300 opacity-100 dark:bg-gray-600/60",
 					isOpen && "px-2 py-1",
 				)}

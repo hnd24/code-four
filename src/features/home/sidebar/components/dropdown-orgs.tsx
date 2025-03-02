@@ -31,9 +31,9 @@ export default function DropdownOrgs() {
 		<Collapsible defaultOpen className="group/collapsible">
 			<SidebarGroup>
 				<SidebarGroupLabel asChild>
-					<CollapsibleTrigger>
+					<CollapsibleTrigger className="">
 						<div
-							className="text-base gap-2 flex w-full truncate text-black font-bold 
+							className="text-base  gap-2 flex w-full truncate text-black font-bold 
 							dark:text-white/60 dark:font-normal">
 							{isPending ? (
 								<Loader size={18} className=" relative top-0.5" />
