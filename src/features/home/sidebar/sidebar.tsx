@@ -15,16 +15,14 @@ import {
 } from "@/components/ui/sidebar";
 import {cn} from "@/lib/utils";
 import {useOrganization, useUser} from "@clerk/nextjs";
-import {useTheme} from "next-themes";
 import CreateOrgButton from "../components/create-org-button";
+import DropdownOrgs from "./components/dropdown-orgs";
 import HeaderSidebar from "./components/header-sidebar";
 import OrgProfile from "./components/org-profile";
-import DropdownOrgs from "./components/dropdown-orgs";
 
 export function AppSidebar() {
-	const {open, toggleSidebar} = useSidebar();
+	const {open, openMobile, toggleSidebar} = useSidebar();
 	const {isSignedIn} = useUser();
-	const {theme, setTheme} = useTheme();
 	const {organization} = useOrganization();
 	const {user} = useUser();
 	return (
@@ -33,7 +31,7 @@ export function AppSidebar() {
 				collapsible={isSignedIn ? "icon" : "offcanvas"}
 				className="!border-r-2 border-blackBorder ">
 				{/* header */}
-				<HeaderSidebar open={open} toggleSidebar={toggleSidebar} />
+				<HeaderSidebar open={open || openMobile} toggleSidebar={toggleSidebar} />
 				<SidebarSeparator className="bg-blackBorder hidden dark:flex" />
 				{/* content */}
 				<SidebarContent>

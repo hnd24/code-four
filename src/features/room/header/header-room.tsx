@@ -1,13 +1,14 @@
 "use client";
 
-import Logo from "@/features/room/components/logo-room-page";
+import Logo from "@/features/room/header/logo-room-page";
 
 import {cn} from "@/lib/utils";
 import {Avatars} from "@/liveblocks/components/Avatars";
 import {Moon, Sun} from "lucide-react";
 import {useTheme} from "next-themes";
-import Navbar from "./navbar";
+import Navbar from "../components/navbar";
 import ThemeSelector from "./theme-selector";
+
 type Props = {
 	roomName?: string;
 };

@@ -10,9 +10,9 @@ import {FileInputType, outputContent} from "@/types";
 import {convexQuery, useConvexMutation} from "@convex-dev/react-query";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {useEffect, useState} from "react";
-import {api} from "../../../convex/_generated/api";
-import {Id} from "../../../convex/_generated/dataModel";
-import InputPanel from "./input-panel/input-panel";
+import {api} from "../../../../convex/_generated/api";
+import {Id} from "../../../../convex/_generated/dataModel";
+import InputPanel from "../input-panel/input-panel";
 
 type Props = {
 	roomId: string;

@@ -2,8 +2,8 @@
 
 import Loading from "@/app/loading";
 import NotFound from "@/app/not-found";
-import HeaderRoom from "@/features/room/components/header-room";
-import ContentRoom from "@/features/room/content-room";
+import ContentRoom from "@/features/room/content/content-room";
+import HeaderRoom from "@/features/room/header/header-room";
 import {Room} from "@/liveblocks/Room";
 import NoAccessPage from "@/pages/no-access-page";
 import {convexQuery} from "@convex-dev/react-query";
