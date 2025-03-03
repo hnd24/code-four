@@ -1,7 +1,6 @@
 "use client";
 import {ArrowRightFromLine, ArrowUpDown} from "lucide-react";
 
-import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
 import {formatTime} from "@/lib/utils";
 import {roomType} from "@/types";
@@ -20,16 +19,14 @@ export const columnsOrgFav: ColumnDef<roomType>[] = [
 			if (room?._id)
 				return (
 					<div className="w-full flex justify-center">
-						<Hint label="click to move room" key={row.id}>
-							<Button
-								className=" dark:bg-blue-700 dark:hover:bg-blue-800 "
-								onClick={() => {
-									window.location.href = `/room/${room?._id}`;
-								}}>
-								<span className="hidden lg:flex">Join Room</span>
-								<ArrowRightFromLine className="flex lg:hidden" size={14} />
-							</Button>
-						</Hint>
+						<Button
+							className=" dark:bg-blue-700 dark:hover:bg-blue-800 "
+							onClick={() => {
+								window.location.href = `/room/${room?._id}`;
+							}}>
+							<span className="hidden lg:flex">Join Room</span>
+							<ArrowRightFromLine className="flex lg:hidden" size={14} />
+						</Button>
 					</div>
 				);
 		},
