@@ -1,9 +1,9 @@
 "use client";
 
-import NoOrg from "@/components/no-org";
 import Content from "@/features/home/content/content";
 import HeaderHome from "@/features/home/header/header-home";
 import IntroductionPage from "@/pages/introduction-page";
+import NoOrgPage from "@/pages/no-org-page";
 import {useOrganization, useUser} from "@clerk/nextjs";
 export default function HomePage() {
 	const {isSignedIn, user} = useUser();
@@ -21,7 +21,7 @@ export default function HomePage() {
 							org={{id: organization.id, name: organization.name, image: organization.imageUrl}}
 						/>
 					) : (
-						<NoOrg />
+						<NoOrgPage />
 					)}
 				</div>
 			</div>
