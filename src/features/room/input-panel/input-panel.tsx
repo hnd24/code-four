@@ -36,6 +36,7 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 	const [checkedFileInput, setCheckedFileInput] = useState<FileInputType>({name: "", content: ""});
 	const [openCreateFileDialog, setOpenCreateFileDialog] = useState<boolean>(false);
 	const [newFile, setNewFile] = useState<FileInputType>({name: "", content: ""});
+	const [nameFiles, setNameFiles] = useState<string[]>([]);
 	const {mutate: updateInput, isPending} = useMutation({
 		mutationFn: useConvexMutation(api.code.updateInputInCodeRoom),
 	});
@@ -56,6 +57,10 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 		}
 	}, [isPending]);
 
+	useEffect(() => {
+		return setNameFiles(data.map(item => item.name));
+	}, [data]);
+	const isDisabled = newFile.name === "" || nameFiles.includes(newFile.name);
 	return (
 		<div
 			className={cn(
@@ -80,10 +85,11 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 									key={index}
 									onClick={() => setCheckedFileInput(item)}
 									className={cn(
-										"flex items-center gap-4  border-blackBorder px-2 py-1 rounded-md cursor-pointer  ",
-										"border-l-2 border-t-2 bg-gray-300/60 hover:bg-gray-400",
+										"w-fit flex items-center gap-4  border-blackBorder px-2 py-1 rounded-md cursor-pointer  ",
+										"border-l-2  bg-gray-300/60 hover:bg-gray-400",
 										"dark:border-r-2 dark:bg-gray-200/20 dark:text-white dark:hover:bg-gray-200/60",
-										item?.name === checkedFileInput?.name && "bg-gray-400/60 dark:bg-gray-200/60",
+										item?.name === checkedFileInput?.name &&
+											"bg-gray-400/60 border-t-2 dark:bg-gray-200/60",
 									)}>
 									<span>{item?.name}</span>
 									<div
@@ -133,7 +139,7 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 										/>
 										<Button
 											className="dark:text-black"
-											disabled={newFile.name === ""}
+											disabled={isDisabled}
 											onClick={() => {
 												setInputTem([...data, newFile]);
 												setCheckedFileInput(newFile);
@@ -168,7 +174,9 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 				onChange={e =>
 					setCheckedFileInput({name: checkedFileInput?.name || "", content: e.target.value})
 				}
-				className="w-full h-full dark:text-white dark:bg-[#1e1e2e]/50 border-blackBorder overflow-y-hidden p-4"
+				className="w-full h-full  overflow-y-hidden p-4
+				bg-gray-200  border-blackBorder
+				dark:text-white dark:bg-[#1e1e2e]/50"
 			/>
 		</div>
 	);

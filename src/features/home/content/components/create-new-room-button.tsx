@@ -60,7 +60,10 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 							</div>
 						</Button>
 					</Hint>
-					<Button className=" text-white/90 dark:bg-indigo-600 flex md:hidden py-6 rounded-full">
+					<Button
+						className="flex md:hidden py-6 rounded-full
+						text-white/90 
+						dark:bg-indigo-600 ">
 						<CopyPlus size={18} />
 					</Button>
 				</div>

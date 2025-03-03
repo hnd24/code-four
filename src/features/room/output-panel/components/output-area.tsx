@@ -59,8 +59,11 @@ function OutputAreaContent({isLoading, error, output}: Props) {
 	}
 
 	return (
-		<div className="flex h-full flex-col items-center justify-center text-gray-500">
-			<div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-gray-800/50 ring-1 ring-gray-700/50">
+		<div className="flex h-full flex-col items-center justify-center dark:text-gray-500">
+			<div
+				className="mb-4 flex size-12 items-center justify-center rounded-xl
+				bg-gray-300
+			dark:bg-gray-800/50 dark:ring-1 dark:ring-gray-700/50">
 				<Clock className="size-6" />
 			</div>
 			<p className="text-center truncate">Run your code to see the output here...</p>

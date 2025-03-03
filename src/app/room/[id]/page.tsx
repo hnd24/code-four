@@ -16,7 +16,7 @@ export default function RoomPage() {
 	const pathname = usePathname();
 
 	const roomId = pathname?.split("/").pop() || "";
-	const {data, isPending} = useQuery(
+	const {data: room, isPending} = useQuery(
 		convexQuery(api.rooms.confirmJoinRoom, {roomId: roomId as Id<"rooms">}),
 	);
 
@@ -24,14 +24,14 @@ export default function RoomPage() {
 		<>
 			{isPending ? (
 				<Loading />
-			) : !data ? (
+			) : !room ? (
 				<NotFound />
-			) : data === 5 ? (
+			) : room === 5 ? (
 				<NoAccessPage />
 			) : (
 				<Room>
 					<div className="h-screen max-w-screen-2xl flex flex-col items-center mx-auto p-4 gap-4">
-						<HeaderRoom roomName={data.name} />
+						<HeaderRoom roomName={room.name} roomId={roomId} authorId={room.author} />
 						<ContentRoom roomId={roomId} />
 					</div>
 				</Room>
