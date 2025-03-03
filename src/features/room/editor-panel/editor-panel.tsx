@@ -67,7 +67,6 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 
 		const data = await executeCode({language, code: value, input});
 		setOutputContent({output: data.stdout, error: data.stderr});
-		console.log("🚀 ~ onExecute ~ data:", data);
 	};
 
 	return (

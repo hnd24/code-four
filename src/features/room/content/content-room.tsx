@@ -20,7 +20,8 @@ type Props = {
 
 export default function ContentRoom({roomId}: Props) {
 	const {
-		config: {input: inputConfig},
+		config: {input: inputConfig, language},
+		setConfig,
 	} = useEditor();
 	const [outputContent, setOutputContent] = useState<outputContent>({output: "", error: ""});
 	const [inputTem, setInputTem] = useState<FileInputType[]>([]);
@@ -29,15 +30,18 @@ export default function ContentRoom({roomId}: Props) {
 	const {data: code, isPending} = useQuery(
 		convexQuery(api.code.getCodeByRoomId, {roomId: roomId as Id<"rooms">}),
 	);
-	const {mutate: updateInput} = useMutation({
-		mutationFn: useConvexMutation(api.code.updateInputInCodeRoom),
-	});
 
 	useEffect(() => {
 		if (code?.input) {
 			setInputTem(code.input);
 		}
 	}, [code]);
+
+	useEffect(() => {
+		if (language === "cpp" || language === "csharp") {
+			setConfig({input: false});
+		}
+	}, [language]);
 
 	return (
 		<ResizablePanelGroup
