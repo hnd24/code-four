@@ -101,7 +101,7 @@ export default function Navbar({className}: Props) {
 							onClick={() => setConfig({hiddenRemoteSelection: !hiddenRemoteSelection})}
 							className={cn(
 								"w-full ",
-								hiddenRemoteSelection ? "dark:bg-sky-800" : "bg-black/60 dark:bg-sky-800/60",
+								!hiddenRemoteSelection ? "dark:bg-sky-800" : "bg-black/60 dark:bg-sky-800/60",
 							)}>
 							Teammate's cursor
 						</Button>

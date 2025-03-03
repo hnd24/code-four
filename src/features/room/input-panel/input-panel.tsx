@@ -129,7 +129,7 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 										<Label>File Name</Label>
 										<Input
 											onKeyDown={e => {
-												if (e.key === "Enter" && isDisabled) {
+												if (e.key === "Enter" && !isDisabled) {
 													setInputTem([...data, newFile]);
 													setCheckedFileInput(newFile);
 													setOpenCreateFileDialog(false);

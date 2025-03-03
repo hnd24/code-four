@@ -55,6 +55,12 @@ export default function UpdateRoom({room, author, org}: PropsDetailsRoom) {
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">New Name</Label>
 						<Input
+							onKeyDown={async e => {
+								if (e.key === "Enter" && !isDisabled) {
+									updateNameRoom({roomId: room._id as Id<"rooms">, name: newName});
+									setOpen(false);
+								}
+							}}
 							onChange={e => setNewName(e.target.value)}
 							className="col-span-4"
 							defaultValue={room?.name}
@@ -76,15 +82,7 @@ export default function UpdateRoom({room, author, org}: PropsDetailsRoom) {
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">Org</Label>
 						<div className="col-span-4 flex gap-2">
-							<Input
-								onKeyDown={e => {
-									if (e.key === "Enter" && isDisabled) {
-									}
-								}}
-								className="w-full"
-								value={org?.name}
-								disabled
-							/>
+							<Input className="w-full" value={org?.name} disabled />
 							<Image
 								src={org?.image || "/avt-room.png"}
 								alt="logo Org"

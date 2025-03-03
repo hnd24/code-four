@@ -59,8 +59,10 @@ export default function UpdateDateRoomNamRoom({roomName, roomId}: Props) {
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">New Name</Label>
 						<Input
-							onKeyDown={e => {
-								if (e.key === "Enter" && isDisabled) {
+							onKeyDown={async e => {
+								if (e.key === "Enter" && !isDisabled) {
+									await updateNameRoom({roomId: roomId as Id<"rooms">, name: newName});
+									setOpen(false);
 								}
 							}}
 							onChange={e => setNewName(e.target.value)}

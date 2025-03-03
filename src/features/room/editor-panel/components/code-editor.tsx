@@ -80,7 +80,7 @@ export const CodeEditor = ({
 
 	return (
 		<>
-			{provider ? <Cursors yProvider={provider} /> : null}
+			<Cursors />
 			<Editor
 				onMount={handleOnMount}
 				language={language}

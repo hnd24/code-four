@@ -67,6 +67,7 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 
 		const data = await executeCode({language, code: value, input});
 		setOutputContent({output: data.stdout, error: data.stderr});
+		console.log("🚀 ~ onExecute ~ data:", data);
 	};
 
 	return (
@@ -96,18 +97,6 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 				</div>
 
 				<div className="flex items-center gap-2 h-10">
-					<Hint label="display teammate's cursor">
-						<Button
-							size="icon"
-							className={cn(
-								"hidden md:flex",
-								"dark:bg-gray-200 dark:border-none dark:text-black dark:hover:bg-gray-200/80 ",
-								hiddenRemoteSelection ? "dark:bg-gray-200" : "bg-black/50 dark:bg-gray-200/60",
-							)}
-							onClick={() => setConfig({hiddenRemoteSelection: !hiddenRemoteSelection})}>
-							<Contact size={20} />
-						</Button>
-					</Hint>
 					{/* ********************** */}
 					<Hint label="file input">
 						<Button
@@ -122,6 +111,18 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 						</Button>
 					</Hint>
 					{/* ********************** */}
+					<Hint label="display teammate's cursor">
+						<Button
+							size="icon"
+							className={cn(
+								"hidden md:flex",
+								"dark:bg-gray-200 dark:border-none dark:text-black dark:hover:bg-gray-200/80 ",
+								!hiddenRemoteSelection ? "dark:bg-gray-200" : "bg-black/50 dark:bg-gray-200/60",
+							)}
+							onClick={() => setConfig({hiddenRemoteSelection: !hiddenRemoteSelection})}>
+							<Contact size={20} />
+						</Button>
+					</Hint>
 					<Hint label="Example">
 						<Button
 							size="icon"
