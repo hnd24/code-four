@@ -34,7 +34,7 @@ function OutputAreaContent({isLoading, error, output}: Props) {
 		);
 	}
 
-	if (error) {
+	if (output) {
 		return (
 			<div className="flex items-start gap-3 text-red-400">
 				<AlertTriangle className="mt-1 size-5 flex-shrink-0" />
