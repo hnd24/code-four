@@ -1,7 +1,11 @@
 "use client";
-
-import {SelectValue} from "@/components/select-theme";
-import {Select, SelectContent, SelectItem, SelectTrigger} from "@/components/ui/select";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import {LANGUAGES} from "@/constants";
 import {useEditor} from "@/hooks/use-editor";
 import {cn} from "@/lib/utils";
