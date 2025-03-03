@@ -16,8 +16,8 @@ import {
 	HeartCrack,
 	Loader2,
 	MoreHorizontal,
+	RotateCcw,
 	ScanLine,
-	ShieldCheck,
 	Trash2,
 } from "lucide-react";
 import {api} from "../../../../../convex/_generated/api";
@@ -74,7 +74,7 @@ export default function DropdownMenuTable({room}: Props) {
 							<DropdownMenuItem onClick={() => UncountdownDelete({roomId: room._id})}>
 								<div className="w-full flex text-green-700">
 									<span className="">UnCountdown </span>
-									<ShieldCheck className="h-4 w-4  ml-auto" />
+									<RotateCcw className="h-4 w-4  ml-auto" />
 								</div>
 							</DropdownMenuItem>
 						) : (
@@ -91,7 +91,7 @@ export default function DropdownMenuTable({room}: Props) {
 				{/* favorite opt */}
 				<DropdownMenuItem>
 					<div
-						className="w-full flex text-pink-700"
+						className="w-full flex text-pink-600"
 						onClick={() => {
 							toggleFavoriteRoom({roomId: room._id});
 						}}>

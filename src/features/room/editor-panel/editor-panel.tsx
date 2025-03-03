@@ -38,7 +38,6 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 		setConfig,
 	} = useEditor();
 
-	console.log("🚀 ~ Edi	torPanel ~ language:", language === "cpp");
 	const [value, setValue] = useState<string | undefined>("");
 	const {executeCode, isPending: isExecuting} = useExecuteCode();
 
@@ -132,7 +131,7 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 						</Button>
 					</Hint>
 					<SelectSizeFont />
-					<RunButton disabled={isLoading} onClick={onExecute} />
+					<RunButton disabled={!value?.trim()} isLoading={isLoading} onClick={onExecute} />
 				</div>
 			</div>
 			<div className="h-full border border-blackBorder rounded-lg overflow-hidden">

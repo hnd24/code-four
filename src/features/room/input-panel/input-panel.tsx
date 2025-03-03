@@ -87,7 +87,7 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 									className={cn(
 										"w-fit flex items-center gap-4  border-blackBorder px-2 py-1 rounded-md cursor-pointer  ",
 										"border-l-2  bg-gray-300/60 hover:bg-gray-400",
-										"dark:border-r-2 dark:bg-gray-200/20 dark:text-white dark:hover:bg-gray-200/60",
+										"dark:border-r-2 dark:border-t-0 dark:bg-gray-200/20 dark:text-white dark:hover:bg-gray-200/60",
 										item?.name === checkedFileInput?.name &&
 											"bg-gray-400/60 border-t-2 dark:bg-gray-200/60",
 									)}>
@@ -111,12 +111,15 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 				<div className="flex items-center h-9 w-20 gap-2 ml-4">
 					<Hint label="add file input">
 						<Dialog open={openCreateFileDialog} onOpenChange={setOpenCreateFileDialog}>
-							<DialogTrigger asChild>
-								<Button
-									disabled={isPending}
-									className="h-8 w-8 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-lg !px-0 !py-0 ">
-									<Plus size={14} />
-								</Button>
+							<DialogTrigger>
+								<Hint label="add file input">
+									<div
+										className="flex items-center justify-center h-8 w-8  text-white rounded-lg
+									bg-black hover:bg-black/80 
+								dark:bg-green-700 dark:hover:bg-green-800">
+										<Plus size={14} />
+									</div>
+								</Hint>
 							</DialogTrigger>
 							<DialogContent>
 								<DialogHeader>
@@ -126,7 +129,7 @@ export default function InputPanel({className, setInputTem, inputTem, codeId}: P
 										<Label>File Name</Label>
 										<Input
 											onKeyDown={e => {
-												if (e.key === "Enter" && newFile.name !== "") {
+												if (e.key === "Enter" && isDisabled) {
 													setInputTem([...data, newFile]);
 													setCheckedFileInput(newFile);
 													setOpenCreateFileDialog(false);

@@ -37,7 +37,7 @@ export default function UpdateRoom({room, author, org}: PropsDetailsRoom) {
 	const {mutate: updateNameRoom, isPending} = useMutation({
 		mutationFn: useConvexMutation(api.rooms.updateNameRoom),
 	});
-
+	const isDisabled = isPending || newName === room?.name || newName === "";
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
@@ -76,7 +76,15 @@ export default function UpdateRoom({room, author, org}: PropsDetailsRoom) {
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">Org</Label>
 						<div className="col-span-4 flex gap-2">
-							<Input className="w-full" value={org?.name} disabled />
+							<Input
+								onKeyDown={e => {
+									if (e.key === "Enter" && isDisabled) {
+									}
+								}}
+								className="w-full"
+								value={org?.name}
+								disabled
+							/>
 							<Image
 								src={org?.image || "/avt-room.png"}
 								alt="logo Org"
@@ -92,7 +100,7 @@ export default function UpdateRoom({room, author, org}: PropsDetailsRoom) {
 							await updateNameRoom({roomId: room._id as Id<"rooms">, name: newName});
 							setOpen(false);
 						}}
-						disabled={isPending || newName === room.name || newName === ""}>
+						disabled={isDisabled}>
 						Save
 					</Button>
 				</div>

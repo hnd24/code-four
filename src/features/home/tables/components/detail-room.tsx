@@ -45,7 +45,7 @@ export default function DetailsRoom({room, author, org}: PropsDetailsRoom) {
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">Author</Label>
 						<div className="col-span-4 flex gap-2">
-							<Input className="w-full" value={author?.name} disabled />
+							<Input className="w-full " value={author?.name} disabled />
 							<Image
 								src={author?.image || "/avt-room.png"}
 								alt="logo Org"

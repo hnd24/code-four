@@ -27,6 +27,7 @@ export default function UpdateDateRoomNamRoom({roomName, roomId}: Props) {
 	const {mutate: updateNameRoom, isPending} = useMutation({
 		mutationFn: useConvexMutation(api.rooms.updateNameRoom),
 	});
+	const isDisabled = isPending || newName === roomName || newName === "";
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger>
@@ -58,6 +59,10 @@ export default function UpdateDateRoomNamRoom({roomName, roomId}: Props) {
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">New Name</Label>
 						<Input
+							onKeyDown={e => {
+								if (e.key === "Enter" && isDisabled) {
+								}
+							}}
 							onChange={e => setNewName(e.target.value)}
 							className="col-span-4"
 							defaultValue={roomName}
@@ -70,7 +75,7 @@ export default function UpdateDateRoomNamRoom({roomName, roomId}: Props) {
 							await updateNameRoom({roomId: roomId as Id<"rooms">, name: newName});
 							setOpen(false);
 						}}
-						disabled={isPending || newName === roomName || newName === ""}>
+						disabled={isDisabled}>
 						Save
 					</Button>
 				</div>
