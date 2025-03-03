@@ -41,7 +41,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 			window.location.replace(`/room/${room1?._id}`);
 		},
 	});
-
+	const isDisabled = isPending || nameRoom !== "";
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -75,7 +75,15 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 				<div className="flex flex-col gap-4">
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">Name</Label>
-						<Input className="col-span-4" onChange={e => setNameRoom(e.target.value)} />
+						<Input
+							className="col-span-4"
+							onKeyDown={async e => {
+								if (e.key === "Enter" && !isDisabled) {
+									await createRoom({name: nameRoom, author: user.id, orgId: org.id});
+								}
+							}}
+							onChange={e => setNameRoom(e.target.value)}
+						/>
 					</div>
 					<div className="w-full grid grid-cols-5">
 						<Label className="col-span-1 text-start mr-2 flex items-center">Author</Label>
@@ -96,7 +104,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 					</div>
 					<Button
 						className="dark:text-black"
-						disabled={isPending}
+						disabled={isDisabled}
 						onClick={async () => {
 							await createRoom({name: nameRoom, author: user.id, orgId: org.id});
 						}}>
