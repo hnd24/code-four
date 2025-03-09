@@ -4,7 +4,7 @@
 
 ## 🚀 About Code Four
 
-**Code Four** is an online coding website designed to help developers run code in real-time, collaborate on coding problems, and engage in discussions. It provides a seamless experience for teams and individuals to work together in live coding sessions.
+**Code Four** is an online coding website designed to help everyone run code in real-time, collaborate on coding problems, and engage in discussions. It provides a seamless experience for teams and individuals to work together in live coding sessions.
 
 ## 🛠️ Technologies Used
 
