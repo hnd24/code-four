@@ -41,7 +41,7 @@ export default function CreateNewRoomButton({disabled = false, user, org}: Props
 			window.location.replace(`/room/${room1?._id}`);
 		},
 	});
-	const isDisabled = isPending || nameRoom !== "";
+	const isDisabled = isPending || nameRoom === "";
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
