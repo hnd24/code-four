@@ -15,6 +15,7 @@
 - **TailwindCSS** - Utility-first CSS framework for styling
 - **Shadcn** - UI components for an elegant design
 - **Monaco Editor** - The powerful editor behind VS Code
+- **Nuqs** -Type-safe search params state manager
 
 ## 🌟 Key Features
 
