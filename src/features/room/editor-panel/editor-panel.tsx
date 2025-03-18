@@ -82,7 +82,7 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 							codeId={code._id}
 						/>
 					) : (
-						<div className="bg-transparent w-9 h-9 border-x rounded-lg border-blackBorder flex items-start justify-center">
+						<div className="bg-transparent w-9 h-9 border-x rounded-lg border-blackBorder md:flex hidden items-start justify-center">
 							<Loader2 className="w-6 h-6 text-white animate-spin" />
 						</div>
 					)}

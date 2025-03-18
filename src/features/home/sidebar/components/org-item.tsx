@@ -36,7 +36,7 @@ export default function OrgItem({id, name, imageUrl, memberCount}: ItemProps) {
 					isOpen && "px-2 py-1",
 				)}
 				onClick={onClick}>
-				<div className={cn("aspect-square w-8 h-8 ")}>
+				<div className="flex items-center justify-center aspect-square w-8 h-8 ">
 					<Image
 						src={imageUrl}
 						alt={name}
