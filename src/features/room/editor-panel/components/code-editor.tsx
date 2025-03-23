@@ -93,7 +93,7 @@ export const CodeEditor = ({
 					fontSize: textSize,
 					automaticLayout: true,
 					scrollBeyondLastLine: false,
-					padding: {top: 16, bottom: 16},
+					padding: {top: 24, bottom: 16},
 					fontFamily: '"Fira Code", "Cascadia Code", Consolas, monospace',
 					fontLigatures: true,
 					cursorBlinking: "smooth",
