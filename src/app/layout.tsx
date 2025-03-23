@@ -41,7 +41,9 @@ export default function RootLayout({
 				<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 					<ConvexClientProvider>
 						<NuqsAdapter>
-							<ThemeProvider attribute="class">{children}</ThemeProvider>
+							<ThemeProvider attribute="class" defaultTheme="dark">
+								{children}
+							</ThemeProvider>
 							<Toaster richColors theme="light" />
 						</NuqsAdapter>
 					</ConvexClientProvider>

@@ -37,48 +37,48 @@ export const columnsUserTrash: ColumnDef<roomType>[] = [
 		header: "Name",
 		cell: ({row}) => {
 			const room = row.original;
-			return <div className="w-full flex items-center justify-start">{room?.name}</div>;
+			return <div className="min-w-full flex items-center justify-start">{room?.name}</div>;
 		},
 	},
 	{
 		accessorKey: "_creationTime",
 		header: ({column}) => (
-			<div className="w-full flex justify-between ">
+			<div className=" flex justify-between ">
 				<span className="flex items-center">Create at</span>
-				<Button
-					variant="ghost"
-					className="rounded-full bg-blackLight hover:bg-gray-300/60 !outline-none"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					<ArrowUpDown className=" h-4 w-4" />
-				</Button>
+				<ArrowUpDown
+					size={16}
+					className=" cursor-pointer text-black dark:text-white"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				/>
 			</div>
 		),
 		cell: ({row}) => {
 			const room = row.original;
 			if (room?._creationTime)
-				return <div className="w-full truncate">{formatTime(room?._creationTime || 0)}</div>;
+				return (
+					<div className="min-w-fit pr-2 truncate">{formatTime(room?._creationTime || 0)}</div>
+				);
 		},
 		sortingFn: "datetime",
 	},
 	{
 		accessorKey: "deleteTime",
 		header: ({column}) => (
-			<div className="w-full flex justify-between ">
-				<span className="flex items-center">Countdown delete</span>
-				<Button
-					variant="ghost"
-					className="rounded-full hover:!bg-gray-300/60 !outline-none"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					<ArrowUpDown className=" h-4 w-4" />
-				</Button>
+			<div className="w-full flex justify-between items-center">
+				<span className="min-w-fit flex items-center">Auto-Delete</span>
+				<ArrowUpDown
+					size={16}
+					className=" cursor-pointer text-black dark:text-white"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				/>
 			</div>
 		),
 		cell: ({row}) => {
 			const room = row.original;
 			if (room.deletionCountup && room.deletionCountup > 0)
 				return (
-					<div className="w-full">
-						<span>{7 - room.deletionCountup}</span>
+					<div className="w-full flex items-center justify-center">
+						<span>{7 - room.deletionCountup} day</span>
 					</div>
 				);
 		},
