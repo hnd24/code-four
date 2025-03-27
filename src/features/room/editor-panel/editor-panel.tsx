@@ -64,9 +64,13 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 
 	const onExecute = async () => {
 		if (!value) return;
-
-		const data = await executeCode({language, code: value, input});
-		setOutputContent({output: data.stdout, error: data.stderr});
+		if (language === Language.CSharp || language === Language.Cpp) {
+			const data = await executeCode({language, code: value});
+			setOutputContent({output: data.stdout, error: data.stderr});
+		} else {
+			const data = await executeCode({language, code: value, input});
+			setOutputContent({output: data.stdout, error: data.stderr});
+		}
 	};
 
 	return (
