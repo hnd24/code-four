@@ -106,3 +106,22 @@ body {
 		@apply absolute top-[-1.4em] left-[-2px] px-2 py-1 bg-[var(--user-color)] text-white rounded-lg rounded-bl-none text-sm font-semibold transition-all duration-150 hover:opacity-0;
 	}
 }
+
+::-webkit-scrollbar {
+	@apply w-2;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	@apply dark:bg-blackLight bg-whiteLight;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	@apply dark:bg-gray-400 bg-gray-300 rounded-xl hover:dark:bg-gray-600  hover:bg-gray-400;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	@apply dark:bg-gray-600 bg-gray-400;
+}

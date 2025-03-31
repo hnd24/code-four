@@ -18,6 +18,17 @@ export enum Language {
 	CSharp = "csharp",
 }
 
+export const LanguageExtension = {
+	js: "javascript",
+	ts: "typescript",
+	java: "java",
+	py: "python",
+	cpp: "cpp",
+	csharp: "csharp",
+};
+
+export const ListLanguageExtensions = ["ts", "js", "java", "c", "cpp", "py"];
+
 export type DraftCode = {
 	language: Language;
 	code?: string;

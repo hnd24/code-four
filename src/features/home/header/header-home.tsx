@@ -36,6 +36,13 @@ export default function header() {
 											border: "2px solid #313244",
 											justifyContent: "space-between",
 											backgroundColor: "#12121a",
+											color: "#fff",
+											"&:hover": {
+												color: "#fff",
+											},
+											"&:focus": {
+												color: "#fff",
+											},
 											// backgroundColor: "--sidebar-background",
 											// "&:hover": {
 											// 	backgroundColor: "--sidebar-background",

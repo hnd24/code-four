@@ -1,5 +1,5 @@
 "use client";
-import {Hint} from "@/components/hint";
+
 import {Button} from "@/components/ui/button";
 import {CODE_EXAMPLES} from "@/constants/code-example";
 import {useEditor} from "@/hooks/use-editor";
@@ -15,7 +15,10 @@ import {useConvexMutation} from "@convex-dev/react-query";
 import {useMutation} from "@tanstack/react-query";
 import {api} from "../../../../convex/_generated/api";
 
+import {Hint} from "@/components/hint";
 import {useClerk} from "@clerk/nextjs";
+import FileDownloader from "../components/file-downloader";
+import FileUploader from "../components/file-uploader";
 import {CodeEditor} from "./components/code-editor";
 import LanguageSelector from "./components/language-selector";
 import {RunButton} from "./components/run-button";
@@ -28,6 +31,8 @@ type Props = {
 };
 
 export default function EditorPanel({setOutputContent, code, isPending, input}: Props) {
+	const [value, setValue] = useState<string | undefined>("");
+
 	const clerk = useClerk();
 
 	if (!clerk.loaded) {
@@ -38,7 +43,6 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 		setConfig,
 	} = useEditor();
 
-	const [value, setValue] = useState<string | undefined>("");
 	const {executeCode, isPending: isExecuting} = useExecuteCode();
 
 	const {mutate: updateCode} = useMutation({
@@ -100,6 +104,18 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 				</div>
 
 				<div className="flex items-center gap-2 h-10">
+					{/* ********************** */}
+					<Hint label="download file ">
+						<div>
+							<FileDownloader value={value} />
+						</div>
+					</Hint>
+					{/* ********************** */}
+					<Hint label="upload file ">
+						<div>
+							<FileUploader setValue={setValue} />
+						</div>
+					</Hint>
 					{/* ********************** */}
 					<Hint label="file input">
 						<Button
