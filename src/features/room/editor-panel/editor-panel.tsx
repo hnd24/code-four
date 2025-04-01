@@ -5,8 +5,15 @@ import {CODE_EXAMPLES} from "@/constants/code-example";
 import {useEditor} from "@/hooks/use-editor";
 import {useExecuteCode} from "@/hooks/use-execute-code";
 import {cn} from "@/lib/utils";
-import {CodeType, FileInputType, Language, outputContent} from "@/types";
-import {Atom, Contact, FileInput, Loader2} from "lucide-react";
+import {
+	CodeType,
+	FileInputType,
+	Language,
+	LanguageExtension,
+	ListLanguageExtensions,
+	outputContent,
+} from "@/types";
+import {Atom, Contact, FileInput, Loader2, Plus} from "lucide-react";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import SelectSizeFont from "../components/select-size-font";
@@ -17,6 +24,7 @@ import {api} from "../../../../convex/_generated/api";
 
 import {Hint} from "@/components/hint";
 import {useClerk} from "@clerk/nextjs";
+import {toast} from "sonner";
 import FileDownloader from "../components/file-downloader";
 import FileUploader from "../components/file-uploader";
 import {CodeEditor} from "./components/code-editor";
@@ -32,6 +40,8 @@ type Props = {
 
 export default function EditorPanel({setOutputContent, code, isPending, input}: Props) {
 	const [value, setValue] = useState<string | undefined>("");
+	const [fileList, setFileList] = useState<FileList>();
+	const [isDragging, setIsDragging] = useState(false);
 
 	const clerk = useClerk();
 
@@ -76,6 +86,41 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 			setOutputContent({output: data.stdout, error: data.stderr});
 		}
 	};
+
+	useEffect(() => {
+		if (!fileList) return;
+		if (fileList.length > 1) {
+			toast.error("Please upload only one file.");
+			return;
+		}
+		const allowedTypes = [...ListLanguageExtensions, "txt"];
+		const file = fileList[0];
+		const fileExtension = file.name.split(".").pop()?.toLowerCase();
+		if (!fileExtension || !allowedTypes.includes(fileExtension)) {
+			toast.error(`Unsupported file type. Please upload a .${allowedTypes.join(", .")} file.`);
+			return;
+		}
+
+		if (file.size > 2 * 1024 * 1024) {
+			toast.error("File size exceeds 2MB limit.");
+			return;
+		}
+
+		// Set the language based on the file extension
+		if (fileExtension in LanguageExtension) {
+			const languageValue = LanguageExtension[
+				fileExtension as keyof typeof LanguageExtension
+			] as Language;
+			setConfig({language: languageValue});
+		}
+
+		const reader = new FileReader();
+		reader.onload = e => {
+			setValue((e.target?.result as string) || "");
+		};
+		reader.readAsText(file);
+		setFileList(undefined); // Clear the file list after reading
+	}, [fileList]);
 
 	return (
 		<div
@@ -154,7 +199,37 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 					<RunButton disabled={!value?.trim()} isLoading={isLoading} onClick={onExecute} />
 				</div>
 			</div>
-			<div className="h-full border border-blackBorder rounded-lg overflow-hidden">
+			<div
+				className="h-full border border-blackBorder rounded-lg overflow-hidden relative"
+				// handle drag and drop events
+				onDragEnter={e => {
+					e.preventDefault();
+					e.stopPropagation();
+					setIsDragging(true);
+				}}
+				// avoid dragging file to the editor
+				onDragOver={e => {
+					e.preventDefault();
+				}}
+				// handle drag leave event
+				// check if the drag leave event is outside the editor
+				onDragLeave={e => {
+					e.preventDefault();
+					if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+						setIsDragging(false);
+					}
+				}}
+				// handle drop event
+				// check if the drop event is outside the editor
+				// and set the file list to the state
+				// and hide the form after dropping the file
+				onDrop={e => {
+					e.preventDefault();
+					setIsDragging(false);
+					setFileList(e.dataTransfer.files);
+
+					e.dataTransfer.items.clear();
+				}}>
 				<CodeEditor
 					value={value}
 					onChange={setValue}
@@ -162,6 +237,26 @@ export default function EditorPanel({setOutputContent, code, isPending, input}: 
 					textSize={textSize}
 					language={language}
 				/>
+
+				<div
+					className={cn(
+						"hidden absolute h-full w-full rounded-lg border-2 border-blue-500",
+						"transition-all duration-300 ease-in-out",
+						"bg-blue-800/10",
+						"inset-0 items-center justify-center z-50",
+						isDragging ? "flex" : "hidden",
+					)}>
+					<div className="size-44 gap-4 flex flex-col items-center justify-center text-center">
+						<div
+							className="
+							size-36 flex items-center justify-center 
+							border-2 border-blue-500 border-dashed text-blue-500 
+						dark:text-white ">
+							<Plus size={80} className=" " />
+						</div>
+						<span className="">Drop a file here to upload</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

@@ -6,8 +6,9 @@ import {toast} from "sonner";
 
 type Props = {
 	setInputTem: React.Dispatch<React.SetStateAction<FileInputType[]>>;
+	inputTem?: FileInputType[];
 };
-export default function MultiFileUploader({setInputTem}: Props) {
+export default function MultiFileUploader({setInputTem, inputTem = []}: Props) {
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	// Function to handle button click and trigger file input
@@ -45,13 +46,20 @@ export default function MultiFileUploader({setInputTem}: Props) {
 		validFiles.forEach(file => {
 			const reader = new FileReader();
 			reader.onload = e => {
-				setInputTem(prev => {
+				// Check if the file already exists in the inputTem array
+				const existingFile = inputTem.find(item => item.name === file.name);
+				// If it exists, update the content
+				if (existingFile) {
+					toast.warning(`File "${file.name}" already exists. Updating content.`);
+				}
+				// If it doesn't exist, add a new file input
+				else {
 					const newFile: FileInputType = {
 						name: file.name,
 						content: e.target?.result as string,
 					};
-					return [...prev, newFile];
-				});
+					setInputTem([...inputTem, newFile]);
+				}
 			};
 			reader.onerror = e => {
 				toast.error(
